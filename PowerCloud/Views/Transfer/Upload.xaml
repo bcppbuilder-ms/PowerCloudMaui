@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PowerCloud.Views.Transfer.Upload"
+             xmlns:local="clr-namespace:PowerCloud.Models"
+             xmlns:Models="clr-namespace:PowerCloud.Models"
+             Title="Upload">
+    <ContentPage.Content>
+        <RefreshView>
+            <Grid>
+                <CollectionView>
+                    <!--ex test date template-->
+                    <CollectionView.ItemsSource>
+                        <x:Array Type="{x:Type local:FileItem}">
+                            <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
+                            <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
+                        </x:Array>
+                    </CollectionView.ItemsSource>
+                    <!--FileList__List head-->
+                    <CollectionView.Header>
+                        <HorizontalStackLayout HorizontalOptions="End">
+                            <HorizontalStackLayout.Padding>
+                                <OnPlatform x:TypeArguments="Thickness">
+                                    <On Platform="iOS" Value="5,40,5,5" />
+                                    <On Platform="Android" Value="5,5,5,5" />
+                                </OnPlatform>
+                            </HorizontalStackLayout.Padding>
+                            <Label Text="共" />
+                            <Label Text="num" />
+                            <Label Text="項，已完成" />
+                            <Label Text="num" />
+                            <Label Text="項" />
+                        </HorizontalStackLayout>
+                    </CollectionView.Header>
+                    <!--FileList__File-Item__清單模式的樣式-->
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <!--<Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="Btn__goFileManagement_SubFolder"/>
+                                </Grid.GestureRecognizers>-->
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="55"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="135"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <!--檔案-圖示-->
+                                <Grid Grid.Column="0" Grid.Row="0" Padding="10,0,10,0">
+                                    <Image Source="file_text.png" Aspect="AspectFit" />
+                                </Grid>
+                                <!--檔案-名稱/檔案格式說明-->
+                                <StackLayout Grid.Column="1"  
+                                      Grid.Row="0" 
+                                      Padding="5">
+                                    <Label Text="{Binding FileName}" 
+                                               FontSize="16" 
+                                               Margin="0,0,0,10" />
+                                    <ProgressBar Progress="0.5" />
+                                </StackLayout>
+                                <!--檔案-更多按鈕-->
+                                <HorizontalStackLayout Grid.Column="2" Padding="0,10,10,0" HorizontalOptions="End">
+                                    <!--211_________Transfer_Run 傳輸執行中-->
+                                    <!--Btn_Clicked_Pause_暫停按鈕-->
+                                    <Label Text="{x:Static Models:icomoonFontIcon.Icon35}" 
+                                           Style="{StaticResource TransferIconStyle}" >
+                                        <!--<Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="Btn_Clicked_Pause" />
+                                        </Label.GestureRecognizers>-->
+                                    </Label>
+                                    <!--212_________Transfer_Pause 傳輸暫停 -->
+                                    <!--Btn_Clicked_Start_開始按鈕-->
+                                    <Label Text="{x:Static Models:icomoonFontIcon.Icon37}" 
+                                           Style="{StaticResource TransferIconStyle}" >
+                                        <!--<Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="Btn_Clicked_Start" />
+                                        </Label.GestureRecognizers>-->
+                                    </Label>
+                                    <!--Btn_Popup_Transfer_CancelOne_删除按鈕-->
+                                    <Label Text="{x:Static Models:icomoonFontIcon.Icon17}" 
+                                           Style="{StaticResource TransferIconStyle}"
+                                           TextColor="{StaticResource Color_Red}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="Btn_Popup_Transfer_CancelOne" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <!--214_________Transfer_Waiting 檔案等待中-->
+                                    <Label Text="等待中..." 
+                                           FontSize="14" 
+                                           VerticalTextAlignment="Center"/>
+                                </HorizontalStackLayout>
+                                <!--分隔線-->
+                                <BoxView Grid.Row="1"
+                                             Grid.ColumnSpan="3"
+                                             Style="{StaticResource DividerStyle}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                    <!--FileList__取消按鈕-->
+                    <CollectionView.Footer>
+                        <StackLayout HorizontalOptions="Center"
+                                     VerticalOptions="Center">
+                            <Button Style="{StaticResource Btn_Bg_White_Red}"
+                                    Clicked="Btn_Popup_Transfer_CancelMore"
+                                    Text="全部取消" />
+                        </StackLayout>
+                    </CollectionView.Footer>
+
+                    <!--FileList__當沒有任何檔案時顯示-->
+                    <CollectionView.EmptyView>
+                        <ContentView>
+                            <StackLayout HorizontalOptions="CenterAndExpand"
+                                 VerticalOptions="CenterAndExpand">
+                                <Label Text="沒有任何傳輸紀錄"
+                                       Margin="10,25,10,10"
+                                       FontAttributes="Bold"
+                                       FontSize="18"
+                                       HorizontalOptions="Fill"
+                                       HorizontalTextAlignment="Center" />
+                            </StackLayout>
+                        </ContentView>
+                    </CollectionView.EmptyView>
+                </CollectionView>
+            </Grid>
+
+        </RefreshView>
+    </ContentPage.Content>
+</ContentPage>

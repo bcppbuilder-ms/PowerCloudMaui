@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PowerCloud.Views.Account.Login_NAS"
+             xmlns:local="clr-namespace:PowerCloud.Models"
+             xmlns:Models="clr-namespace:PowerCloud.Models"
+             Title="Account.Login_NAS">
+    <VerticalStackLayout HorizontalOptions="Center"
+                         VerticalOptions="Center"
+                         WidthRequest="300">
+        <!--013_Login_NAS Title-->
+        <Label Text="歡迎" 
+               Style="{StaticResource AccountTitleStyle}"/>
+
+        <!--022_Switch_NAS Title-->
+        <Label Text="開始新增"
+               Style="{StaticResource AccountTitleStyle}"/>
+
+        <!--033_Logout_NAS Title-->
+        <Label Text="您已登出" x:Name="labelLogout" 
+               Style="{StaticResource AccountTitleStyle}"/>
+        <Label Text="您可以重新登入"
+               HorizontalTextAlignment="Center"
+               Style="{StaticResource AccountStitleStyle2}"/>
+
+        <Grid ColumnSpacing="0"
+              RowSpacing="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="50" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Entry Grid.Column="0" x:Name="entryTmpIp" Keyboard="Plain"
+                   Margin="0,5,0,5"
+                   Style="{StaticResource EntryBaseStyle}"
+                   Placeholder="請輸入NAS的IP或DDNS" />
+            
+            <!--Btn View__014_Btn_View_Login_NAS_IPList-->
+            <Label Grid.Column="1"
+                   Text="{x:Static Models:icomoonFontIcon.Icon43}"
+                   Style="{StaticResource LabelIconStyle}"
+                   FontSize="26">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Btn_View_Login_NAS_IPList" />
+                </Label.GestureRecognizers>
+            </Label>
+        </Grid>
+
+        <Label FontSize="12" 
+               Padding="6,0,6,40" 
+               Style="{StaticResource AccountStitleStyle2}"
+               Text="DDNS僅需輸入前置名稱即可，例如abcde.powernas.com.tw，只需輸入abcde。"  />
+
+        <!--Btn View__015_Btn_View_Login_Account-->
+        <StackLayout HorizontalOptions="End">
+            <Button Style="{StaticResource Btn_Bg_BlueGreen}"
+                    Clicked="Btn_View_Login_Account"
+                    Padding="15,5,15,5"
+                    Text="下一步"/>            
+        </StackLayout>
+    </VerticalStackLayout>
+</ContentPage>

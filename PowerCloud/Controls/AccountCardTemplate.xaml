@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PowerCloud.Controls.AccountCardTemplate"
+             x:Name="this">
+    <Frame BindingContext="{x:Reference this}" 
+           Padding="0"
+           CornerRadius="0"
+           BorderColor="{StaticResource Color_LightGary}"
+           Margin="0,2,0,5">
+        <HorizontalStackLayout Padding="10">
+            <Label Text="{Binding AccountIcon, FallbackValue='Icon'}"
+               TextColor="{StaticResource Color_Dark4}"
+               FontSize="28"
+               Margin="0,0,5,0"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               FontFamily="icomoon"/>
+            <VerticalStackLayout>
+                <Label Text="{Binding AccountId, FallbackValue='AccountId'}"
+                   TextColor="{StaticResource Color_Gary}"
+                   FontSize="16"/>
+                <Label Text="{Binding AccountNas, FallbackValue='AccountNas'}"
+                   TextColor="{StaticResource Color_Dark4}"
+                   FontSize="10"/>
+            </VerticalStackLayout>
+        </HorizontalStackLayout>
+    </Frame>
+    
+</ContentView>

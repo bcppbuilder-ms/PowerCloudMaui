@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PowerCloud.Views.SystemInfo"
+             xmlns:local="clr-namespace:PowerCloud.Models"
+             Title="SystemInfo">
+    <VerticalStackLayout>
+        <!--  Info___主機名稱  -->
+        <Label Text="主機名稱" 
+               Style="{StaticResource SystemInfoTitleStyle}"/>
+        <Label Text="主機名稱inner" 
+               Style="{StaticResource SystemInfoInnerStyle}"/>
+        <BoxView Style="{StaticResource DividerStyle}"/>
+        <!-- Info___NAS 型號 -->
+        <Label Text="NAS 型號" 
+               Style="{StaticResource SystemInfoTitleStyle}"/>
+        <Label Text="NAS 型號inner" 
+               Style="{StaticResource SystemInfoInnerStyle}"/>
+        <BoxView Style="{StaticResource DividerStyle}"/>
+        <!--  Info___NAS 序號  -->
+        <Label Text="NAS 序號" 
+               Style="{StaticResource SystemInfoTitleStyle}"/>
+        <Label Text="NAS 序號inner" 
+               Style="{StaticResource SystemInfoInnerStyle}"/>
+        <BoxView Style="{StaticResource DividerStyle}"/>
+        <!--  Info___NAS 版本  -->
+        <Label Text="NAS 版本" 
+               Style="{StaticResource SystemInfoTitleStyle}"/>
+        <Label Text="NAS 版本inner" 
+               Style="{StaticResource SystemInfoInnerStyle}"/>
+        <BoxView Style="{StaticResource DividerStyle}"/>
+        <!--  Info___NAS 作業系統  -->
+        <Label Text="NAS 作業系統" 
+               Style="{StaticResource SystemInfoTitleStyle}"/>
+        <Label Text="NAS 作業系統inner" 
+               Style="{StaticResource SystemInfoInnerStyle}"/>
+        <BoxView Style="{StaticResource DividerStyle}"/>
+        <!--  Info___APP 版本  -->
+        <Label Text="APP 版本" 
+               Style="{StaticResource SystemInfoTitleStyle}"/>
+        <Label Text="APP 版本inner" 
+               Style="{StaticResource SystemInfoInnerStyle}"/>
+        <BoxView Style="{StaticResource DividerStyle}"/>
+    </VerticalStackLayout>
+</ContentPage>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="PowerCloud.Views.FileManagement.Popup_SelectFile"
+               xmlns:Models="clr-namespace:PowerCloud.Models"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+
+    <Grid Padding="10" 
+          Style="{StaticResource PopupBackgroudStyle}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="30"/>
+        </Grid.ColumnDefinitions>
+
+        <Image Grid.Row="0" 
+               Grid.RowSpan="2" 
+               Grid.Column="0"
+               Source="file_text.png" 
+               Aspect="AspectFit"/>
+        <Label Grid.Row="0"
+               Grid.Column="1"
+               VerticalTextAlignment="Center"
+               Text="file name"/> 
+        <Label Grid.Row="1"
+               Grid.Column="1"
+               VerticalTextAlignment="Center"
+               FontSize="10" 
+               TextColor="{StaticResource Color_Gary}"
+               Text="fileinfo"/>
+        <StackLayout Grid.Row="0"
+               Grid.RowSpan="2"
+               Grid.Column="2"
+               Padding="0">
+            <!--Btn_Clicked_ClosePopup-->
+            <Label Text="{x:Static Models:icomoonFontIcon.Icon17}"
+                       TextColor="{StaticResource Gray300}"
+                       FontFamily="icomoon" 
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       FontSize="25">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Btn_Clicked_ClosePopup" />
+                </Label.GestureRecognizers>
+            </Label>
+        </StackLayout>
+        <VerticalStackLayout Grid.Row="2"
+                             Grid.Column="0"
+                             Grid.ColumnSpan="3">
+            <BoxView Grid.Row="1"
+                     Grid.ColumnSpan="3"
+                     Style="{StaticResource DividerStyle}"/>
+            <!--popup-btn1 重新命名-->
+            <HorizontalStackLayout Style="{StaticResource PopupButtonStyle}">
+                <Label Style="{StaticResource PopupButtonIconStyle}"
+                       Text="{x:Static Models:icomoonFontIcon.Icon25}" />
+                <Label Style="{StaticResource PopupButtonTextStyle}"
+                    Text="重新命名"/>
+            </HorizontalStackLayout>
+            <!--popup-btn2 下載-->
+            <HorizontalStackLayout Style="{StaticResource PopupButtonStyle}">
+                <Label Style="{StaticResource PopupButtonIconStyle}"
+                       Text="{x:Static Models:icomoonFontIcon.Icon24}" />
+                <Label Style="{StaticResource PopupButtonTextStyle}"
+                       Text="下載"/>
+            </HorizontalStackLayout>
+            <!--popup-btn3 分享-->
+            <HorizontalStackLayout Style="{StaticResource PopupButtonStyle}">
+                <Label Style="{StaticResource PopupButtonIconStyle}"
+                       Text="{x:Static Models:icomoonFontIcon.Icon44}" />
+                <Label Style="{StaticResource PopupButtonTextStyle}"
+                       Text="分享"/>
+            </HorizontalStackLayout>
+            <!--popup-btn4 複製-->
+            <HorizontalStackLayout Style="{StaticResource PopupButtonStyle}">
+                <Label Style="{StaticResource PopupButtonIconStyle}"
+                       Text="{x:Static Models:icomoonFontIcon.Icon21}" />
+                <Label Style="{StaticResource PopupButtonTextStyle}"
+                       Text="複製"/>
+            </HorizontalStackLayout>
+            <!--popup-btn5 移動-->
+            <HorizontalStackLayout Style="{StaticResource PopupButtonStyle}">
+                <Label Style="{StaticResource PopupButtonIconStyle}"
+                       Text="{x:Static Models:icomoonFontIcon.Icon34}" />
+                <Label Style="{StaticResource PopupButtonTextStyle}"
+                       Text="移動"/>
+            </HorizontalStackLayout>
+            <!--popup-btn6 刪除-->
+            <HorizontalStackLayout Style="{StaticResource PopupButtonStyle}">
+                <Label Style="{StaticResource PopupButtonIconStyle}"
+                       TextColor="{StaticResource Color_Red}"
+                       Text="{x:Static Models:icomoonFontIcon.Icon46}" />
+                <Label Style="{StaticResource PopupButtonTextStyle}"
+                       TextColor="{StaticResource Color_Red}"
+                       Text="刪除"/>
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+    </Grid>
+</toolkit:Popup>

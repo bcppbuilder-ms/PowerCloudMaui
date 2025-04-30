@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="PowerCloud.Views.PopupTestContentView"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:Models="clr-namespace:PowerCloud.Models">
+
+    <Grid Padding="10" 
+          BackgroundColor="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="30"/>
+        </Grid.ColumnDefinitions>
+
+        <Image Grid.Row="0" 
+               Grid.RowSpan="2" 
+               Grid.Column="0"
+               Source="file_text.png" 
+               Aspect="AspectFit"/>
+        <Label Grid.Row="0"
+               Grid.Column="1"
+               VerticalTextAlignment="Center"
+               Text="file name"/> 
+        <Label Grid.Row="1"
+               Grid.Column="1"
+               VerticalTextAlignment="Center"
+               FontSize="10" 
+               TextColor="{StaticResource Color_Gary}"
+               Text="fileinfo"/>
+        <StackLayout Grid.Row="0"
+               Grid.RowSpan="2"
+               Grid.Column="2"
+               Padding="0">
+            <Label Text="{x:Static Models:icomoonFontIcon.Icon17}" 
+                       TextColor="{StaticResource Gray300}"
+                       FontFamily="icomoon" 
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       FontSize="25"/>
+        </StackLayout>
+        <VerticalStackLayout Grid.Row="2"
+                             Grid.Column="0"
+                             Grid.ColumnSpan="3">
+            <BoxView Grid.Row="1"
+                     Grid.ColumnSpan="3"
+                     Style="{StaticResource DividerStyle}"/>
+            <!--popup-btn1-->
+            <HorizontalStackLayout Style="{StaticResource PopupButtonStyle}">
+                <Label Style="{StaticResource PopupButtonIconStyle}"
+                       Text="{x:Static Models:icomoonFontIcon.Icon17}" />
+                <Label Style="{StaticResource PopupButtonTextStyle}"
+                       Text="AAAA"/>
+            </HorizontalStackLayout>
+            <!--popup-btn2-->
+            <HorizontalStackLayout Style="{StaticResource PopupButtonStyle}">
+                <Label Style="{StaticResource PopupButtonIconStyle}"
+                       Text="{x:Static Models:icomoonFontIcon.Icon17}" />
+                <Label Style="{StaticResource PopupButtonTextStyle}"
+                       Text="AAAA"/>
+            </HorizontalStackLayout>
+            <!--popup-btn3-->
+            <HorizontalStackLayout Style="{StaticResource PopupButtonStyle}">
+                <Label Style="{StaticResource PopupButtonIconStyle}"
+                       Text="{x:Static Models:icomoonFontIcon.Icon17}" />
+                <Label Style="{StaticResource PopupButtonTextStyle}"
+                       Text="AAAA"/>
+            </HorizontalStackLayout>
+            <!--popup-btn4-->
+            <HorizontalStackLayout Style="{StaticResource PopupButtonStyle}">
+                <Label Style="{StaticResource PopupButtonIconStyle}"
+                       Text="{x:Static Models:icomoonFontIcon.Icon17}" />
+                <Label Style="{StaticResource PopupButtonTextStyle}"
+                       Text="AAAA"/>
+            </HorizontalStackLayout>
+            <!--popup-btn5-->
+            <!--<HorizontalStackLayout Style="{StaticResource PopupButtonStyle}">
+                <Label Style="{StaticResource PopupButtonIconStyle}"
+                       Text="{x:Static Models:icomoonFontIcon.Icon17}" />
+                <Label Style="{StaticResource PopupButtonTextStyle}"
+                    Text="AAAA"/>
+            </HorizontalStackLayout>-->
+            <!--popup-btn6-->
+            <!--<HorizontalStackLayout Style="{StaticResource PopupButtonStyle}">
+                <Label Style="{StaticResource PopupButtonIconStyle}"
+                       TextColor="{StaticResource Color_Red}"
+                       Text="{x:Static Models:icomoonFontIcon.Icon17}" />
+                <Label Style="{StaticResource PopupButtonTextStyle}"
+                       TextColor="{StaticResource Color_Red}"
+                       Text="AAAA"/>
+            </HorizontalStackLayout>-->
+
+        </VerticalStackLayout>
+    </Grid>
+</toolkit:Popup>

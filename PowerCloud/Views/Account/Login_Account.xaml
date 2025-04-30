@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PowerCloud.Views.Account.Login_Account"
+             xmlns:local="clr-namespace:PowerCloud.Models"
+             xmlns:controls="clr-namespace:PowerCloud.Controls"
+             Title="Account.Login_Account">
+    <VerticalStackLayout HorizontalOptions="Center"
+                         VerticalOptions="Center"
+                         WidthRequest="300">
+        <!--015_Login_Account Title-->
+        <Label Text="登入"
+               Style="{StaticResource AccountTitleStyle}"/>
+
+        <Label HorizontalTextAlignment="Center"
+               Style="{StaticResource AccountStitleStyle2}">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="登入位置" />
+                    <Span Text=" - "/>
+                    <Span Text="{Binding TmpIp}" />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+
+        <Entry Grid.Column="0" x:Name="entryAccount"
+                   Margin="0,5,0,5"  Keyboard="Plain"
+                   Style="{StaticResource EntryBaseStyle}"
+                   Placeholder="請輸入帳號" />
+        <Entry Grid.Column="0" x:Name="entrySecret" IsPassword="True"
+                   Margin="0,5,0,10"
+                   Style="{StaticResource EntryBaseStyle}"
+                   Placeholder="請輸入密碼" />
+
+        <Grid ColumnSpacing="0"
+              RowSpacing="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="80" />
+            </Grid.ColumnDefinitions>
+
+            <HorizontalStackLayout Grid.Column="0">
+                <CheckBox />
+                <Label VerticalOptions="Center"
+                       Text="記住帳號"/>
+            </HorizontalStackLayout>
+            <!--Btn View__101_Btn_View_FileManagement_ListView-->
+            <Button Grid.Column="1" 
+                    Style="{StaticResource Btn_Bg_BlueGreen}"
+                    Clicked="Btn_View_FileManagement_ListView"
+                    Padding="15,10,15,10"
+                    Text="登入"/>
+        </Grid>
+
+        <HorizontalStackLayout HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               Margin="0,10,0,10">
+            <BoxView Style="{StaticResource DividerDarkStyle}"
+                     WidthRequest="50"/>
+            <Label Text="使用其他登入方式"
+                   Padding="5,10,5,10"
+                   TextColor="{StaticResource Color_Gary2}"/>
+            <BoxView Style="{StaticResource DividerDarkStyle}"
+                     WidthRequest="50"/>
+        </HorizontalStackLayout>
+
+        <Image Source="sing_google.png" Aspect="AspectFit" Margin="0" HeightRequest="80" />
+        <Image Source="sing_fbbook.png" Aspect="AspectFit" Margin="0" HeightRequest="80" />
+    </VerticalStackLayout>
+</ContentPage>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PowerCloud.Views.Account.Login_AccountList_More"
+             xmlns:local="clr-namespace:PowerCloud.Models"
+             xmlns:Models="clr-namespace:PowerCloud.Models"
+             Title="Account.Login_AccountList_More">
+    <StackLayout VerticalOptions="Start">
+        <RefreshView>
+            <Grid>
+                <CollectionView x:Name="Login_AccList_UserMore" ItemsSource="{Binding AllLoginAccounts}" SelectedItem="{Binding UserSelected}">
+                    <!--ex test date template-->
+                    <!--<CollectionView.ItemsSource>
+                        <x:Array Type="{x:Type local:LoginUserItem}">
+                            <local:LoginUserItem UserName="UserName" UserNasLink="UserNasLink" />
+                        </x:Array>
+                    </CollectionView.ItemsSource>-->
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <!--<Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Btn__goFileManagement_SubFolder"/>
+                            </Grid.GestureRecognizers>-->
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <!--Icon-->
+                                <Grid Grid.Column="0" Grid.Row="0">
+                                    <Label Style="{StaticResource AccountIconStyle}"
+                                           Text="{x:Static Models:icomoonFontIcon.Icon50}"/>
+                                </Grid>
+                                <!--ID & NAS-->
+                                <StackLayout Grid.Column="1"  Grid.Row="0" Padding="0,10,15,5">
+                                    <Label Text="{Binding UserName}" FontSize="16" FontAttributes="Bold" TextColor="{StaticResource Color_Gary}" />
+                                    <Label Text="{Binding UserNasLink}" FontSize="12" FontAttributes="Bold" />
+                                </StackLayout>
+
+                                <!--分隔線-->
+                                <BoxView Grid.Row="1"
+                                         Grid.ColumnSpan="3"
+                                         Style="{StaticResource DividerStyle}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                    <CollectionView.EmptyView>
+                        <ContentView>
+                            <StackLayout HorizontalOptions="CenterAndExpand"
+                             VerticalOptions="CenterAndExpand">
+                                <Label Text="無紀錄"
+                                   Margin="10,25,10,10"
+                                   FontAttributes="Bold"
+                                   FontSize="18"
+                                   HorizontalOptions="Fill"
+                                   HorizontalTextAlignment="Center" />
+                            </StackLayout>
+                        </ContentView>
+                    </CollectionView.EmptyView>
+                </CollectionView>
+            </Grid>
+        </RefreshView>
+    </StackLayout>
+</ContentPage>

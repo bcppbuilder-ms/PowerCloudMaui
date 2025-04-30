@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PowerCloud.Views.TestPage"
+             xmlns:Models="clr-namespace:PowerCloud.Models"
+             Title="Test page">
+    <VerticalStackLayout>
+        <Label 
+            Text="Test page"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+
+        <Button Margin="10" Text="View_130_瀏覽照片" Clicked="Btn_View_FileManagement_View"/>
+
+        <Button Margin="10" Text="View_011_Account.Login_AccountList" Clicked="Btn_View_Login_AccountList"/>
+
+        <Button Margin="10" Text="View_012_Account.Login_AccountList_More" Clicked="Btn_View_Login_AccountList_More"/>
+
+        <Button Margin="10" Text="View_013_Account.Login_NAS" Clicked="Btn_View_Login_NAS"/>
+
+        <Button Margin="10" Text="View_014_Account.Login_NAS_IPList" Clicked="Btn_View_Login_NAS_IPList"/>
+
+        <Button Margin="10" Text="View_015_Account.Login_Account" Clicked="Btn_View_Login_Account"/>
+
+        <Button Margin="10" Text="View_021_Account.Switch_AccountList" Clicked="Btn_View_Switch_AccountList"/>
+
+        <Label Margin="0,20,0,0" Text="123456789012345678901234567890123456789012345678901234567890" />
+
+
+        <StackLayout>
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnCounterClicked"/>
+            </StackLayout.GestureRecognizers>
+            <Label Text="test open popup" />
+
+        </StackLayout>
+
+        <HorizontalStackLayout Style="{StaticResource PopupButtonStyle}">
+            <Editor Style="{StaticResource PopupButtonStyle}"
+                    Placeholder="Enter your response here 1234567890"
+                    WidthRequest="300"
+                    AutoSize="TextChanges"/>
+        </HorizontalStackLayout>
+        
+        
+
+        <StackLayout>
+            <Label Text="new icomoon font test"/>
+            <Label Text="MauiProgram.cs add .tff"/>
+            <Label Text="Modesls add icomoonFontIcon.cs, icon C#"/>
+            <Label Text="page head add xmlns:Models= clr-namespace:PowerCloudMaui.Models "/>
+            <Label FontFamily="icomoon"
+                   Text="{x:Static Models:icomoonFontIcon.Icon1}"
+                   FontSize="48"/>
+        </StackLayout>
+
+    </VerticalStackLayout>
+</ContentPage>

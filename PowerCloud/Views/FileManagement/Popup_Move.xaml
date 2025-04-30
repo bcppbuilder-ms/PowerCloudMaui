@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="PowerCloud.Views.FileManagement.Popup_Move"
+               xmlns:Models="clr-namespace:PowerCloud.Models"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+
+
+    <Grid Style="{StaticResource PopupBackgroudStyle}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="1"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackLayout Grid.Row="0"
+                     Grid.Column="0"
+                     VerticalOptions="Center"
+                     HorizontalOptions="Center">
+            <!--關閉-->
+            <Label Text="{x:Static Models:icomoonFontIcon.Icon16}"
+                   FontSize="20"
+                   Style="{StaticResource PopupButtonIconStyle}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Btn_Clicked_ClosePopup" />
+                </Label.GestureRecognizers>
+            </Label>
+            <!--前一層-->
+            <!--<Label Text="{x:Static Models:icomoonFontIcon.Icon13}"
+                   Style="{StaticResource PopupButtonIconStyle}"/>-->
+        </StackLayout>
+        <!--路徑-->
+        <Label Grid.Row="0"
+               Grid.Column="1"
+               VerticalTextAlignment="Center"
+               Text="file name"/>
+        <!--分隔線-->
+        <BoxView Grid.Row="1"
+                 Grid.ColumnSpan="2"
+                 Grid.Column="0"
+                 Style="{StaticResource DividerStyle}"/>
+        <!--list-->
+        <StackLayout Grid.Row="2"
+                     Grid.Column="0"
+                     Grid.ColumnSpan="2">
+            <Label Text="add FileManagement/ListView" />
+            <Label Text="add FileManagement/PicView" />
+        </StackLayout>
+        <!--按鈕-->
+        <HorizontalStackLayout Grid.Row="3"
+                               Grid.Column="0"
+                               Grid.ColumnSpan="2"
+                               Padding="10"
+                               HorizontalOptions="End">
+            <Button Text="取消" Clicked="Btn_Clicked_ClosePopup" Style="{StaticResource Btn_Bg_White_DarkGary}"/>
+            <Button Text="移動到此" Style="{StaticResource Btn_Bg_BlueGreen}" Margin="15,0,0,0"/>
+        </HorizontalStackLayout>
+
+        
+    </Grid>
+
+</toolkit:Popup>

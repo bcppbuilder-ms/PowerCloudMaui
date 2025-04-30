@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="PowerCloud.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:PowerCloud"
+    xmlns:Models="clr-namespace:PowerCloud.Models"
+    Shell.FlyoutBehavior="Flyout"
+    FlyoutBackground="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Color_DarkBlueGreen}}"
+    Title="PowerCloud">
+
+    <!--left menu-head-->
+    <Shell.FlyoutHeaderTemplate>
+        <DataTemplate>
+            <Grid Padding="15,20,15,20" BackgroundColor="{AppThemeBinding Light={StaticResource Color_BlueGreen}, Dark={StaticResource Color_DarkBlueGreen3}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" 
+                       Grid.Column="0"
+                       Style="{StaticResource LabelIconStyle}"
+                       TextColor="White"
+                       Text="{x:Static Models:icomoonFontIcon.Icon50}"/>
+                <Label Text="name" 
+                       TextColor="White"
+                       Grid.Row="0" 
+                       Grid.Column="1" >
+                </Label>
+                <StackLayout Grid.ColumnSpan="2" Grid.Row="1" />
+                <Label Grid.Row="2" 
+                       Grid.Column="0"
+                       Style="{StaticResource LabelIconStyle}"
+                       TextColor="White"
+                       Text="{x:Static Models:icomoonFontIcon.Icon45}"/>
+                <Label Text="link" 
+                       TextColor="White"
+                       Grid.Row="2" 
+                       Grid.Column="1" />
+            </Grid>
+        </DataTemplate>
+    </Shell.FlyoutHeaderTemplate>
+
+    <!--left menu-page btn style-->
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <StackLayout Style="{StaticResource FloutItemStyle}">
+                <Label x:Name="FlyoutItemLabel"
+                       Grid.Column="1" 
+                       Text="{Binding Title}"
+                       VerticalTextAlignment="Center" 
+                       HeightRequest="45"
+                       Padding="20,5,0,5"/>
+            </StackLayout>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+
+    <!--left menu-page btn -->
+    <FlyoutItem Title="測試用">
+        <ShellContent
+            Title="Test"
+            ContentTemplate="{DataTemplate local:Views.TestPage}"
+            Route="Test" />
+    </FlyoutItem>
+    <FlyoutItem Title="檔案管理">
+        <Tab Title="FileManagement-Tab">
+            <ShellContent
+                Title="共用空間"
+                ContentTemplate="{DataTemplate local:Views.FileManagement.ListView}"
+                Route="ListView" />
+            <ShellContent
+                Title="我的空間"
+                ContentTemplate="{DataTemplate local:Views.FileManagement.PicView}"
+                Route="PicView" />
+            <ShellContent
+                Title="群組空間"
+                ContentTemplate="{DataTemplate local:Views.FileManagement.SpacePage}"
+                Route="FileManagement_Groups" />
+        </Tab>
+    </FlyoutItem>
+    <FlyoutItem Title="上傳/下載狀態">
+        <Tab Title="Transfer-Tab">
+            <ShellContent
+                Title="上傳"
+                ContentTemplate="{DataTemplate local:Views.Transfer.Upload}"
+                Route="TransferUpload" />
+            <ShellContent
+                Title="下載"
+                ContentTemplate="{DataTemplate local:Views.Transfer.Download}"
+                Route="TransferDownload" />
+        </Tab>
+    </FlyoutItem>
+    <FlyoutItem Title="系統資訊">
+        <ShellContent
+            Title="SystemInfo"
+            ContentTemplate="{DataTemplate local:Views.SystemInfo}"
+            Route="SystemInfo" />
+    </FlyoutItem>
+    <FlyoutItem Title="設定">
+        <ShellContent
+            Title="Setting"
+            ContentTemplate="{DataTemplate local:Views.Setting.SettingList}"
+            Route="Setting" />
+    </FlyoutItem>
+    <FlyoutItem Title="手機照片備份">
+        <ShellContent
+            Title="Backup"
+            ContentTemplate="{DataTemplate local:Views.BackupView.BackupList}"
+            Route="Backup" />
+    </FlyoutItem>
+
+    <!--用於URL GoToAsync跳轉頁面用-->
+    <TabBar>
+        <ShellContent Route="Login_Account" ContentTemplate="{DataTemplate local:Views.Account.Login_Account}" />
+        <ShellContent Route="Login_AccountList" ContentTemplate="{DataTemplate local:Views.Account.Login_AccountList}" />
+        <ShellContent Route="Login_AccountList_More" ContentTemplate="{DataTemplate local:Views.Account.Login_AccountList_More}" />
+        <ShellContent Route="Login_NAS" ContentTemplate="{DataTemplate local:Views.Account.Login_NAS}" />
+        <ShellContent Route="Login_NAS_IPList" ContentTemplate="{DataTemplate local:Views.Account.Login_NAS_IPList}" />
+        <ShellContent Route="Switch_AccountList" ContentTemplate="{DataTemplate local:Views.Account.Switch_AccountList}" />
+    </TabBar>
+
+    <Shell.FlyoutFooterTemplate>
+        <DataTemplate>
+            <Grid HeightRequest="60">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <!--View_021_Btn_View_Switch_AccountList_可切換的帳號列表頁-->
+                <StackLayout Grid.Column="0" 
+                             Padding="0,20,0,20" 
+                             BackgroundColor="{AppThemeBinding Light={StaticResource Color_LightGary}, Dark={StaticResource Color_DarkBlueGreen2}}">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Btn_View_Switch_AccountList" />
+                    </StackLayout.GestureRecognizers>
+                    <Label Text="切換帳號" 
+                           HorizontalTextAlignment="Center" 
+                           TextColor="{AppThemeBinding Light={StaticResource Color_Dark3}, Dark={StaticResource Color_White}}"/>
+                </StackLayout>
+                <!--View_ 031_Btn_View_Logout_AccountList_登出頁 – 可選擇其他已登入帳號列表 改用View__011__Login_AccountList -->
+                <StackLayout Grid.Column="1" 
+                             Padding="0,20,0,20" 
+                             BackgroundColor="{AppThemeBinding Light={StaticResource Color_LightGary}, Dark={StaticResource Color_DarkBlueGreen2}}">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Btn_View_Login_AccountList" />
+                    </StackLayout.GestureRecognizers>
+                    <Label Text="登出" 
+                           HorizontalTextAlignment="Center" 
+                           TextColor="{AppThemeBinding Light={StaticResource Color_Dark3}, Dark={StaticResource Color_White}}" />
+                </StackLayout>
+            </Grid>
+        </DataTemplate>
+    </Shell.FlyoutFooterTemplate>
+
+</Shell>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PowerCloud.Views.Setting.SettingList"
+             xmlns:Models="clr-namespace:PowerCloud.Models"
+             Title="Setting">
+    <VerticalStackLayout>
+        <Label Text="傳輸設定"
+            Style="{StaticResource SettingTitleStyle}"
+            Padding="10"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Text="批次傳輸數量"
+                   Grid.Column="0"
+                   Padding="10"/>
+            <HorizontalStackLayout Grid.Column="1" 
+                                   HorizontalOptions="End"
+                                   Padding="10">
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Btn_Popup_Setting_TransNumber"/>
+                </HorizontalStackLayout.GestureRecognizers>
+                <Label Text="1" />
+                <Label Text="{x:Static Models:icomoonFontIcon.Icon12}"
+                       Style="{StaticResource SettingIconStyle}"/>
+            </HorizontalStackLayout>
+        </Grid>
+        <BoxView Style="{StaticResource DividerStyle}"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Text="在下列環境時才可進行傳輸"
+                   Grid.Column="0"
+                   Padding="10"/>
+            <HorizontalStackLayout Grid.Column="1" 
+                                   HorizontalOptions="End"
+                                   Padding="10">
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Btn_Popup_Setting_TransNetwork"/>
+                </HorizontalStackLayout.GestureRecognizers>
+                <Label Text="僅在 Wi-Fi 環境下" />
+                <Label Text="{x:Static Models:icomoonFontIcon.Icon12}"
+                       Style="{StaticResource SettingIconStyle}"/>
+            </HorizontalStackLayout>
+        </Grid>
+        <BoxView Style="{StaticResource DividerStyle}"/>
+
+        <Label Text="備份設定"
+            Style="{StaticResource SettingTitleStyle}"
+            Padding="10,60,10,10" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Text="批次傳輸數量"
+                   Grid.Column="0"
+                   Padding="10"/>
+            <HorizontalStackLayout Grid.Column="1" 
+                                   HorizontalOptions="End"
+                                   Padding="10">
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Btn_Popup_Setting_BackupNetwork"/>
+                </HorizontalStackLayout.GestureRecognizers>
+                <Label Text="僅在 Wi-Fi 環境下" />
+                <Label Text="{x:Static Models:icomoonFontIcon.Icon12}"
+                       Style="{StaticResource SettingIconStyle}"/>
+            </HorizontalStackLayout>
+        </Grid>
+        <BoxView Style="{StaticResource DividerStyle}"/>
+        
+    </VerticalStackLayout>
+</ContentPage>

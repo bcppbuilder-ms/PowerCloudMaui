@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="PowerCloud.Views.FileManagement.Popup_ViewDelete"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+
+    <VerticalStackLayout Style="{StaticResource PopupBackgroudStyle}">
+
+        <!--多檔案-->
+        <Label Style="{StaticResource PopupTitleTextStyle}"
+               Text="刪除後無法還原，" />
+        
+        <Label Style="{StaticResource PopupTitleTextStyle}"
+               Text="確定刪除目前的照片？" />
+        
+
+
+        <!--btn-row-->
+        <HorizontalStackLayout HorizontalOptions="End" Padding="0,30,0,15">
+            <Button Text="取消" Clicked="Btn_Clicked_ClosePopup" Style="{StaticResource Btn_Bg_White_DarkGary}"/>
+            <Button Text="刪除" Style="{StaticResource Btn_Bg_White_Red}" Margin="15,0,0,0"/>
+        </HorizontalStackLayout>
+
+    </VerticalStackLayout>
+    
+
+</toolkit:Popup>

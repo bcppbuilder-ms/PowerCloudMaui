@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:PowerCloud.Models"
+             xmlns:controls="clr-namespace:PowerCloud.Controls"             
+             x:Class="PowerCloud.Views.Account.Login_AccountList"
+             Shell.NavBarHasShadow="False"
+             Shell.NavBarIsVisible="False">
+    <VerticalStackLayout HorizontalOptions="Center"
+                           VerticalOptions="Center">
+        <!--011_Login_AccountList Title-->
+        <Label Text="歡迎"
+               Style="{StaticResource AccountTitleStyle}"/>
+
+        <!--031_Logout_AccountList Title-->
+        <Label Text="您已登出"
+               Style="{StaticResource AccountTitleStyle}"/>
+        
+        <Label Text="請選擇下列帳號進行登入："
+               Style="{StaticResource AccountStitleStyle}"/>
+        <VerticalStackLayout>
+            <controls:AccountCardTemplate AccountIcon="&#xe92d;" x:Name="id1"
+                              AccountId="{Binding ID1}"
+                              AccountNas="{Binding Link1}" />
+            <controls:AccountCardTemplate AccountIcon="&#xe92d;" x:Name="id2"
+                              AccountId="{Binding ID2}"
+                              AccountNas="{Binding Link2}" />
+            <controls:AccountCardTemplate AccountIcon="&#xe92d;" x:Name="id3"
+                              AccountId="{Binding ID3}"
+                              AccountNas="{Binding Link3}" />
+        </VerticalStackLayout>
+        
+        <!--Btn View__012_Btn_View_Login_AccountList_More-->
+        <Button Style="{StaticResource Btn_Bg_DarkGary}"
+                Clicked="Btn_View_Login_AccountList_More"
+                Padding="5"
+                Text="更多帳號"/>
+        <HorizontalStackLayout HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               Margin="0,10,0,10">
+            <BoxView Style="{StaticResource DividerDarkStyle}"
+                     WidthRequest="50"/>
+            <Label Text="其他登入選項"
+                   Padding="5,10,5,10"
+                   TextColor="{StaticResource Color_Gary2}"/>
+            <BoxView Style="{StaticResource DividerDarkStyle}"
+                     WidthRequest="50"/>
+        </HorizontalStackLayout>
+        
+        <!--Btn View__013_Btn_View_Login_NAS-->
+        <Button Style="{StaticResource Btn_Bg_BlueGreen}"
+                Clicked="Btn_View_Login_NAS"
+                Padding="5"
+                Text="使用其他帳號登入"/>
+
+    </VerticalStackLayout>
+</ContentPage>

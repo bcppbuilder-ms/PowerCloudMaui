@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="PowerCloud.Views.Setting.Popup_BackupNetwork"
+               xmlns:Models="clr-namespace:PowerCloud.Models"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+
+    <VerticalStackLayout Style="{StaticResource PopupBackgroudStyle}">
+        <!--title-->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="35"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="35"/>
+            </Grid.ColumnDefinitions>
+            <Label Style="{StaticResource PopupTitleTextStyle}"
+                   VerticalTextAlignment="Center"
+                   HorizontalTextAlignment="Center"
+                   Grid.Column="1"
+                   Text="在下列環境時才可進行備份" />
+            <StackLayout Grid.Column="2"
+                         Padding="5,0,0,0">
+                <Frame Style="{StaticResource PopupCloseButtonStyle}">
+                    <!--Btn_Clicked_ClosePopup-->
+                    <Label Style="{StaticResource PopupCloseIconStyle}"
+                           Text="{x:Static Models:icomoonFontIcon.Icon16}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Btn_Clicked_ClosePopup" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Frame>
+            </StackLayout>
+        </Grid>
+
+        <!--inner btn-->
+        <VerticalStackLayout Grid.Row="2"
+                             Grid.Column="0"
+                             Grid.ColumnSpan="3">
+            <BoxView Grid.Row="1"
+                     Grid.ColumnSpan="3"
+                     Style="{StaticResource DividerStyle}"/>
+            <!--popup-btn1-->
+            <HorizontalStackLayout Style="{StaticResource PopupButtonStyle}">
+                <Label Style="{StaticResource PopupButtonTextStyle}"
+                       Text="僅在 Wi-Fi 環境下"/>
+            </HorizontalStackLayout>
+            <!--popup-btn2-->
+            <HorizontalStackLayout Style="{StaticResource PopupButtonStyle}">
+                <Label Style="{StaticResource PopupButtonTextStyle}"
+                       Text="Wi-Fi 及 行動數據"/>
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+</toolkit:Popup>

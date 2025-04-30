@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PowerCloud.Views.Account.Login_NAS_IPList"
+             xmlns:local="clr-namespace:PowerCloud.Models"
+             Title="Account.Login_NAS_IPList">
+    <StackLayout VerticalOptions="Start">
+        <RefreshView>
+            <Grid>
+                <CollectionView ItemsSource="{Binding IPList}">
+                    <!--ex test date template-->
+                    <!--<CollectionView.ItemsSource>
+                        <x:Array Type="{x:Type local:NASItem}">
+                            <local:NASItem NasIp="NasIp" NasName="NasName" />
+                            <local:NASItem NasIp="NasIp2" NasName="NasName2" />
+                        </x:Array>
+                    </CollectionView.ItemsSource>-->
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <!--<Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="Btn__goFileManagement_SubFolder"/>
+                                </Grid.GestureRecognizers>-->
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <!--NAS-->
+                                <StackLayout Grid.Column="0"  Grid.Row="0" Padding="10,20,10,20">
+                                    <Label FontSize="16" TextColor="{StaticResource Color_Gary}" >
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding SystemInfo.HostName}" />
+                                                <Span Text=" - "/>
+                                                <Span Text="{Binding UserNasLink}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                </StackLayout>
+
+                                <!--分隔線-->
+                                <BoxView Grid.Row="1"
+                                             Grid.ColumnSpan="3"
+                                             Style="{StaticResource DividerStyle}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                    <CollectionView.EmptyView>
+                        <ContentView>
+                            <StackLayout HorizontalOptions="CenterAndExpand"
+                                 VerticalOptions="CenterAndExpand">
+                                <Label Text="無紀錄"
+                                       Margin="10,25,10,10"
+                                       FontAttributes="Bold"
+                                       FontSize="18"
+                                       HorizontalOptions="Fill"
+                                       HorizontalTextAlignment="Center" />
+                            </StackLayout>
+                        </ContentView>
+                    </CollectionView.EmptyView>
+                </CollectionView>
+            </Grid>
+
+        </RefreshView>
+    </StackLayout>
+</ContentPage>
