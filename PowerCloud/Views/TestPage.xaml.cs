@@ -9,7 +9,9 @@ public partial class TestPage : ContentPage
 {
 	public TestPage(MainViewModel mv)
 	{
-		InitializeComponent();
+        // when vs updates, and the following line is compiled error saying "Cast invalid"
+        // try to remove the emulator and recreate it again.
+        InitializeComponent();
 	}
 
     private async void Btn_View_FileManagement_View(object sender, EventArgs e)
