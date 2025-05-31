@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PowerCloud.Views.BackupView.BackupMoreList"
+             xmlns:local="clr-namespace:PowerCloud.Models"
+             Title="BackupMore">
+    <RefreshView Grid.Row="0"
+                     HorizontalOptions="StartAndExpand">
+        <Grid>
+            <CollectionView ItemsSource="{Binding Animals}"
+                            IsGrouped="true">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                            Span="4" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="0">
+                            <Image Source="{Binding ImageUrl}" 
+                                   HeightRequest="80"
+                                   Aspect="AspectFill"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout
+                                Padding="18,0,0,5"
+                                HorizontalOptions="Start">
+                            <Label Text="{Binding Name}"
+                                   Style="{StaticResource BackupTitleStyle}" />
+                            <StackLayout WidthRequest="60"
+                                             HeightRequest="1"
+                                             HorizontalOptions="Start"
+                                             BackgroundColor="{StaticResource Color_BlueGreen}"/>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.GroupHeaderTemplate>
+            </CollectionView>
+        </Grid>
+    </RefreshView>
+</ContentPage>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PowerCloud.Views.BackupView.BackupList"
+             xmlns:local="clr-namespace:PowerCloud"
+             xmlns:Models="clr-namespace:PowerCloud.Models"
+             Title="Backup">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <RefreshView Grid.Row="0"
+                     HorizontalOptions="StartAndExpand">
+            <Grid>
+                <CollectionView ItemsSource="{Binding Animals}"
+                        IsGrouped="true">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical"
+                        Span="4" />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <!--img-->
+                            <AbsoluteLayout HeightRequest="80">
+                                <Image Source="{Binding ImageUrl}" 
+                                   HeightRequest="80"
+                                   AbsoluteLayout.LayoutFlags="All" 
+                                   AbsoluteLayout.LayoutBounds="0,0,1,1"
+                                   Aspect="AspectFill"/>
+                                <Label Text="{x:Static Models:icomoonFontIcon.Icon20}"
+                                   AbsoluteLayout.LayoutFlags="All" 
+                                   AbsoluteLayout.LayoutBounds="1,1,0.25,0.3"
+                                   Style="{StaticResource LabelIconStyle}"
+                                   FontSize="20" 
+                                   TextColor="{StaticResource Color_White}"/>
+                            </AbsoluteLayout>
+
+                            <!--參照文件說明 501_Backup_手機照片備份，每一個圖片區塊內最多16張照片，
+                                    在第16張照片會變成更多的按鈕，點下更多按鈕將導頁至 502_Backup_More_展開更多照片-->
+                            <!--<AbsoluteLayout HeightRequest="80">
+                            -->
+                            <!--img-more__bg__btn-->
+                            <!--
+                            <StackLayout AbsoluteLayout.LayoutFlags="All" 
+                                         AbsoluteLayout.LayoutBounds="0,0,1,1"
+                                         BackgroundColor="{StaticResource Color_Dark}" 
+                                         HeightRequest="80"
+                                         Opacity="0.55">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="Btn_View_Backup_More"/>
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                            -->
+                            <!--img-more__img num-->
+                            <!--
+                            <Label TextColor="{StaticResource Color_White}" 
+                                           AbsoluteLayout.LayoutFlags="All"
+                                           AbsoluteLayout.LayoutBounds="0,0,1,1"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"
+                                           FontSize="Large">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="num" />
+                                        <Span Text="+" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </AbsoluteLayout>-->
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <!--Head__img group title-->
+                    <CollectionView.GroupHeaderTemplate>
+                        <DataTemplate>
+                            <VerticalStackLayout
+                            Padding="18,0,0,5"
+                            HorizontalOptions="Start">
+                                <Label Text="{Binding Name}"
+                               Style="{StaticResource BackupTitleStyle}" />
+                                <StackLayout WidthRequest="60"
+                                         HeightRequest="1"
+                                         HorizontalOptions="Start"
+                                         BackgroundColor="{StaticResource Color_BlueGreen}"/>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.GroupHeaderTemplate>
+                    <!--Footer__space-->
+                    <CollectionView.GroupFooterTemplate>
+                        <DataTemplate>
+                            <StackLayout  HeightRequest="30" />
+                        </DataTemplate>
+                    </CollectionView.GroupFooterTemplate>
+                </CollectionView>
+            </Grid>
+
+        </RefreshView>
+        <!--end-->
+        <HorizontalStackLayout Grid.Row="1"
+                               HorizontalOptions="End">
+            <!--file link-->
+            <StackLayout Grid.Column="0" Padding="5,10,5,10">
+                <Label Text="將備份至NAS路徑: " 
+                           FontSize="Small" 
+                           Margin="0,0,0,-3"/>
+                <Label Text="我的空間/Backup/您的手機序號" 
+                           FontSize="Small" 
+                           Margin="0,0,0,-3"/>
+                <Label Text="{Binding PhotoFileCount}" 
+                           FontSize="Small" />
+            </StackLayout>
+            <!--popup btn-->
+            <Label Text="開始備份"
+                   Style="{StaticResource BackupBtnStyle}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Btn_Popup_Backup_Transfer" />
+                </Label.GestureRecognizers>
+            </Label>
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>

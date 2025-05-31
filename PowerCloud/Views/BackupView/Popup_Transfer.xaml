@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="PowerCloud.Views.BackupView.Popup_Transfer"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+
+    <VerticalStackLayout Style="{StaticResource PopupBackgroudStyle}">
+
+        <Label Style="{StaticResource PopupTitleTextStyle}"
+               Text="備份中，請勿離開APP。" />
+        
+        <Label FontSize="14">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span>共 </Span>
+                    <Span>num</Span>
+                    <Span> 項目，已完成 </Span>
+                    <Span>num</Span>
+                    <Span> 項</Span>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+
+        <ProgressBar Progress="0.5"/>
+
+        <!--btn-row-->
+        <HorizontalStackLayout HorizontalOptions="End" Padding="0,30,0,15">
+            <Button Text="取消" 
+                    Style="{StaticResource Btn_Bg_White_DarkGary}"
+                    Clicked="Btn_Clicked_ClosePopup"/>
+        </HorizontalStackLayout>
+
+    </VerticalStackLayout>
+    
+
+</toolkit:Popup>
