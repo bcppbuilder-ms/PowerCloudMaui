@@ -8,7 +8,7 @@ using PowerCloud.ViewModels;
 
 namespace PowerCloud.Platforms
 {
-    public class Ite2DeviceInfoService : IIte2DeviceInfo
+    public class Ite2DeviceInfoService2 : IIte2DeviceInfo2
     {
         public Task<string> GetExternalPath(AccountViewModel user)
         {

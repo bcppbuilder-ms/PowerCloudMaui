@@ -16,12 +16,12 @@ using System.Runtime.InteropServices;
 namespace PowerCloud.Platforms
 {
 
-    public class Ite2DeviceInfoService : IIte2DeviceInfo
+    public class Ite2DeviceInfoService2 : IIte2DeviceInfo2
     {
         public static UIWindow MyWindow;
         //public static NSUserDefaults IPCData = NSUserDefaults.StandardUserDefaults;
         public static NSUserDefaults IPCData; //= new NSUserDefaults("group.com.companyname.PowerCloud", NSUserDefaultsType.SuiteName);
-        public Ite2DeviceInfoService()
+        public Ite2DeviceInfoService2()
         {
             IPCData = new NSUserDefaults("group.com.ite2.powercloud.maui", NSUserDefaultsType.SuiteName);
         }
@@ -593,7 +593,7 @@ namespace PowerCloud.Platforms
             btn.TouchUpInside += (sender, e) =>
             {
                 //this.NavigationController.PushViewController(user, true);
-                Ite2DeviceInfoService.MyWindow.RootViewController = oldController;
+                Ite2DeviceInfoService2.MyWindow.RootViewController = oldController;
             };
 
             var btn2 = UIButton.FromType(UIButtonType.System);
@@ -1182,7 +1182,7 @@ namespace PowerCloud.Platforms
             btn.TouchUpInside += (sender, e) =>
             {
                 //this.NavigationController.PushViewController(user, true);
-                Ite2DeviceInfoService.MyWindow.RootViewController = oldController;
+                Ite2DeviceInfoService2.MyWindow.RootViewController = oldController;
             };
 
             var btn2 = UIButton.FromType(UIButtonType.System);

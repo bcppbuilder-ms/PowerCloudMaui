@@ -25,8 +25,11 @@ public static class MauiProgram
 		builder.Logging.AddDebug();
 #endif
 
-        builder.Services.AddSingleton<IAccountFiler>((e) => new AccountFiler());
-        builder.Services.AddSingleton<IIte2DeviceInfo>((e) => new Ite2DeviceInfoService());
+        // 2025/08/07
+        //builder.Services.AddSingleton<IAccountFiler>((e) => new AccountFiler());
+        //builder.Services.AddSingleton<IIte2DeviceInfo>((e) => new Ite2DeviceInfoService());
+        builder.Services.AddSingleton<IAccountFiler2, AccountFiler2>();
+        builder.Services.AddSingleton<IIte2DeviceInfo2, Ite2DeviceInfoService2>();
         builder.Services.AddSingleton<MainViewModel>();
 
         builder.Services.AddTransient<TestPage>();

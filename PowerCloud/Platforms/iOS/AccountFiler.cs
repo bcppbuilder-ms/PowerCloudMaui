@@ -5,7 +5,7 @@ using PowerCloud.ViewModels;
 
 namespace PowerCloud.Platforms
 {
-    public class AccountFiler : IAccountFiler
+    public class AccountFiler2 : IAccountFiler2
     {
         const string FileName = "UserAccounts.xml";
 

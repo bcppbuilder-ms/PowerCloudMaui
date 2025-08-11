@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 
 using PowerCloud.ViewModels;
 using PowerCloud.Models;
+using System.Collections.ObjectModel;
 
 namespace PowerCloud.NasHttp
 {
@@ -210,8 +211,14 @@ namespace PowerCloud.NasHttp
 
         private static bool SetItemSelected(NE201LogonResp? ne201Token)
         {
-            if (ne201Token == null) return false;
+            if (ne201Token == null) 
+                return false;
 
+            Account acc = new Account(ne201Token.username, ne201Token.access_token, ne201Token.refresh_token, ne201Token.url, "1", string.Empty);
+            App.PC2ViewModel.UserSelected = new AccountViewModel(acc);
+            //App.PC2ViewModel.UserSelected.UserSecret = ne201Token.secret;
+            //App.PC2ViewModel.UserSelected.UserName = ne201Token.username;
+            //App.PC2ViewModel.UserSelected.UserNasLink = ne201Token.url;
             bool found = false;
             if (App.PC2ViewModel.RecentAccounts != null)
             {
@@ -219,37 +226,46 @@ namespace PowerCloud.NasHttp
                 {
                     if (item.UserName == ne201Token.username && item.UserNasLink == ne201Token.url)
                     {
-                        found = true;
-                        App.PC2ViewModel.UserSelected = item;
-                        App.PC2ViewModel.UserSelected.UserSecret = ne201Token.secret;
                         App.PC2ViewModel.RecentAccounts.Remove(item);
                         break;
                     }
                 }
+                App.PC2ViewModel.RecentAccounts.Insert(0, App.PC2ViewModel.UserSelected);
             }
-            if (!found)
+            else
             {
-                if (App.PC2ViewModel.Accounts != null)
+                App.PC2ViewModel.RecentAccounts = new ObservableCollection<AccountViewModel>() { App.PC2ViewModel.UserSelected };
+            }
+            AccountViewModel? userRemoved = null;
+            if (App.PC2ViewModel.RecentAccounts?.Count > 3)
+            {
+                userRemoved = App.PC2ViewModel.RecentAccounts[3];
+                App.PC2ViewModel.RecentAccounts.RemoveAt(3);
+            }
+
+            if (App.PC2ViewModel.Accounts != null)
+            {
+                foreach (AccountViewModel item in App.PC2ViewModel.Accounts)
                 {
-                    foreach (AccountViewModel item in App.PC2ViewModel.Accounts)
+                    if (item.UserName == ne201Token.username && item.UserNasLink == ne201Token.url)
                     {
-                        if (item.UserName == ne201Token.username && item.UserNasLink == ne201Token.url)
-                        {
-                            found = true;
-                            App.PC2ViewModel.UserSelected = item;
-                            App.PC2ViewModel.UserSelected.UserSecret = ne201Token.secret;
-                            App.PC2ViewModel.Accounts.Remove(item);
-                            break;
-                        }
+                        found = true;
+                        App.PC2ViewModel.Accounts.Remove(item);
+                        break;
                     }
                 }
             }
 
-            //string s = AppContext.BaseDirectory;
-            if (!found)
+            if (userRemoved != null)
             {
-                Account acc = new Account(ne201Token.username, ne201Token.access_token, ne201Token.refresh_token, ne201Token.url, "1", string.Empty);
-                App.PC2ViewModel.UserSelected = new AccountViewModel(acc);
+                if (App.PC2ViewModel.Accounts != null)
+                {
+                    App.PC2ViewModel.Accounts.Insert(0, userRemoved);
+                }
+                else
+                {
+                    App.PC2ViewModel.Accounts = new ObservableCollection<AccountViewModel> { userRemoved };
+                }
             }
 
             return found;

@@ -4,17 +4,17 @@ namespace PowerCloud.ViewModels
 {
     public class AccountManager
     {
-        private IAccountFiler loader;
+        private IAccountFiler2 loader;
         //private ITextToSpeech tts;
         private IUserTakePicture tts;
         private IPdfRender pdfRender;
-        private IIte2DeviceInfo devInfo;
+        private IIte2DeviceInfo2 devInfo;
 
         public static AccountManager Instance { get; private set; }
 
         public IList<AccountViewModel> Accounts { get; set; }
 
-        public AccountManager(IAccountFiler loader, /*ITextToSpeech*/IUserTakePicture tts, IPdfRender pdfR, IIte2DeviceInfo prvdev)
+        public AccountManager(IAccountFiler2 loader, /*ITextToSpeech*/IUserTakePicture tts, IPdfRender pdfR, IIte2DeviceInfo2 prvdev)
         {
 
             if (Instance != null)

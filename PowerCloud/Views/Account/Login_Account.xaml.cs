@@ -43,6 +43,7 @@ public partial class Login_Account : ContentPage
 
         if (loginOk)
         {
+            AccountViewModel y = App.PC2ViewModel.UserSelected;
             NE201FileManager NE201 = NE201FileManager.FileManagerFactory(App.PC2ViewModel.UserSelected);
             string s = await NE201.NE201SystemInfo();
 

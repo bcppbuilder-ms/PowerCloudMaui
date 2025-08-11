@@ -9,7 +9,7 @@ using CommunityToolkit.Maui.Storage;
 
 namespace PowerCloud.Platforms
 {
-    public class AccountFiler : IAccountFiler
+    public class AccountFiler2 : IAccountFiler2
     {
         const string FileName = "UserAccounts.xml";
 
@@ -17,10 +17,10 @@ namespace PowerCloud.Platforms
         {
             XDocument doc = null;
 
-            //string filename = Path.Combine(FileSystem.Current.AppDataDirectory, FileName);
-            string filename = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                "..", "Library", FileName);
+            string filename = Path.Combine(FileSystem.Current.AppDataDirectory, FileName);
+            //string filename = Path.Combine(
+            //    Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+            //    "..", "Library", FileName);
 
             if (File.Exists(filename))
             {
@@ -56,6 +56,9 @@ namespace PowerCloud.Platforms
         public void Save(IEnumerable<AccountViewModel> quotes)
         {
             string filename = Path.Combine(FileSystem.Current.AppDataDirectory, FileName);
+            //string filename = Path.Combine(
+            //    Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+            //    "..", "Library", FileName);
 
             if (File.Exists(filename))
                 File.Delete(filename);

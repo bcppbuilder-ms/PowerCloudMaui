@@ -2,7 +2,7 @@
 
 namespace PowerCloud
 {
-    public interface IIte2DeviceInfo
+    public interface IIte2DeviceInfo2
     {
         Task<string> GetExternalPath(AccountViewModel user);
         Task DownloadToDevice(MainNasFileViewModel mvm);

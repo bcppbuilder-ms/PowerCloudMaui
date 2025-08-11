@@ -17,7 +17,7 @@
         public PhotoAlbum()
         {
             mBuiltInPhotos = new List<Photo>();
-            foreach (Ite2MediaItem item in Ite2DeviceInfoService.AllMediaFiles)
+            foreach (Ite2MediaItem item in Ite2DeviceInfoService2.AllMediaFiles)
             {
                 if (item.IsImage)
                     mBuiltInPhotos.Add(new Photo(item.Id, item.DateAdded));

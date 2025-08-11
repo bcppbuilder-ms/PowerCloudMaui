@@ -88,7 +88,7 @@ namespace PowerCloud.Platforms
                 //StartActivity(intent);
 
                 //int n = 0;
-                foreach (Ite2MediaItem item in Ite2DeviceInfoService.AllMediaFiles)
+                foreach (Ite2MediaItem item in Ite2DeviceInfoService2.AllMediaFiles)
                 {
                     ////if (Ite2DeviceInfoService.NE201Instance.fmr.NE201IsFileExistSync(Path.Combine(Ite2DeviceInfoService.UpLoadTarget, item.DisplayName))
                     ////    || item.IsImage)
@@ -121,7 +121,7 @@ namespace PowerCloud.Platforms
                 Finish();
             };
 
-            Android.Widget.Toast.MakeText(this, "Photo Total: " + Ite2DeviceInfoService.AllMediaFiles.Count, ToastLength.Long).Show();
+            Android.Widget.Toast.MakeText(this, "Photo Total: " + Ite2DeviceInfoService2.AllMediaFiles.Count, ToastLength.Long).Show();
         }
 
         void OnItemClick(object sender, int position)

@@ -7,7 +7,7 @@ namespace PowerCloud.ViewModels
     {
         public readonly AccountManager accountManager;
 
-        public MainViewModel(IAccountFiler flr, IIte2DeviceInfo devInfo)
+        public MainViewModel(IAccountFiler2 flr, IIte2DeviceInfo2 devInfo)
         {
             accountManager = new AccountManager(flr, null, null, devInfo);
             if (accountManager == null)
