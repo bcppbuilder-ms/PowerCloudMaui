@@ -2,20 +2,32 @@
 <toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                x:Class="PowerCloud.Views.Transfer.Popup_CancelMore"
-               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               CanBeDismissedByTappingOutsideOfPopup="False"
+               Color="Transparent">
 
-    <VerticalStackLayout Style="{StaticResource PopupBackgroudStyle}">
+    <Grid Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-        <Label Style="{StaticResource PopupTitleTextStyle}"
-               Text="確認取消目前所有的工作嗎？" />
+        <Frame Grid.Row="0"
+               CornerRadius="10"
+               VerticalOptions="Center"
+               Style="{StaticResource PopupBackgroudStyle}">
 
-        <!--btn-row-->
-        <HorizontalStackLayout HorizontalOptions="End" Padding="0,30,0,15">
-            <Button Text="取消" Clicked="Btn_Clicked_ClosePopup" Style="{StaticResource Btn_Bg_White_DarkGary}"/>
-            <Button Text="確定" Style="{StaticResource Btn_Bg_BlueGreen}" Margin="15,0,0,0"/>
-        </HorizontalStackLayout>
-
-    </VerticalStackLayout>
-    
-
+            <VerticalStackLayout>
+                <Label Style="{StaticResource PopupTitleTextStyle}" Text="確認取消目前所有的工作嗎？" />
+                <!--btn-row-->
+                <HorizontalStackLayout HorizontalOptions="End" Padding="0,30,0,15">
+                    <Button Text="取消"
+                            Clicked="Btn_Clicked_ClosePopup"
+                            Style="{StaticResource Btn_Bg_White_DarkGary}" />
+                    <Button Text="確定"
+                            Style="{StaticResource Btn_Bg_BlueGreen}"
+                            Margin="15,0,0,0" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </Frame>
+    </Grid>
 </toolkit:Popup>

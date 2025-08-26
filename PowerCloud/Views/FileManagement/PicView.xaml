@@ -74,12 +74,20 @@
 
     <ContentPage.Content>
         <Grid>
+            <StackLayout IsVisible="True">
+                <CheckBox x:Name="cbIsMultiSelect" IsChecked="False"/>
+            </StackLayout>
+
             <!--FileList-->
-            <RefreshView>
-                <Grid>
-                    <CollectionView>
-                        <!--ex test date template-->
-                        <CollectionView.ItemsSource>
+            <!--<RefreshView>-->
+            <Grid>
+                <ActivityIndicator Color="SandyBrown" x:Name="ActIndicator"
+                                       HeightRequest="100" WidthRequest="100"  />
+                <CollectionView x:Name="NASFileList" ItemsSource="{Binding NASFiles}"
+                        SelectionMode="Single" SelectedItem="{Binding FileSelected}" Scrolled="FileList_ListView_Public_Scrolled"
+                        RemainingItemsThreshold="1" RemainingItemsThresholdReached="NASFileList_RemainingItemsThresholdReached">
+                    <!--ex test date template-->
+                    <!--<CollectionView.ItemsSource>
                             <x:Array Type="{x:Type local:FileItem}">
                                 <local:FileItem FileName="FileNamePic" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
                                 <local:FileItem FileName="FileNamePic" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
@@ -95,67 +103,73 @@
                                 <local:FileItem FileName="FileNamePic" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
                                 <local:FileItem FileName="FileNamePic" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
                             </x:Array>
-                        </CollectionView.ItemsSource>
-                        <!--FileList__Top-Option-row-->
-                        <CollectionView.Header>
-                            <StackLayout>
-                                <Grid>
-                                    <Grid.Padding>
-                                        <OnPlatform x:TypeArguments="Thickness">
-                                            <On Platform="iOS" Value="10,40,10,2" />
-                                            <On Platform="Android" Value="10,10,10,2" />
-                                        </OnPlatform>
-                                    </Grid.Padding>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <!--popup_111_排序-->
-                                    <StackLayout Grid.Column="0" Orientation="Horizontal">
-                                        <StackLayout.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="Btn_Popup_FileManSort"/>
-                                        </StackLayout.GestureRecognizers>
-                                        <Label Text="名稱"/>
-                                        <Label Text="{x:Static Models:icomoonFontIcon.Icon12}"
+                        </CollectionView.ItemsSource>-->
+                    <!--FileList__Top-Option-row-->
+                    <CollectionView.Header>
+                        <StackLayout x:Name="InformationBoard">
+                            <Grid>
+                                <Grid.Padding>
+                                    <OnPlatform x:TypeArguments="Thickness">
+                                        <On Platform="iOS" Value="10,10,10,2" />
+                                        <On Platform="Android" Value="10,10,10,2" />
+                                    </OnPlatform>
+                                </Grid.Padding>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="55" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="25" />
+                                </Grid.ColumnDefinitions>
+                                <!--popup_111_排序-->
+                                <StackLayout Grid.Column="0" Orientation="Horizontal">
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="Btn_Popup_FileManSort"/>
+                                    </StackLayout.GestureRecognizers>
+                                    <Label Text="名稱"/>
+                                    <Label Text="{x:Static Models:icomoonFontIcon.Icon12}"
                                            Style="{StaticResource LabelIconStyle}"
                                            FontSize="20" />
-                                    </StackLayout>
-                                    <!--View_117_縮圖檢視 -->
-                                    <Label Grid.Column="1" 
+                                </StackLayout>
+
+                                <!--space-->
+                                <StackLayout Grid.Column="1" Orientation="Horizontal"/>
+
+                                <!--View_117_縮圖檢視 -->
+                                <Label Grid.Column="2" 
                                            HorizontalOptions="End"
-                                           Text="{x:Static Models:icomoonFontIcon.Icon30}"
+                                           x:Name="IconChar01"
+                                               Text="&#xe919;"
                                            Style="{StaticResource LabelIconStyle}"
-                                           FontSize="20">
-                                    </Label>
-                                </Grid>
-                            </StackLayout>
-                        </CollectionView.Header>
-                        <!--FileList__File-Item__兩排設定-->
-                        <CollectionView.ItemsLayout>
-                            <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="5" HorizontalItemSpacing="5"/>
-                        </CollectionView.ItemsLayout>
-                        <!--FileList__File-Item__縮圖模式的樣式-->
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="5">
-                                    <Grid.Padding>
-                                        <OnPlatform x:TypeArguments="Thickness">
-                                            <On Platform="iOS" Value="10" />
-                                            <On Platform="Android" Value="5" />
-                                        </OnPlatform>
-                                    </Grid.Padding>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="90" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="25" />
-                                    </Grid.ColumnDefinitions>
-                                    <!--FileManagement_PicView_File-Item_img+CheckBox -->
-                                    <AbsoluteLayout Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="2">
-                                        <!--FileManagement_PicView_File-Item_img-->
-                                        <Frame HorizontalOptions="FillAndExpand"
+                                           FontSize="20" />
+                            </Grid>
+                        </StackLayout>
+                    </CollectionView.Header>
+
+                    <!--FileList__File-Item__兩排設定-->
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="5" HorizontalItemSpacing="5"/>
+                    </CollectionView.ItemsLayout>
+                    <!--FileList__File-Item__縮圖模式的樣式-->
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="5">
+                                <Grid.Padding>
+                                    <OnPlatform x:TypeArguments="Thickness">
+                                        <On Platform="iOS" Value="10" />
+                                        <On Platform="Android" Value="5" />
+                                    </OnPlatform>
+                                </Grid.Padding>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="90" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="25" />
+                                </Grid.ColumnDefinitions>
+                                <!--FileManagement_PicView_File-Item_img+CheckBox -->
+                                <AbsoluteLayout Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="2">
+                                    <!--FileManagement_PicView_File-Item_img-->
+                                    <Frame HorizontalOptions="FillAndExpand"
                                                                VerticalOptions="FillAndExpand"
                                                                AbsoluteLayout.LayoutBounds="1, 1, 1, 1"
                                                                AbsoluteLayout.LayoutFlags="All"
@@ -164,84 +178,84 @@
                                                                Padding="0" 
                                                                Margin="0"
                                                                CornerRadius="0">
-                                            <Image Source="file_text.png"  HeightRequest="89" Aspect="AspectFill">
-                                                <!--<Image.GestureRecognizers>
+                                        <Image Source="{Binding ImageSrc}"  HeightRequest="89" Aspect="AspectFill">
+                                            <!--<Image.GestureRecognizers>
                                                                     <TapGestureRecognizer Command="" />
                                                                 </Image.GestureRecognizers>-->
-                                            </Image>
-                                        </Frame>
-                                        <!--FileManagement_PicView_File-Item_CheckBox-->
-                                        <CheckBox VerticalOptions="End"
+                                        </Image>
+                                    </Frame>
+                                    <!--FileManagement_PicView_File-Item_CheckBox-->
+                                    <CheckBox VerticalOptions="End"
                                                               AbsoluteLayout.LayoutBounds="1, 1, 40, 30">
-                                            <VisualStateManager.VisualStateGroups>
-                                                <VisualStateGroup x:Name="CommonStates">
-                                                    <VisualState x:Name="Normal">
-                                                        <VisualState.Setters>
-                                                            <Setter Property="Color" Value="{StaticResource Color_BlueGreen}" />
-                                                        </VisualState.Setters>
-                                                    </VisualState>
-                                                    <VisualState x:Name="Disabled">
-                                                        <VisualState.Setters>
-                                                            <Setter Property="Color" Value="Silver" />
-                                                        </VisualState.Setters>
-                                                    </VisualState>
-                                                </VisualStateGroup>
-                                            </VisualStateManager.VisualStateGroups>
-                                        </CheckBox>
-                                    </AbsoluteLayout>
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="Normal">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Color" Value="{StaticResource Color_BlueGreen}" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState x:Name="Disabled">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Color" Value="Silver" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </CheckBox>
+                                </AbsoluteLayout>
 
-                                    <!--FileManagement_PicView_File-Item__info-->
-                                    <StackLayout Grid.Row="1" 
+                                <!--FileManagement_PicView_File-Item__info-->
+                                <StackLayout Grid.Row="1" 
                                                              Grid.Column="0">
-                                        <!--<StackLayout.GestureRecognizers>
+                                    <!--<StackLayout.GestureRecognizers>
                                                     <TapGestureRecognizer Command=""/>
                                                 </StackLayout.GestureRecognizers>-->
-                                        <Label Text="{Binding FileName}" FontSize="12" FontAttributes="Bold" />
-                                        <Label FontSize="9" TextColor="{StaticResource Color_Gary}">
-                                            <Label.FormattedText>
-                                                <FormattedString>
-                                                    <Span Text="{Binding FileFormat}" />
-                                                    <Span Text=" - "/>
-                                                    <Span Text="{Binding FileSize}" />
-                                                </FormattedString>
-                                            </Label.FormattedText>
-                                        </Label>
-                                    </StackLayout>
+                                    <Label Text="{Binding Name}" FontSize="12" FontAttributes="Bold" />
+                                    <Label FontSize="9" TextColor="{StaticResource Color_Gary}">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding MimeType}" />
+                                                <Span Text=" - "/>
+                                                <Span Text="{Binding Size}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                </StackLayout>
 
-                                    <!--FileManagement_PicView_File-Item_more-->
-                                    <Label Grid.Row="1" 
+                                <!--FileManagement_PicView_File-Item_more-->
+                                <Label Grid.Row="1" 
                                            Grid.Column="1" 
                                            Text="{x:Static Models:icomoonFontIcon.Icon33}"
                                            Style="{StaticResource LabelIconStyle}"
                                            FontSize="20">
-                                        <Label.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="Btn_Popup_FileManSelectFile"/>
-                                        </Label.GestureRecognizers>
-                                    </Label>
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="Btn_Popup_FileManSelectFile"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
 
-                        <!--FileList__File-Item__縮圖模式 : 需至「FileManagement_PicView」查看，從68行~至102行，包括切換成縮圖模式的設定和樣式 -->
+                    <!--FileList__File-Item__縮圖模式 : 需至「FileManagement_PicView」查看，從68行~至102行，包括切換成縮圖模式的設定和樣式 -->
 
-                        <!--FileList__當沒有任何檔案時顯示-->
-                        <CollectionView.EmptyView>
-                            <ContentView>
-                                <StackLayout HorizontalOptions="CenterAndExpand"
+                    <!--FileList__當沒有任何檔案時顯示-->
+                    <CollectionView.EmptyView>
+                        <ContentView>
+                            <StackLayout HorizontalOptions="CenterAndExpand"
                                  VerticalOptions="CenterAndExpand">
-                                    <Label Text="這個資料夾是空的"
+                                <Label Text="這個資料夾是空的"
                                        Margin="10,25,10,10"
                                        FontAttributes="Bold"
                                        FontSize="18"
                                        HorizontalOptions="Fill"
                                        HorizontalTextAlignment="Center" />
-                                </StackLayout>
-                            </ContentView>
-                        </CollectionView.EmptyView>
-                    </CollectionView>
+                            </StackLayout>
+                        </ContentView>
+                    </CollectionView.EmptyView>
+                </CollectionView>
 
-                </Grid>
-            </RefreshView>
+            </Grid>
+            <!--</RefreshView>-->
 
             <!--FileList__Bottom-btn-->
             <Grid HorizontalOptions="End" VerticalOptions="End" x:Name="FinalLayout" Padding="0,0,25,25" ColumnSpacing="15">

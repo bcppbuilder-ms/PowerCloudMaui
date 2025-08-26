@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="PowerCloud.Views.Account.Login_NAS"
              xmlns:local="clr-namespace:PowerCloud.Models"
              xmlns:Models="clr-namespace:PowerCloud.Models"
              Title="Account.Login_NAS">
+
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="#44C3D9" StatusBarStyle="LightContent">
+        </toolkit:StatusBarBehavior>
+    </ContentPage.Behaviors>
+
     <VerticalStackLayout HorizontalOptions="Center"
                          VerticalOptions="Center"
                          WidthRequest="300">

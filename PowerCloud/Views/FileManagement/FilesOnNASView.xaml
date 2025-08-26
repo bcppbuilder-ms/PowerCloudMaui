@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:Models="clr-namespace:PowerCloud.Models"
+             xmlns:Mgt="clr-namespace:PowerCloud.Views.FileManagement"   
+             x:Class="PowerCloud.Views.FileManagement.FilesOnNASView">
+    
+    <ContentView.Resources>
+
+        <ResourceDictionary>
+            <Mgt:BoolNotConverter x:Key="NotConverter"/>
+        </ResourceDictionary>
+        
+        <ResourceDictionary>
+
+            <!--FileManagement_PicView__File-Item__圖示模式的樣式-->
+            <DataTemplate x:Key="picViewTemplate">
+                <StackLayout Padding="6,0,8,8" 
+                             BackgroundColor="White"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="FillAndExpand">
+                    <Frame CornerRadius="3" 
+                           HasShadow="False" 
+                           Padding="0" 
+                           Margin="0" 
+                           BackgroundColor="White">
+                        <Grid BackgroundColor="White">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="91" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="25" />
+                            </Grid.ColumnDefinitions>
+                            <!--FileManagement_PicView_File-Item_img+CheckBox -->
+                            <StackLayout Grid.Row="0" Grid.ColumnSpan="2" Orientation="Vertical">
+                                <AbsoluteLayout>
+                                    <!--FileManagement_PicView_File-Item_img-->
+                                    <StackLayout HorizontalOptions="FillAndExpand"
+                                                 VerticalOptions="FillAndExpand"
+                                                 AbsoluteLayout.LayoutBounds="1, 1, 1, 1"
+                                                 AbsoluteLayout.LayoutFlags="All">
+                                        <Frame BorderColor="LightGray"
+                                               BackgroundColor="White"
+                                               HasShadow="False" 
+                                               Padding="0" 
+                                               Margin="0"
+                                               CornerRadius="0">
+                                            <Image Source="{Binding ImageSrc}" HeightRequest="90" Aspect="AspectFill">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding Source={x:Reference NASFileList}, 
+                                                        Path=BindingContext.SetSelectedCommand}" CommandParameter="{Binding}" 
+                                                        Tapped="FileIcone_Tapped"/>
+                                                </Image.GestureRecognizers>
+                                            </Image>
+                                        </Frame>
+                                    </StackLayout>
+
+                                    <!--FileManagement_PicView_File-Item_CheckBox-->
+                                    <StackLayout AbsoluteLayout.LayoutBounds="1, 1, 40, 40">
+                                        <CheckBox IsChecked="{Binding Selected}" VerticalOptions="Start"
+                                                   IsVisible="{Binding Source={x:Reference cbIsMultiSelect}, Path=IsChecked}"
+                                                  IsEnabled="{Binding CanMultiSelect}">
+                                            <VisualStateManager.VisualStateGroups>
+                                                <VisualStateGroup x:Name="CommonStates">
+                                                    <VisualState x:Name="Normal">
+                                                        <VisualState.Setters>
+                                                            <Setter Property="Color" Value="{StaticResource Color_BlueGreen}" />
+                                                        </VisualState.Setters>
+                                                    </VisualState>
+                                                    <VisualState x:Name="Disabled">
+                                                        <VisualState.Setters>
+                                                            <Setter Property="Color" Value="Silver" />
+                                                        </VisualState.Setters>
+                                                    </VisualState>
+                                                </VisualStateGroup>
+                                            </VisualStateManager.VisualStateGroups>
+                                        </CheckBox>
+                                    </StackLayout>
+                                </AbsoluteLayout>
+                                <!--<StackLayout IsVisible="{Binding Source={x:Reference cbIsSingleSelect}, Path=IsChecked}" 
+                                             HorizontalOptions="StartAndExpand">
+                                    <Image Source="{Binding ImageSrc}" Aspect="AspectFill"/>
+                                </StackLayout>-->
+                            </StackLayout>
+
+                            <!--FileManagement_PicView_File-Item__info-->
+                            <StackLayout Grid.Row="1" Grid.Column="0" Padding="5,0,0,10" BackgroundColor="{StaticResource Color_Wh}">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference NASFileList}, 
+                                                        Path=BindingContext.SetSelectedCommand}" CommandParameter="{Binding}" 
+                                                        Tapped="FileIcone_Tapped"/>
+                                </StackLayout.GestureRecognizers>
+                                <Label Text="{Binding Name}" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource Color_Dark2}" />
+                                <Label FontSize="9" TextColor="{StaticResource Color_Gary}">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding MimeType}" />
+                                            <Span Text=" - "/>
+                                            <Span Text="{Binding Size}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </StackLayout>
+
+                            <!--FileManagement_PicView_File-Item_more-->
+                            <StackLayout Grid.Row="1" Grid.Column="1" BackgroundColor="{StaticResource Color_Wh}">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference NASFileList}, 
+                                                                Path=BindingContext.SetSelectedCommand}" CommandParameter="{Binding}"
+                                                                Tapped="NASFileLists_Tapped"/>
+                                </StackLayout.GestureRecognizers>
+                                <StackLayout VerticalOptions="FillAndExpand">
+                                    <Label FontFamily="{StaticResource IcomoonFont}"
+                                                       Text="&#xe9a5;"
+                                                       FontSize="25" 
+                                                       VerticalOptions="FillAndExpand" 
+                                                       VerticalTextAlignment="Center"
+                                                       TextColor="{StaticResource Color_Dark}"/>
+                                </StackLayout>
+                            </StackLayout>
+
+
+
+
+                        </Grid>
+                    </Frame>
+                </StackLayout>
+            </DataTemplate>
+
+        </ResourceDictionary>
+
+    </ContentView.Resources>
+
+
+
+    <ContentView.Content>
+        <StackLayout Margin="0">
+            <StackLayout IsVisible="False">
+                <CheckBox x:Name="cbIsMultiSelect" IsChecked="False"/>
+                <!--<CheckBox x:Name="cbIsSingleSelect" IsChecked="True"/>-->
+            </StackLayout>
+
+            <!--SelectionChanged="NASFileList_SelectionChanged"-->
+
+            <Grid VerticalOptions="Start">
+
+                <!--<StackLayout x:Name="TopLayout" IsVisible="True">-->
+                <ActivityIndicator Color="SandyBrown" x:Name="ActIndicator"
+                                       HeightRequest="100" WidthRequest="100"
+                           VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+                <!--</StackLayout>-->
+
+                <!--SelectionChanged="NASFileList_SelectionChanged"-->
+                <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}" x:Name="ThisRefreshView">
+                    <CollectionView x:Name="NASFileList" ItemsSource="{Binding NASFiles}" 
+                            SelectionMode="Single" SelectedItem="{Binding FileSelected}"
+                            Scrolled="FileList_ListView_Public_Scrolled"
+                            RemainingItemsThreshold="1"
+                            RemainingItemsThresholdReached="NASFileList_RemainingItemsThresholdReached">
+                        <!--RemainingItemsThresholdReachedCommand="{Binding LoadMoreDataCommand}">-->
+
+                        <!--FileList__Top-Option-row-->
+                        <CollectionView.Header>
+                            <StackLayout Padding="10,5,10,13"  x:Name="InformationBoard">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="35" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--多選__自己一列-->
+                                    <!--<StackLayout IsVisible="{Binding IsMultiSelect}" 
+                                                 BackgroundColor="Blue"
+                                                 Orientation="Horizontal" 
+                                                 Grid.Row="0" 
+                                                 Grid.Column="0" 
+                                                 Grid.ColumnSpan="3">
+                                        <StackLayout Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                                            <Label Text="2" FontSize="14" TextColor="{StaticResource Color_Gary}"/>
+                                            <Label Text="個項目" FontSize="14" TextColor="{StaticResource Color_Gary}"/>
+                                        </StackLayout>
+                                        <StackLayout Grid.Row="0" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
+                                            -->
+                                    <!--<StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="##"/>
+                                        </StackLayout.GestureRecognizers>-->
+                                    <!--
+                                            <Label Text="全選" FontSize="14" TextColor="{StaticResource Color_BlueGreen}"/>
+                                        </StackLayout>
+                                    </StackLayout>-->
+
+                                    <!--多選 與 回上層-->
+                                    <!--當開啟多選時，回上層隱藏-->
+                                    <!--當在最上層時，則隱藏回上層按鈕-->
+                                    <StackLayout Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+                                        <!--全選btn-->
+                                        <StackLayout IsVisible="{Binding IsMultiSelect}" 
+                                                     Padding="0,0,10,0"
+                                                     Orientation="Horizontal">
+                                            <Label Text="全選" 
+                                                   FontSize="14" 
+                                                   Padding="5,0,5,0" 
+                                                   VerticalTextAlignment="Center"
+                                                   TextColor="{StaticResource Color_BlueGreen}">
+                                                <!--<Label.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped=" " />
+                                                </Label.GestureRecognizers>-->
+                                            </Label>
+                                            <Label Text="2" FontSize="14" VerticalTextAlignment="Center" TextColor="{StaticResource Color_Gary}"/>
+                                            <Label Text="個項目" FontSize="14" VerticalTextAlignment="Center" TextColor="{StaticResource Color_Gary}"/>
+                                        </StackLayout>
+                                        <!-- -->
+                                        <!--回上層-->
+                                        <!--<StackLayout Orientation="Horizontal" IsVisible="{Binding HasParent}">
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="GotoParrent_Tapped"/>
+                                            </StackLayout.GestureRecognizers>
+                                            <Label Text="&#xe92f;" 
+                                                   FontFamily="{StaticResource IcomoonFont}" 
+                                                   FontSize="20" 
+                                                   Padding="0"
+                                                   Margin="0"
+                                                   TextColor="{StaticResource Color_Dark}"
+                                                   VerticalTextAlignment="Center"/>
+                                            <Label Text="回上層" 
+                                                   Margin="-5,0,0,0"
+                                                   VerticalTextAlignment="Center"
+                                                   FontSize="14" 
+                                                   TextColor="{StaticResource Color_Dark}"/>
+                                        </StackLayout>-->
+
+                                        <!--popup_111_排序-->
+                                        <StackLayout Orientation="Horizontal">
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="Btn_Popup_FileManSort"/>
+                                            </StackLayout.GestureRecognizers>
+                                            <Label Text="名稱" 
+                                               VerticalTextAlignment="Center"
+                                               Margin="0,0,-5,0"
+                                               FontSize="14" 
+                                               TextColor="{StaticResource Color_Dark}"/>
+                                            <Label Text="&#xe92e;" 
+                                               FontFamily="{StaticResource IcomoonFont}" 
+                                               FontSize="18" 
+                                               TextColor="{StaticResource Color_Dark}"
+                                               HorizontalTextAlignment="Center"
+                                               VerticalTextAlignment="Center"/>
+                                        </StackLayout>
+
+                                    </StackLayout>
+
+                                    <!--popup_111_排序-->
+                                    <!--<StackLayout Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="Btn_Popup_FileManSort"/>
+                                        </StackLayout.GestureRecognizers>
+                                        <Label Text="名稱" 
+                                               VerticalTextAlignment="Center"
+                                               Margin="0,0,-5,0"
+                                               FontSize="14" 
+                                               TextColor="{StaticResource Color_Dark}"/>
+                                        <Label Text="&#xe92e;" 
+                                               FontFamily="{StaticResource IcomoonFont}" 
+                                               FontSize="18" 
+                                               TextColor="{StaticResource Color_Dark}"
+                                               HorizontalTextAlignment="Center"
+                                               VerticalTextAlignment="Center"/>
+                                    </StackLayout>-->
+
+                                    <!--View_117_縮圖檢視 FileManagement_PicView : 主要是更換CollectionView.ItemTemplate和增加CollectionView.ItemsLayout，詳看126行註解 -->
+                                    <StackLayout Grid.Row="1" Grid.Column="1">
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="thumb_pic_Tapped"/>
+                                        </StackLayout.GestureRecognizers>
+                                        <!--Text="&#xe979;"-->
+                                        <Label x:Name="IconChar01"
+                                               FontFamily="{StaticResource IcomoonFont}" 
+                                               Text="&#xe979;"
+                                               FontSize="18" 
+                                               TextColor="{StaticResource Color_Dark}"
+                                               HorizontalTextAlignment="Center"
+                                               VerticalTextAlignment="Center">
+                                        </Label>
+                                    </StackLayout>
+
+                                </Grid>
+                            </StackLayout>
+                        </CollectionView.Header>
+
+                        <!--<CollectionView.ItemsLayout />-->
+
+                        <!--FileManagement_ListView_File-Item__清單模式的樣式-->
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <!--<SwipeView Padding="0" Margin="0">
+                                    <SwipeView.RightItems>
+                                        <SwipeItems>
+                                            <SwipeItem Text="刪除" BackgroundColor="#cc1b1b" Clicked="Btn_Popup_FileManDelete"
+                                               Command="{Binding Source={x:Reference NASFileList}, Path=BindingContext.SetSelectedCommand}"
+                                               CommandParameter="{Binding}"/>
+                                            <SwipeItem Text="重新命名" BackgroundColor="#01afdf" Clicked="Btn_Popup_FileManRename"
+                                               Command="{Binding Source={x:Reference NASFileList}, Path=BindingContext.SetSelectedCommand}"
+                                               CommandParameter="{Binding}"/>
+                                        </SwipeItems>
+                                    </SwipeView.RightItems>
+                                    <SwipeView.LeftItems>
+                                        <SwipeItems>
+                                            <SwipeItem Text="下載" BackgroundColor="#56dff1"/>
+                                            <SwipeItem Text="分享" BackgroundColor="#01afdf"/>
+                                        </SwipeItems>
+                                    </SwipeView.LeftItems>-->
+
+                                <Frame BorderColor="{StaticResource Color_Wh}" 
+                                       BackgroundColor="{StaticResource Color_Wh}" 
+                                       Padding="0"  
+                                       Margin="0"
+                                       CornerRadius="0"
+                                       HasShadow="False">
+                                    <Grid BackgroundColor="White"
+                                          ColumnSpacing="5"
+                                          RowSpacing="3"
+                                          Margin="0"
+                                          Padding="5,0,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="35"></ColumnDefinition>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                            <ColumnDefinition Width="35"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="1.5" />
+                                        </Grid.RowDefinitions>
+                                        <!--FileManagement_ListView_File-Item_img-->
+                                        <Grid Grid.Column="0" Grid.Row="0" Padding="5,0,0,0" BackgroundColor="White">
+                                            <!--<Grid.GestureRecognizers>
+                                            <TapGestureRecognizer 
+                                                    Command="{Binding Source={x:Reference NASFileList}, Path=BindingContext.SetSelectedCommand}" 
+                                                    CommandParameter="{Binding}" Tapped="FileImage_Tapped"/>
+                                        </Grid.GestureRecognizers>-->
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Source={x:Reference NASFileList}, 
+                                                                Path=BindingContext.SetSelectedCommand}" CommandParameter="{Binding}"
+                                                                Tapped="NASFileLists_Tapped"/>
+                                            </Grid.GestureRecognizers>
+                                            <StackLayout WidthRequest="35" HeightRequest="35">
+                                                <CheckBox IsChecked="{Binding Selected}" 
+                                                      IsVisible="{Binding Source={x:Reference cbIsMultiSelect}, Path=IsChecked}"
+                                                      Margin="0,0,0,0"
+                                                      IsEnabled="{Binding CanMultiSelect}">
+                                                    <VisualStateManager.VisualStateGroups>
+                                                        <VisualStateGroup x:Name="CommonStates">
+                                                            <VisualState x:Name="Normal">
+                                                                <VisualState.Setters>
+                                                                    <Setter Property="Color" Value="{StaticResource Color_BlueGreen}" />
+                                                                </VisualState.Setters>
+                                                            </VisualState>
+                                                            <VisualState x:Name="Disabled">
+                                                                <VisualState.Setters>
+                                                                    <Setter Property="Color" Value="Silver" />
+                                                                </VisualState.Setters>
+                                                            </VisualState>
+                                                        </VisualStateGroup>
+                                                    </VisualStateManager.VisualStateGroups>
+                                                </CheckBox>
+                                                <Image Source="{Binding ImageSrc}"  
+                                                           Aspect="AspectFill"
+                                                           HeightRequest="35"
+                                                           VerticalOptions="CenterAndExpand"
+                                                           IsVisible="{Binding Source={x:Reference cbIsMultiSelect}, Path=IsChecked, 
+                                                        Converter={StaticResource NotConverter}}">
+                                                    <Image.GestureRecognizers>
+                                                        <TapGestureRecognizer  Command="{Binding Source={x:Reference NASFileList}, Path=BindingContext.SetSelectedCommand}" 
+                                                                                   CommandParameter="{Binding}" Tapped="FileIcone_Tapped"/>
+                                                    </Image.GestureRecognizers>
+                                                </Image>
+                                            </StackLayout>
+                                        </Grid>
+                                        <!--FileManagement_ListView_File-Item_info-->
+                                        <StackLayout Grid.Column="1"  Grid.Row="0" Padding="0,8,5,5" VerticalOptions="Start" BackgroundColor="White">
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer 
+                                                        Command="{Binding Source={x:Reference NASFileList}, Path=BindingContext.SetSelectedCommand}" 
+                                                        CommandParameter="{Binding}" Tapped="FileIcone_Tapped"/>
+                                            </StackLayout.GestureRecognizers>
+                                            <!--<StackLayout Margin="0" Padding="0,8,0,8">-->
+                                            <Label Text="{Binding Name}" 
+                                                       FontSize="15" 
+                                                       TextColor="{StaticResource Color_Dark2}"
+                                                       VerticalOptions="FillAndExpand">
+                                            </Label>
+                                            <Label FontSize="9" 
+                                                       TextColor="{StaticResource Color_Gary}" 
+                                                       VerticalOptions="EndAndExpand">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding MimeType}" />
+                                                        <Span Text=" - "/>
+                                                        <Span Text="{Binding LastWriteTime}" />
+                                                        <Span Text=" - "/>
+                                                        <Span Text="{Binding Size}" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <!--</StackLayout>-->
+                                        </StackLayout>
+                                        <!--FileManagement_ListView_File-Item_more-->
+                                        <StackLayout Grid.Column="2" Grid.Row="0" BackgroundColor="White">
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Source={x:Reference NASFileList}, 
+                                                                Path=BindingContext.SetSelectedCommand}" CommandParameter="{Binding}"
+                                                                Tapped="NASFileLists_Tapped"/>
+                                            </StackLayout.GestureRecognizers>
+                                            <StackLayout VerticalOptions="FillAndExpand"
+                                                         Padding="0"
+                                                         Margin="0,0,10,0">
+                                                <Label FontFamily="{StaticResource IcomoonFont}"
+                                                       Text="&#xe9a5;"
+                                                       FontSize="25" 
+                                                       VerticalOptions="FillAndExpand" 
+                                                       VerticalTextAlignment="Center"
+                                                       TextColor="{StaticResource Color_Dark}"/>
+                                            </StackLayout>
+                                        </StackLayout>
+                                        <!--FileManagement_ListView_File-Item_line-->
+                                        <StackLayout Grid.Row="1" 
+                                                     Grid.ColumnSpan="3" 
+                                                     Spacing="1"
+                                                     Margin="0"
+                                                     HeightRequest="1" 
+                                                     BackgroundColor="{StaticResource Color_Gary3}"/>
+
+                                    </Grid>
+                                </Frame>
+
+                                <!--</SwipeView>-->
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+
+
+                        <!--FileList__當沒有任何檔案時顯示-->
+                        <CollectionView.EmptyView>
+                            <ContentView>
+                                <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" 
+                                         Padding="6,2,0,0">
+                                    <Label Text="這個空間是空的"
+                                           Margin="10,25,10,10"
+                                           FontAttributes="Bold"
+                                           FontSize="18"
+                                           HorizontalOptions="Fill"
+                                           TextColor="{StaticResource Color_Dark2}"
+                                   HorizontalTextAlignment="Center" />
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label TextColor="LightGray" FontSize="12"   Text="status: "/>
+                                        <Label TextColor="LightGray" FontSize="12"   Text="{Binding ErrorMessage}"/>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label  TextColor="LightGray" FontSize="12"  Text="item count: "/>
+                                        <Label  TextColor="LightGray" FontSize="12" Text="{Binding FilesCount}"/>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label  TextColor="LightGray" FontSize="12" Text="page: "/>
+                                        <Label  TextColor="LightGray" FontSize="12" Text="{Binding CurrentMaxPage}"/>
+                                    </StackLayout>
+                                </StackLayout>
+                            </ContentView>
+                        </CollectionView.EmptyView>
+
+                        <CollectionView.Footer>
+                            <ContentView Padding="0,0,0,110" Margin="0">
+                                <StackLayout Orientation="Horizontal" Padding="5">
+                                    <Label Text="count: " TextColor="LightGray" FontSize="12"/>
+                                    <Label Text="{Binding FilesCount}" TextColor="LightGray" FontSize="12"/>
+                                    <Label Text="      page: " TextColor="LightGray" FontSize="12"/>
+                                    <Label Text="{Binding CurrentMaxPage}" TextColor="LightGray" FontSize="12"/>
+                                </StackLayout>
+                            </ContentView>
+                        </CollectionView.Footer>
+
+                    </CollectionView>
+                </RefreshView>
+
+                <!--FileList__Bottom-btn-->
+                <Grid HorizontalOptions="End" VerticalOptions="End" x:Name="FinalLayout" Padding="0,0,25,25" ColumnSpacing="15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="75" />
+                        <ColumnDefinition Width="75" />
+                    </Grid.ColumnDefinitions>
+                    <!--<Bottom-btn__back-->
+                    <Grid x:Name="GridBottom" Grid.Column="0" IsVisible="{Binding HasParent}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="75" />
+                        </Grid.RowDefinitions>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="GotoParrent_Tapped"/>
+                        </Grid.GestureRecognizers>
+                        <Frame Grid.Row="0" 
+                               Padding="0"
+                               CornerRadius="38"
+                               HasShadow="False"
+                               BackgroundColor="{StaticResource Color_BlueGreen}">
+                            <Label Text="&#xe967;" 
+                                   FontFamily="{StaticResource IcomoonFont}" 
+                                   FontSize="32" 
+                                   Margin="0,3,0,0"
+                                   TextColor="{StaticResource Color_Wh}"
+                                   HorizontalTextAlignment="Center"
+                                   VerticalTextAlignment="Center"/>
+                        </Frame>
+                    </Grid>
+                    <!--<Bottom-btn__add-->
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="75" />
+                        </Grid.RowDefinitions>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Btn_Popup_FileManAdd"/>
+                        </Grid.GestureRecognizers>
+                        <Frame Grid.Row="0" 
+                               Padding="0"
+                               CornerRadius="38"
+                               HasShadow="False"
+                               BackgroundColor="{StaticResource Color_BlueGreen}">
+                            <Label Text="&#xe9bc;" 
+                                   FontFamily="{StaticResource IcomoonFont}" 
+                                   FontSize="48" 
+                                   TextColor="{StaticResource Color_Wh}"
+                                   HorizontalTextAlignment="Center"
+                                   VerticalTextAlignment="Center"/>
+                        </Frame>
+                    </Grid>
+
+                </Grid>
+            </Grid>
+
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

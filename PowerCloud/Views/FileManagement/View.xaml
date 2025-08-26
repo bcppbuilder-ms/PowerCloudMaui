@@ -8,6 +8,11 @@
              BackgroundColor="Black"
              Title="view page">
 
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="Black" StatusBarStyle="LightContent">
+        </toolkit:StatusBarBehavior>
+    </ContentPage.Behaviors>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />

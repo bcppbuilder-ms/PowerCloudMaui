@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PowerCloud.Views.SystemInfo"
              xmlns:local="clr-namespace:PowerCloud.Models"
-             Title="SystemInfo">
+             Title="系統資訊">
     <VerticalStackLayout>
         <!--  Info___主機名稱  -->
         <Label Text="主機名稱" 

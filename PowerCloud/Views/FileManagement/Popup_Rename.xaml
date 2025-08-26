@@ -2,26 +2,41 @@
 <toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                x:Class="PowerCloud.Views.FileManagement.Popup_Rename"
-               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               CanBeDismissedByTappingOutsideOfPopup="False"
+               Color="Transparent">
 
-    <VerticalStackLayout Style="{StaticResource PopupBackgroudStyle}">
-        <!--title-->
-        <Label Style="{StaticResource PopupTitleTextStyle}"
+
+    <Grid Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Frame Grid.Row="0"
+           CornerRadius="10"
+           VerticalOptions="Center"
+           Style="{StaticResource PopupBackgroudStyle}">
+
+            <VerticalStackLayout>
+                <!--title-->
+                <Label Style="{StaticResource PopupTitleTextStyle}"
                    Grid.Column="1"
                    Text="重新命名檔案" />
-              
-        <!--inner-->
-        <Label Text="原本檔案名稱"/>
-        <Entry Style="{StaticResource PopupEntryStyle}"
-                Placeholder="Enter text" />
-        
-        <!--btn-row-->
-        <HorizontalStackLayout HorizontalOptions="End" Padding="0,30,0,15">
-            <Button Text="取消" Clicked="Btn_Clicked_ClosePopup" Style="{StaticResource Btn_Bg_White_DarkGary}"/>
-            <Button Text="重新命名" Style="{StaticResource Btn_Bg_BlueGreen}" Margin="15,0,0,0"/>
-        </HorizontalStackLayout>
 
-    </VerticalStackLayout>
-    
+                <!--inner-->
+                <Label Text="原本檔案名稱"/>
+                <Entry Style="{StaticResource PopupEntryStyle}"
+                Placeholder="Enter text" />
+
+                <!--btn-row-->
+                <HorizontalStackLayout HorizontalOptions="End" Padding="0,30,0,15">
+                    <Button Text="取消" Clicked="Btn_Clicked_ClosePopup" Style="{StaticResource Btn_Bg_White_DarkGary}"/>
+                    <Button Text="重新命名" Style="{StaticResource Btn_Bg_BlueGreen}" Margin="15,0,0,0"/>
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+            
+        </Frame>
+    </Grid>
 
 </toolkit:Popup>

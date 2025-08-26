@@ -1,199 +1,46 @@
-using CommunityToolkit.Maui.Views;
 using PowerCloud.ViewModels;
 using System.Collections.ObjectModel;
+using CommunityToolkit.Maui.Views;
 using LayoutAlignment = Microsoft.Maui.Primitives.LayoutAlignment;
 
 namespace PowerCloud.Views.FileManagement;
 
-public partial class ListView : ContentPage
+public partial class FilesOnNASView : ContentView
 {
-    public ListView()
-    {
-        InitializeComponent();
+	public FilesOnNASView()
+	{
+		InitializeComponent();
 
         if (string.IsNullOrEmpty(InitPath))
-            InitPath = App.InitPath;
-
-        mvm = new MainNasFileViewModel()
+            mvm = new MainNasFileViewModel();
+        else
         {
-            CurrentMaxPage = 0,
-            PrevPath = InitPath,
-            NASFiles = new ObservableCollection<NASFileViewModel>(),
-            PageCollectionView = NASFileList
-        };
+            mvm = new MainNasFileViewModel()
+            {
+                CurrentMaxPage = 0,
+                PrevPath = InitPath,
+                NASFiles = new ObservableCollection<NASFileViewModel>(),
+                PageCollectionView = NASFileList
+            };
+        }
         BindingContext = mvm;
         InformationBoard.BindingContext = this;
         GridBottom.BindingContext = this;
 
-        //if (DeviceInfo.Platform == DevicePlatform.iOS)
-        //    ThisRefreshView.HeightRequest = 600;
-    }
-
-    protected async override void OnAppearing()
-    {
-        base.OnAppearing();
-        if (App.PC2ViewModel.UserSelected == null || App.PC2ViewModel.UserSelected.AccessToken == "unknown")
-        {
-            //if (Device.RuntimePlatform == Device.iOS)
-            //{
-            //    Routing.RegisterRoute("GoLogin_AccountList", typeof(Views.Login_AccountList));
-            //    await Shell.Current.GoToAsync("GoLogin_AccountList");
-            //}
-            //else
-            //{
-            //    await Shell.Current.GoToAsync($"//{nameof(Views.Login_AccountList)}");
-            //    //Shell.Current.FlyoutIsPresented = false;
-            //    //return;
-
-            //    //await Shell.Current.Navigation.PopToRootAsync();
-            //    //return;
-            //}
-            return;
-        }
-
-
-        if (currentUser != App.PC2ViewModel.UserSelected)
-        {
-            InitPath = "public";
-            currentUser = App.PC2ViewModel.UserSelected;
-        }
-        if (BindingContext != null)
-        {
-            MainNasFileViewModel mvm = (MainNasFileViewModel)BindingContext;
-            if (mvm.NASFiles.Count == 0)
-            {
-                ActIndicator.IsRunning = true;
-                await mvm.readFileList(mvm.PrevPath, 1, 0, ActIndicator);
-            }
-            else
-            {
-                ActIndicator.IsRunning = false;
-            }
-            if (App.PC2ViewModel.UserSelected != null /*&& 
-                    App.PC2ViewModel.UserSelected.AccessToken != App.PC2ViewModel.accountManager.SelectedAccessToeken*/)
-            {
-                App.PC2ViewModel.accountManager.SelectedAccessToeken = App.PC2ViewModel.UserSelected.AccessToken;
-                App.PC2ViewModel.accountManager.SelectedNasAddress = App.PC2ViewModel.UserSelected.UserNasLink;
-                App.PC2ViewModel.accountManager.SelectedRefreshToken = App.PC2ViewModel.UserSelected.RefreshToken;
-            }
-        }
-        else
-        {
-            throw new Exception("BindinContext is null.");
-        }
-    }
-
-    private void Btn_Popup_FileManSort(object sender, EventArgs e)
-    {
-        //var popup = new PopupTestContentView();
-        var popup = new Popup_Sort();
-        //popup-end
-        popup.VerticalOptions = LayoutAlignment.End;
-        popup.HorizontalOptions = LayoutAlignment.Fill;
-
-        //popup-center
-        //popup.VerticalOptions = LayoutAlignment.Center;
-        //popup.HorizontalOptions = LayoutAlignment.Fill;
-
-        this.ShowPopup(popup);
-    }
-
-
-    private void Btn_Popup_FileManAdd(object sender, EventArgs e)
-    {
-        //var popup = new PopupTestContentView();
-        var popup = new Popup_Add();
-        //popup-end
-        popup.VerticalOptions = LayoutAlignment.End;
-        popup.HorizontalOptions = LayoutAlignment.Fill;
-
-        //popup-center
-        //popup.VerticalOptions = LayoutAlignment.Center;
-        //popup.HorizontalOptions = LayoutAlignment.Fill;
-
-        this.ShowPopup(popup);
-    }
-
-    private void Btn_Popup_FileManSelectFile(object sender, EventArgs e)
-    {
-        //var popup = new PopupTestContentView();
-        var popup = new Popup_SelectFile();
-        //popup-end
-        popup.VerticalOptions = LayoutAlignment.End;
-        popup.HorizontalOptions = LayoutAlignment.Fill;
-
-        //popup-center
-        //popup.VerticalOptions = LayoutAlignment.Center;
-        //popup.HorizontalOptions = LayoutAlignment.Fill;
-
-        this.ShowPopup(popup);
+        if (DeviceInfo.Platform == DevicePlatform.iOS)
+            ThisRefreshView.HeightRequest = 600;
     }
 
 
 
-    bool doing = false;
-    private async void FileIcone_Tapped(object sender, TappedEventArgs e)
-    {
-        FinalLayout.IsVisible = false;
-        ActIndicator.IsRunning = true;
 
-        if (doing)
-            return;
-
-        doing = true;
-
-        if (((NASFileViewModel)NASFileList.SelectedItem).MimeType == "folder")
-        {
-            //await mvm.ListView_GotoSubFolder(/*NASFileList*/);
-
-            HasParent = true;
-        }
-        else
-        {
-            ////Routing.RegisterRoute(nameof(FileManagement_View), typeof(FileManagement_View));
-            ////await Shell.Current.GoToAsync(nameof(FileManagement_View));
-            if (mvm.FileSelected.MimeType.StartsWith("image"))
-            {
-                //await Navigation.PushAsync(new FileManagement_View(mvm));
-            }
-            else
-            {
-                //await Navigation.PushPopupAsync(new FileManagement_Popup_SelectFile(mvm));
-            }
-        }
-
-        ActIndicator.IsRunning = false;
-        FinalLayout.IsVisible = true;
-        doing = false;
-    }
-
-    ItemsLayout listLayout;
-    DataTemplate listTemplate;
-    GridItemsLayout gridItemsLayout = new GridItemsLayout(2, ItemsLayoutOrientation.Vertical) { VerticalItemSpacing = 5 };
-
-
-
-    AccountViewModel currentUser = null;
-
-    /*
-     * import from xamarin
-     */
-    MainNasFileViewModel mvm;
-
-    public event EventHandler OnHasParentChanged;
-
-
-
-    /*
-     * Property : InitPath
-     */
     public static readonly BindableProperty InitPathProperty = BindableProperty.Create(
-        nameof(InitPath), typeof(string), typeof(ListView),
+        nameof(InitPath), typeof(string), typeof(FilesOnNASView),
         defaultValue: string.Empty, defaultBindingMode: BindingMode.OneWay, propertyChanged: InitPathPropertyChanged);
 
     private static void InitPathPropertyChanged(BindableObject bindable, object oldValue, object newValue)
     {
-        ListView control = (ListView)bindable;
+        FilesOnNASView control = (FilesOnNASView)bindable;
         if (oldValue != null && oldValue.ToString() != newValue.ToString())
         {
             //((MainNasFileViewModel)control.BindingContext).PrevPath = newValue?.ToString();
@@ -226,7 +73,7 @@ public partial class ListView : ContentPage
 
 
     public static readonly BindableProperty IsMultiSelectProperty = BindableProperty.Create(
-        nameof(IsMultiSelect), typeof(bool), typeof(ListView),
+        nameof(IsMultiSelect), typeof(bool), typeof(FilesOnNASView),
         defaultValue: false, defaultBindingMode: BindingMode.OneWay, propertyChanged: IsMultiSelectPropertyChanged);
 
     private static void IsMultiSelectPropertyChanged(BindableObject bindable, object oldValue, object newValue)
@@ -266,14 +113,14 @@ public partial class ListView : ContentPage
 
 
     public static readonly BindableProperty HasParentProperty = BindableProperty.Create(
-        nameof(HasParent), typeof(bool), typeof(ListView),
+        nameof(HasParent), typeof(bool), typeof(FilesOnNASView),
         defaultValue: false, defaultBindingMode: BindingMode.OneWay, propertyChanged: HasParentPropertyChanged);
 
     private static void HasParentPropertyChanged(BindableObject bindable, object oldValue, object newValue)
     {
         if (oldValue != newValue)
         {
-            ListView control = (ListView)bindable;
+            FilesOnNASView control = (FilesOnNASView)bindable;
             if (control.OnHasParentChanged != null)
             {
                 control.OnHasParentChanged.Invoke(newValue, new EventArgs());
@@ -314,6 +161,120 @@ public partial class ListView : ContentPage
 
 
 
+    //string xicon01 = "\ue979";
+    //public string IconChar01 { get { return xicon01; } set { xicon01 = value; OnPropertyChanged("IconChar01"); } }
+
+
+
+    MainNasFileViewModel mvm;
+
+    public event EventHandler OnHasParentChanged;
+
+
+
+    //按鈕事件
+    //View_141_子資料夾
+    //async void Btn_View_FileManagement_SubFolder(object sender, System.EventArgs e)
+    //{
+    //    //Routing.RegisterRoute(nameof(Views.FileManagement_SubFolder), typeof(Views.FileManagement_SubFolder));
+    //    //await Shell.Current.GoToAsync(nameof(Views.FileManagement_SubFolder));
+    //}
+
+    //View_118-1_多選-列表 Btn_View_FileManagement_MultiSelect_ListView
+
+    //popup_112_新增
+    private void Btn_Popup_FileManSort(object sender, EventArgs e)
+    {
+        //var popup = new PopupTestContentView();
+        var popup = new Popup_Sort();
+        //popup-end
+        popup.VerticalOptions = LayoutAlignment.End;
+        popup.HorizontalOptions = LayoutAlignment.Fill;
+
+        //popup-center
+        //popup.VerticalOptions = LayoutAlignment.Center;
+        //popup.HorizontalOptions = LayoutAlignment.Fill;
+
+        Shell.Current.ShowPopup(popup);
+    }
+
+
+    private void Btn_Popup_FileManAdd(object sender, EventArgs e)
+    {
+        //var popup = new PopupTestContentView();
+        var popup = new Popup_Add();
+        //popup-end
+        popup.VerticalOptions = LayoutAlignment.End;
+        popup.HorizontalOptions = LayoutAlignment.Fill;
+
+        //popup-center
+        //popup.VerticalOptions = LayoutAlignment.Center;
+        //popup.HorizontalOptions = LayoutAlignment.Fill;
+
+        Shell.Current.ShowPopup(popup);
+    }
+
+    private void Btn_Popup_FileManSelectFile(object sender, EventArgs e)
+    {
+        //var popup = new PopupTestContentView();
+        var popup = new Popup_SelectFile();
+        //popup-end
+        popup.VerticalOptions = LayoutAlignment.End;
+        popup.HorizontalOptions = LayoutAlignment.Fill;
+
+        //popup-center
+        //popup.VerticalOptions = LayoutAlignment.Center;
+        //popup.HorizontalOptions = LayoutAlignment.Fill;
+
+        Shell.Current.ShowPopup(popup);
+    }
+
+
+
+    bool doing = false;
+    private async void FileIcone_Tapped(object sender, EventArgs e)
+    {
+        FinalLayout.IsVisible = false;
+        ActIndicator.IsRunning = true;
+
+        if (doing)
+            return;
+
+        doing = true;
+
+        if (((NASFileViewModel)NASFileList.SelectedItem).MimeType == "folder")
+        {
+            //await mvm.ListView_GotoSubFolder(/*NASFileList*/);
+
+            HasParent = true;
+        }
+        else
+        {
+            ////Routing.RegisterRoute(nameof(FileManagement_View), typeof(FileManagement_View));
+            ////await Shell.Current.GoToAsync(nameof(FileManagement_View));
+            if (mvm.FileSelected.MimeType.StartsWith("image"))
+            {
+                //await Navigation.PushAsync(new FileManagement_View(mvm));
+            }
+            else
+            {
+                //await Navigation.PushPopupAsync(new FileManagement_Popup_SelectFile(mvm));
+            }
+        }
+
+        ActIndicator.IsRunning = false;
+        FinalLayout.IsVisible = true;
+        doing = false;
+    }
+
+
+    ItemsLayout listLayout;
+    DataTemplate listTemplate;
+    GridItemsLayout gridItemsLayout = new GridItemsLayout(2, ItemsLayoutOrientation.Vertical) { VerticalItemSpacing = 5 };
+
+
+
+    AccountViewModel currentUser = null;
 
     private void FileList_ListView_Public_Scrolled(object sender, ItemsViewScrolledEventArgs e)
     {
@@ -327,9 +288,40 @@ public partial class ListView : ContentPage
         ActIndicator.IsRunning = false;
     }
 
+    private async void NASFileLists_Tapped(object sender, EventArgs e)
+    {
+        if (mvm.FileSelected == null)
+            return;
 
+        if (mvm.FileSelected.MimeType == "folder")
+        {
+            //await Navigation.PushPopupAsync(new FileManagement_Popup_SelectFolder(mvm));
+        }
+        else
+        {
+            //await Navigation.PushPopupAsync(new FileManagement_Popup_SelectFile(mvm));
+        }
+    }
+    //private async void NASFileList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    //{
+    //    if (((NASFileViewModel)NASFileList.SelectedItem).MimeType == "folder")
+    //    {
+    //        await Navigation.PushPopupAsync(new FileManagement_Popup_SelectFolder(mvm));
+    //    }
+    //    else
+    //    {
+    //        //Routing.RegisterRoute(nameof(FileManagement_View), typeof(FileManagement_View));
+    //        //await Shell.Current.GoToAsync(nameof(FileManagement_View));
+    //        if (mvm.FileSelected.MimeType.StartsWith("image"))
+    //            await Navigation.PushAsync(new FileManagement_View(mvm));
+    //        else
+    //        {
+    //            await Navigation.PushPopupAsync(new Popup_ShowMessage("Image File Only", "File mime type must be \"image\"", "Close"));
+    //        }
+    //    }
+    //}
 
-    private async void thumb_pic_Tapped(object sender, TappedEventArgs e)
+    private async void thumb_pic_Tapped(object sender, EventArgs e)
     {
         //App.PC2ViewModel.PicViewPath = mvm.PrevPath;
         //Routing.RegisterRoute(nameof(Views.FileManagement_PicView), typeof(Views.FileManagement_PicView));
@@ -338,14 +330,15 @@ public partial class ListView : ContentPage
         mvm.UseThumbNail = !mvm.UseThumbNail;
         displayListOrView();
 
-        await mvm.readAllFileList(mvm.PrevPath, mvm.NASFiles.Count);
-        //mvm.ResetImageSrc(mvm.UseThumbNail).GetAwaiter().GetResult();
+        //await mvm.readAllFileList(mvm.PrevPath, mvm.NASFiles.Count);
+        await mvm.ResetImageSrc(mvm.UseThumbNail);
     }
+
     private void displayListOrView()
     {
         if (mvm.UseThumbNail)
         {
-            IconChar01.Text = "\ue91a";
+            IconChar01.Text = "\ue98d";
             //InformationBoard.IsVisible = true;
 
             if (listTemplate == null)
@@ -353,7 +346,7 @@ public partial class ListView : ContentPage
                 listTemplate = NASFileList.ItemTemplate;
                 listLayout = (ItemsLayout)NASFileList.ItemsLayout;
             }
-            if (!(Resources["picViewTemplate"] is null))
+            if (Resources.ContainsKey("picViewTemplate"))
             {
                 NASFileList.ItemTemplate = (DataTemplate)Resources["picViewTemplate"];
                 NASFileList.ItemsLayout = gridItemsLayout;
@@ -361,7 +354,7 @@ public partial class ListView : ContentPage
         }
         else
         {
-            IconChar01.Text = "\ue919";
+            IconChar01.Text = "\ue979";
             NASFileList.ItemTemplate = listTemplate;
             NASFileList.ItemsLayout = listLayout;
         }

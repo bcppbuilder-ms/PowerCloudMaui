@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PowerCloud.Views.Setting.SettingList"
              xmlns:Models="clr-namespace:PowerCloud.Models"
-             Title="Setting">
+             Title="設定">
     <VerticalStackLayout>
         <Label Text="傳輸設定"
             Style="{StaticResource SettingTitleStyle}"

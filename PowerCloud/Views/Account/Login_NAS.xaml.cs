@@ -28,9 +28,6 @@ public partial class Login_NAS : ContentPage
     //Btn View__015_Btn_View_Login_Account
     private async void Btn_View_Login_Account(object sender, EventArgs e)
     {
-        if (string.IsNullOrEmpty(entryTmpIp.Text))
-            entryTmpIp.Text = "j2";
-
         if (string.IsNullOrEmpty(entryTmpIp.Text) || string.IsNullOrWhiteSpace(entryTmpIp.Text))
         {
             await DisplayAlert("Wanning", "NAS Ip/name can not be empty.", "Close");

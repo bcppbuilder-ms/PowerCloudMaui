@@ -4,7 +4,7 @@
              x:Class="PowerCloud.Views.Transfer.Upload"
              xmlns:local="clr-namespace:PowerCloud.Models"
              xmlns:Models="clr-namespace:PowerCloud.Models"
-             Title="Upload">
+             Title="上傳狀態">
     <ContentPage.Content>
         <RefreshView>
             <Grid>
@@ -21,8 +21,8 @@
                         <HorizontalStackLayout HorizontalOptions="End">
                             <HorizontalStackLayout.Padding>
                                 <OnPlatform x:TypeArguments="Thickness">
-                                    <On Platform="iOS" Value="5,40,5,5" />
-                                    <On Platform="Android" Value="5,5,5,5" />
+                                    <On Platform="iOS" Value="5,10,5,10" />
+                                    <On Platform="Android" Value="5,10,5,10" />
                                 </OnPlatform>
                             </HorizontalStackLayout.Padding>
                             <Label Text="共" />

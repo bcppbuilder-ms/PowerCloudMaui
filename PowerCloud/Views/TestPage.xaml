@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="PowerCloud.Views.TestPage"
              xmlns:Models="clr-namespace:PowerCloud.Models"
              Title="Test page">
+    
+    <!--<ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="#44C3D9" StatusBarStyle="LightContent">
+        </toolkit:StatusBarBehavior>
+    </ContentPage.Behaviors>-->
+    
     <VerticalStackLayout>
         <Label 
             Text="Test page"
@@ -35,7 +42,7 @@
 
         </StackLayout>
 
-        <HorizontalStackLayout Style="{StaticResource PopupButtonStyle}">
+        <HorizontalStackLayout Style="{StaticResource PopupButtonStyle}" Padding="0,0,0,50">
             <Editor Style="{StaticResource PopupButtonStyle}"
                     Placeholder="Enter your response here 1234567890"
                     WidthRequest="300"
@@ -49,9 +56,20 @@
             <Label Text="MauiProgram.cs add .tff"/>
             <Label Text="Modesls add icomoonFontIcon.cs, icon C#"/>
             <Label Text="page head add xmlns:Models= clr-namespace:PowerCloudMaui.Models "/>
-            <Label FontFamily="icomoon"
+            <HorizontalStackLayout>
+                <Label FontFamily="icomoon"
                    Text="{x:Static Models:icomoonFontIcon.Icon1}"
-                   FontSize="48"/>
+                   FontSize="24"/>
+                <Label FontFamily="icomoon"
+                   Text="{x:Static Models:icomoonFontIcon.Icon29}"
+                   FontSize="24"/>
+                <Label FontFamily="icomoon"
+                   Text="{x:Static Models:icomoonFontIcon.Icon30}"
+                   FontSize="24"/>
+                <Label FontFamily="icomoon"
+                   Text="{x:Static Models:icomoonFontIcon.Icon31}"
+                   FontSize="24"/>
+            </HorizontalStackLayout>
         </StackLayout>
 
     </VerticalStackLayout>

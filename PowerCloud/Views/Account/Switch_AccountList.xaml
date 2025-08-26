@@ -5,7 +5,7 @@
              xmlns:local="clr-namespace:PowerCloud.Models"
              xmlns:Models="clr-namespace:PowerCloud.Models"
              Title="Account.Switch_AccountList">
-    <StackLayout VerticalOptions="Start">
+    <StackLayout VerticalOptions="Fill">
         <RefreshView>
             <Grid>
                 <CollectionView>

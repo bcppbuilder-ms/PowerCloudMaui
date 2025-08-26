@@ -42,6 +42,7 @@
             <HorizontalStackLayout Grid.Column="0">
                 <CheckBox />
                 <Label VerticalOptions="Center"
+                       Padding="5,0,0,0"
                        Text="記住帳號"/>
             </HorizontalStackLayout>
             <!--Btn View__101_Btn_View_FileManagement_ListView-->

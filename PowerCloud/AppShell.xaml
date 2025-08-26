@@ -3,46 +3,50 @@
     x:Class="PowerCloud.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:local="clr-namespace:PowerCloud"
     xmlns:Models="clr-namespace:PowerCloud.Models"
     Shell.FlyoutBehavior="Flyout"
     FlyoutBackground="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Color_DarkBlueGreen}}"
+    Shell.BackgroundColor="#44C3D9"
     Title="PowerCloud">
+
+
+    <Shell.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Color_BlueGreen}" StatusBarStyle="LightContent">
+        </toolkit:StatusBarBehavior>
+    </Shell.Behaviors>
+
+    <!--<Shell.TitleView>
+        <Label TextColor="#fff"/>
+    </Shell.TitleView>-->
 
     <!--left menu-head-->
     <Shell.FlyoutHeaderTemplate>
         <DataTemplate>
-            <Grid Padding="15,20,15,20" BackgroundColor="{AppThemeBinding Light={StaticResource Color_BlueGreen}, Dark={StaticResource Color_DarkBlueGreen3}}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="5" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" 
-                       Grid.Column="0"
-                       Style="{StaticResource LabelIconStyle}"
-                       TextColor="White"
-                       Text="{x:Static Models:icomoonFontIcon.Icon50}"/>
-                <Label Text="name" 
-                       TextColor="White"
-                       Grid.Row="0" 
-                       Grid.Column="1" >
-                </Label>
-                <StackLayout Grid.ColumnSpan="2" Grid.Row="1" />
-                <Label Grid.Row="2" 
-                       Grid.Column="0"
-                       Style="{StaticResource LabelIconStyle}"
-                       TextColor="White"
-                       Text="{x:Static Models:icomoonFontIcon.Icon45}"/>
-                <Label Text="link" 
-                       TextColor="White"
-                       Grid.Row="2" 
-                       Grid.Column="1" />
-            </Grid>
+            <StackLayout Padding="10">
+                <Grid VerticalOptions="Start"
+                      Background="#fff"
+                       Padding="15">
+                    <Grid.Shadow>
+                        <Shadow Brush="#329eb1" Radius="1"  />
+                    </Grid.Shadow>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="5" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0"  Grid.Column="0" Style="{StaticResource LabelIconStyle}" TextColor="{StaticResource Color_BlueGreen}" Text="{x:Static Models:icomoonFontIcon.Icon50}"/>
+                    <Label Text="name" TextColor="{StaticResource Color_BlueGreen}" Grid.Row="0" Grid.Column="1" MaxLines="3"/>
+                    <StackLayout Grid.ColumnSpan="2" Grid.Row="1" />
+                    <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource LabelIconStyle}"  TextColor="{StaticResource Color_BlueGreen}" Text="{x:Static Models:icomoonFontIcon.Icon45}"/>
+                    <Label Text="link" TextColor="{StaticResource Color_BlueGreen}" Grid.Row="2" Grid.Column="1" MaxLines="3" />
+                </Grid>
+            </StackLayout>
         </DataTemplate>
     </Shell.FlyoutHeaderTemplate>
 
@@ -95,6 +99,13 @@
                 Route="TransferDownload" />
         </Tab>
     </FlyoutItem>
+    <FlyoutItem Title="手機照片備份">
+        <ShellContent
+            Title="Backup"
+            ContentTemplate="{DataTemplate local:Views.BackupView.BackupList}"
+            Route="Backup" />
+    </FlyoutItem>
+
     <FlyoutItem Title="系統資訊">
         <ShellContent
             Title="SystemInfo"
@@ -107,12 +118,7 @@
             ContentTemplate="{DataTemplate local:Views.Setting.SettingList}"
             Route="Setting" />
     </FlyoutItem>
-    <FlyoutItem Title="手機照片備份">
-        <ShellContent
-            Title="Backup"
-            ContentTemplate="{DataTemplate local:Views.BackupView.BackupList}"
-            Route="Backup" />
-    </FlyoutItem>
+
 
     <!--用於URL GoToAsync跳轉頁面用-->
     <TabBar>
@@ -126,15 +132,14 @@
 
     <Shell.FlyoutFooterTemplate>
         <DataTemplate>
-            <Grid HeightRequest="60">
+            <Grid BackgroundColor="{AppThemeBinding Light={StaticResource Color_LightGary}, Dark={StaticResource Color_DarkBlueGreen2}}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <!--View_021_Btn_View_Switch_AccountList_可切換的帳號列表頁-->
                 <StackLayout Grid.Column="0" 
-                             Padding="0,20,0,20" 
-                             BackgroundColor="{AppThemeBinding Light={StaticResource Color_LightGary}, Dark={StaticResource Color_DarkBlueGreen2}}">
+                             Padding="0,25,0,25">
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="Btn_View_Switch_AccountList" />
                     </StackLayout.GestureRecognizers>
@@ -144,8 +149,7 @@
                 </StackLayout>
                 <!--View_ 031_Btn_View_Logout_AccountList_登出頁 – 可選擇其他已登入帳號列表 改用View__011__Login_AccountList -->
                 <StackLayout Grid.Column="1" 
-                             Padding="0,20,0,20" 
-                             BackgroundColor="{AppThemeBinding Light={StaticResource Color_LightGary}, Dark={StaticResource Color_DarkBlueGreen2}}">
+                             Padding="0,25,0,25" >
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="Btn_View_Login_AccountList" />
                     </StackLayout.GestureRecognizers>

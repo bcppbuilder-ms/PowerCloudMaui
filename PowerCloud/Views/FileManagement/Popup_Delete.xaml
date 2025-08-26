@@ -2,58 +2,75 @@
 <toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                x:Class="PowerCloud.Views.FileManagement.Popup_Delete"
-               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               CanBeDismissedByTappingOutsideOfPopup="False"
+               Color="Transparent">
 
-    <VerticalStackLayout Style="{StaticResource PopupBackgroudStyle}">
 
-        <!--單一檔案-->
-        <Label Style="{StaticResource PopupTitleTextStyle}"
+
+    <Grid Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Frame Grid.Row="0"
+           CornerRadius="10"
+           VerticalOptions="Center"
+           Style="{StaticResource PopupBackgroudStyle}">
+
+            <VerticalStackLayout>
+                <!--單一檔案-->
+                <Label Style="{StaticResource PopupTitleTextStyle}"
                Grid.Column="1"
                Text="刪除後無法還原，確定刪除？" />
-        <!--單一檔案-inner-->
-        <Grid Padding="10" 
+                <!--單一檔案-inner-->
+                <Grid Padding="10" 
               BackgroundColor="White">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="25"/>
-                <RowDefinition Height="25"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Image Grid.Row="0" 
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Row="0" 
                    Grid.RowSpan="2" 
                    Grid.Column="0"
                    Source="file_text.png" 
                    Aspect="AspectFit"/>
-            <Label Grid.Row="0"
+                    <Label Grid.Row="0"
                    Grid.Column="1"
                    VerticalTextAlignment="Center"
                    Text="file name"/>
-            <Label Grid.Row="1"
+                    <Label Grid.Row="1"
                    Grid.Column="1"
                    VerticalTextAlignment="Center"
                    FontSize="10" 
                    TextColor="{StaticResource Color_Gary}"
                    Text="fileinfo"/>
-        </Grid>
-        
-        <!--多檔案-->
-        <Label Style="{StaticResource PopupTitleTextStyle}"
+                </Grid>
+
+                <!--多檔案-->
+                <Label Style="{StaticResource PopupTitleTextStyle}"
                Text="刪除後無法還原，" />
-        
-        <Label Style="{StaticResource PopupTitleTextStyle}"
+
+                <Label Style="{StaticResource PopupTitleTextStyle}"
                Text="確定刪除所選取的2個項目？" />
-        
+
+                <!--btn-row-->
+                <HorizontalStackLayout HorizontalOptions="End" Padding="0,30,0,15">
+                    <Button Text="取消" Clicked="Btn_Clicked_ClosePopup" Style="{StaticResource Btn_Bg_White_DarkGary}"/>
+                    <Button Text="刪除" Style="{StaticResource Btn_Bg_White_Red}" Margin="15,0,0,0"/>
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+
+        </Frame>
+    </Grid>
 
 
-        <!--btn-row-->
-        <HorizontalStackLayout HorizontalOptions="End" Padding="0,30,0,15">
-            <Button Text="取消" Clicked="Btn_Clicked_ClosePopup" Style="{StaticResource Btn_Bg_White_DarkGary}"/>
-            <Button Text="刪除" Style="{StaticResource Btn_Bg_White_Red}" Margin="15,0,0,0"/>
-        </HorizontalStackLayout>
 
-    </VerticalStackLayout>
     
 
 </toolkit:Popup>
