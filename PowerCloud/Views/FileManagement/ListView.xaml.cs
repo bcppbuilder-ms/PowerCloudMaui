@@ -154,7 +154,7 @@ public partial class ListView : ContentPage
             ////await Shell.Current.GoToAsync(nameof(FileManagement_View));
             if (mvm.FileSelected.MimeType.StartsWith("image"))
             {
-                //await Navigation.PushAsync(new FileManagement_View(mvm));
+               // await Navigation.PushAsync(new FileManagement_View(mvm));
             }
             else
             {
@@ -327,6 +327,20 @@ public partial class ListView : ContentPage
         ActIndicator.IsRunning = false;
     }
 
+    private async void NASFileLists_Tapped(object sender, EventArgs e)
+    {
+        if (mvm.FileSelected == null)
+            return;
+
+        if (mvm.FileSelected.MimeType == "folder")
+        {
+            //await Navigation.PushPopupAsync(new FileManagement_Popup_SelectFolder(mvm));
+        }
+        else
+        {
+            //await Navigation.PushPopupAsync(new FileManagement_Popup_SelectFile(mvm));
+        }
+    }
 
 
     private async void thumb_pic_Tapped(object sender, TappedEventArgs e)
