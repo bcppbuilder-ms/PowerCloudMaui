@@ -49,8 +49,8 @@ public partial class Login_Account : ContentPage
 
             //await Shell.Current.GoToAsync($"//{nameof(FileManagementPublic)}");
             int n = App.PC2ViewModel.accountManager.Accounts.Count;
-            await Shell.Current.GoToAsync($"//{nameof(FileManagement.ListView)}");
-            //await Shell.Current.GoToAsync($"//{nameof(FileManagement.PicView)}");
+            await Shell.Current.GoToAsync($"//{nameof(FileManagement.filesPublic)}");
+            //await Shell.Current.GoToAsync($"//{nameof(FileManagement.ListView)}");
         }
         else
         {

@@ -1,9 +1,12 @@
+
+using PowerCloud.ViewModels;
+
 namespace PowerCloud.Views.FileManagement;
 
 
 public partial class Popup_Delete : CommunityToolkit.Maui.Views.Popup
 {
-    public Popup_Delete()
+    public Popup_Delete(MainNasFileViewModel mVm)
 	{
 		InitializeComponent();
 

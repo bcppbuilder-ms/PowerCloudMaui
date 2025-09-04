@@ -117,7 +117,7 @@ public partial class PicView : ContentPage
     private void Btn_Popup_FileManSelectFile(object sender, EventArgs e)
     {
         //var popup = new PopupTestContentView();
-        var popup = new Popup_SelectFile();
+        var popup = new Popup_SelectFile(mvm);
         //popup-end
         popup.VerticalOptions = LayoutAlignment.End;
         popup.HorizontalOptions = LayoutAlignment.Fill;
@@ -306,6 +306,7 @@ public partial class PicView : ContentPage
         //await mvm.readAllFileList(mvm.PrevPath, mvm.NASFiles.Count);
         mvm.ResetImageSrc(mvm.UseThumbNail).GetAwaiter().GetResult();
     }
+
     private void displayListOrView()
     {
         if (mvm.UseThumbNail)

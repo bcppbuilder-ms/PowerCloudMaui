@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:PowerCloud.Views.FileManagement"
+             x:Class="PowerCloud.Views.FileManagement.filesPublic"
+             Title="共用空間">
+    
+    <ContentPage.ToolbarItems>
+        <!--icon__搜尋-->
+        <ToolbarItem>
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="&#xe926;"
+                                         FontFamily="icomoon"
+                                         Color="White"
+                                         Size="20" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <!--icon__多選-->
+        <ToolbarItem Clicked="Btn_MultiSelect_ListView">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="&#xe906;"
+                                         FontFamily="icomoon"
+                                         Color="White"
+                                         Size="20" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <!--icon__分享-->
+        <ToolbarItem>
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="&#xe927;"
+                                         FontFamily="icomoon"
+                                         Color="White"
+                                         Size="20" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <!--icon__下載-->
+        <ToolbarItem>
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="&#xe913;"
+                                         FontFamily="icomoon"
+                                         Color="White"
+                                         Size="20" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <!--icon__刪除-->
+        <ToolbarItem>
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="&#xe929;"
+                                         FontFamily="icomoon"
+                                         Color="White"
+                                         Size="20" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <!--icon__更多-->
+        <ToolbarItem>
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="&#xe91b;"
+                                         FontFamily="icomoon"
+                                         Color="White"
+                                         Size="20" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <!--icon__回上一層-->
+        <ToolbarItem>
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="&#xe908;"
+                                         FontFamily="icomoon"
+                                         Color="White"
+                                         Size="20" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <controls:FilesOnNASView x:Name="myControl"></controls:FilesOnNASView>
+    </ContentPage.Content>
+</ContentPage>

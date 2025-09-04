@@ -114,10 +114,10 @@ public partial class ListView : ContentPage
         this.ShowPopup(popup);
     }
 
-    private void Btn_Popup_FileManSelectFile(object sender, EventArgs e)
+    private void Btn_Popup_FileManSelectFile(object sender, TappedEventArgs e)
     {
         //var popup = new PopupTestContentView();
-        var popup = new Popup_SelectFile();
+        var popup = new Popup_SelectFile(mvm);
         //popup-end
         popup.VerticalOptions = LayoutAlignment.End;
         popup.HorizontalOptions = LayoutAlignment.Fill;
@@ -132,7 +132,7 @@ public partial class ListView : ContentPage
 
 
     bool doing = false;
-    private async void FileIcone_Tapped(object sender, TappedEventArgs e)
+    private async void FileIcon_Tapped(object sender, TappedEventArgs e)
     {
         FinalLayout.IsVisible = false;
         ActIndicator.IsRunning = true;
@@ -144,8 +144,7 @@ public partial class ListView : ContentPage
 
         if (((NASFileViewModel)NASFileList.SelectedItem).MimeType == "folder")
         {
-            //await mvm.ListView_GotoSubFolder(/*NASFileList*/);
-
+            await mvm.ListView_GotoSubFolder(/*NASFileList*/);
             HasParent = true;
         }
         else
@@ -155,6 +154,10 @@ public partial class ListView : ContentPage
             if (mvm.FileSelected.MimeType.StartsWith("image"))
             {
                // await Navigation.PushAsync(new FileManagement_View(mvm));
+               await AppShell.Current.GoToAsync(nameof(FileManagement.PicView), true, new Dictionary<string, object>
+               {
+                   { "mvm", mvm }
+               });
             }
             else
             {
@@ -334,11 +337,11 @@ public partial class ListView : ContentPage
 
         if (mvm.FileSelected.MimeType == "folder")
         {
-            //await Navigation.PushPopupAsync(new FileManagement_Popup_SelectFolder(mvm));
+            await AppShell.Current.ShowPopupAsync(new FileManagement.Popup_SelectFolder(mvm));
         }
         else
         {
-            //await Navigation.PushPopupAsync(new FileManagement_Popup_SelectFile(mvm));
+            await AppShell.Current.ShowPopupAsync(new FileManagement.Popup_SelectFile(mvm));
         }
     }
 
@@ -355,6 +358,7 @@ public partial class ListView : ContentPage
         await mvm.readAllFileList(mvm.PrevPath, mvm.NASFiles.Count);
         //mvm.ResetImageSrc(mvm.UseThumbNail).GetAwaiter().GetResult();
     }
+
     private void displayListOrView()
     {
         if (mvm.UseThumbNail)

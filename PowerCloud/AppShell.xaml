@@ -75,12 +75,12 @@
         <Tab Title="FileManagement-Tab">
             <ShellContent
                 Title="共用空間"
-                ContentTemplate="{DataTemplate local:Views.FileManagement.ListView}"
-                Route="ListView" />
+                ContentTemplate="{DataTemplate local:Views.FileManagement.filesPublic}"
+                Route="filesPublic" />
             <ShellContent
                 Title="我的空間"
-                ContentTemplate="{DataTemplate local:Views.FileManagement.PicView}"
-                Route="PicView" />
+                ContentTemplate="{DataTemplate local:Views.FileManagement.ListView}"
+                Route="ListView" />
             <ShellContent
                 Title="群組空間"
                 ContentTemplate="{DataTemplate local:Views.FileManagement.SpacePage}"

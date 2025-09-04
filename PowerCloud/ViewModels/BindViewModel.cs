@@ -6,9 +6,9 @@ namespace PowerCloud.ViewModels
     public class BindViewModel : INotifyPropertyChanged
     {
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected bool SetPropertyValue<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+        protected bool SetPropertyValue<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
         {
             if (Equals(field, value) == false)
             {

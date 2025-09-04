@@ -13,7 +13,6 @@
         </ResourceDictionary>
 
         <ResourceDictionary>
-
             <!--FileManagement_PicView__File-Item__圖示模式的樣式-->
             <DataTemplate x:Key="picViewTemplate">
                 <Grid Margin="5">
@@ -34,8 +33,8 @@
                     <!--FileManagement_PicView_File-Item_img+CheckBox -->
                     <AbsoluteLayout Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="2">
                         <!--FileManagement_PicView_File-Item_img-->
-                        <Frame HorizontalOptions="FillAndExpand"
-                             VerticalOptions="FillAndExpand"
+                        <Frame HorizontalOptions="Fill"
+                             VerticalOptions="Fill"
                              AbsoluteLayout.LayoutBounds="1, 1, 1, 1"
                              AbsoluteLayout.LayoutFlags="All"
                              BorderColor="{StaticResource Gray100}"
@@ -43,15 +42,20 @@
                              Padding="0" 
                              Margin="0"
                              CornerRadius="0">
-                            <Image Source="{Binding ImageSrc}"  HeightRequest="89" Aspect="AspectFill">
-                                <!--<Image.GestureRecognizers>
-                                                                    <TapGestureRecognizer Command="" />
-                                                                </Image.GestureRecognizers>-->
+                            <Image Source="{Binding ImageSrc}" HeightRequest="90" Aspect="AspectFill">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference NASFileList}, 
+                                                        Path=BindingContext.SetSelectedCommand}" CommandParameter="{Binding}" 
+                                                        Tapped="FileIcon_Tapped"/>
+                                </Image.GestureRecognizers>
                             </Image>
                         </Frame>
+                        
                         <!--FileManagement_PicView_File-Item_CheckBox-->
-                        <CheckBox VerticalOptions="End"
-                                                              AbsoluteLayout.LayoutBounds="1, 1, 40, 30">
+                        <CheckBox VerticalOptions="End" AbsoluteLayout.LayoutBounds="1, 1, 40, 30"
+                                  IsChecked="{Binding Selected}"
+                                  IsVisible="{Binding Source={x:Reference cbIsMultiSelect}, Path=IsChecked}"
+                                  IsEnabled="{Binding CanMultiSelect}">
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
                                     <VisualState x:Name="Normal">
@@ -70,8 +74,7 @@
                     </AbsoluteLayout>
 
                     <!--FileManagement_PicView_File-Item__info-->
-                    <StackLayout Grid.Row="1" 
-                                                             Grid.Column="0">
+                    <StackLayout Grid.Row="1" Grid.Column="0">
                         <!--<StackLayout.GestureRecognizers>
                                                     <TapGestureRecognizer Command=""/>
                                                 </StackLayout.GestureRecognizers>-->
@@ -179,9 +182,8 @@
             </StackLayout>
 
             <Grid>
-                <ActivityIndicator Color="SandyBrown" x:Name="ActIndicator"
-                                       HeightRequest="100" WidthRequest="100"  />
-                <!--VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />-->
+                <ActivityIndicator Color="SandyBrown" x:Name="ActIndicator" HeightRequest="100" WidthRequest="100"
+                    VerticalOptions="Center" HorizontalOptions="Center"/>
 
                 <!--FileList-->
                 <RefreshView x:Name="ThisRefreshView" IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">
@@ -260,8 +262,7 @@
                                         </StackLayout.GestureRecognizers>
                                         <Label 
                                            HorizontalOptions="End"
-                                           x:Name="IconChar01"
-                                               Text="&#xe919;"
+                                           x:Name="IconChar01" Text="&#xe919;"
                                            Style="{StaticResource LabelIconStyle}"
                                            FontSize="20" />
                                     </StackLayout>
@@ -288,8 +289,8 @@
                                     </Grid.RowDefinitions>
                                     <!--檔案-圖示/多選按鈕-->
                                     <Grid Grid.Column="0" Grid.Row="0" Padding="15,10,5,5">
-                                        <StackLayout HorizontalOptions="FillAndExpand"
-                                                 VerticalOptions="FillAndExpand"
+                                        <StackLayout HorizontalOptions="Fill"
+                                                 VerticalOptions="Fill"
                                                  AbsoluteLayout.LayoutBounds="1, 1, 1, 1"
                                                  AbsoluteLayout.LayoutFlags="All">
                                             <Frame BorderColor="LightGray"
@@ -302,7 +303,7 @@
                                                     <Image.GestureRecognizers>
                                                         <TapGestureRecognizer Command="{Binding Source={x:Reference NASFileList}, 
                                                         Path=BindingContext.SetSelectedCommand}" CommandParameter="{Binding}" 
-                                                        Tapped="FileIcone_Tapped"/>
+                                                        Tapped="FileIcon_Tapped"/>
                                                     </Image.GestureRecognizers>
                                                 </Image>
                                             </Frame>
@@ -369,9 +370,8 @@
                         <!--FileList__當沒有任何檔案時顯示-->
                         <CollectionView.EmptyView>
                             <ContentView>
-                                <StackLayout HorizontalOptions="CenterAndExpand"
-                                 VerticalOptions="CenterAndExpand">
-                                    <Label Text="這個--資料夾--是空的"
+                                <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                    <Label Text="這個資料夾是空的"
                                        Margin="10,25,10,10"
                                        FontAttributes="Bold"
                                        FontSize="18"

@@ -21,6 +21,29 @@
         private long size;
         public long Size { get { return size; } set { SetPropertyValue(ref size, value); } }
 
+        public string SizeStr
+        {
+            get
+            {
+                if (Size < 1024)
+                    return $"{Size} B";
+                else if (Size < 1024 * 1024)
+                    return $"{(Size / 1024.0):F2} KB";
+                else if (Size < 1024 * 1024 * 1024)
+                    return $"{(Size / (1024.0 * 1024.0)):F2} MB";
+                else
+                    return $"{(Size / (1024.0 * 1024.0 * 1024.0)):F2} GB";
+            }
+        }
+
+        public string FileInfoStr
+        {
+            get
+            {
+                return $"{Path.GetExtension(Name)} ({SizeStr})";
+            }
+        }
+
         private string lastWriteTime;
         public string LastWriteTime { get { return lastWriteTime; } set { SetPropertyValue(ref lastWriteTime, value); } }
 

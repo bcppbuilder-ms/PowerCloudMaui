@@ -1,9 +1,11 @@
+using PowerCloud.ViewModels;
+
 namespace PowerCloud.Views.FileManagement;
 
 
 public partial class Popup_SelectFolder : CommunityToolkit.Maui.Views.Popup
 {
-    public Popup_SelectFolder()
+    public Popup_SelectFolder(MainNasFileViewModel mvm)
 	{
 		InitializeComponent();
 
