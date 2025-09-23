@@ -27,8 +27,8 @@ public partial class FilesOnNASView : ContentView
         InformationBoard.BindingContext = this;
         GridBottom.BindingContext = this;
 
-        if (DeviceInfo.Platform == DevicePlatform.iOS)
-            ThisRefreshView.HeightRequest = 600;
+        //if (DeviceInfo.Platform == DevicePlatform.iOS)
+        //    ThisRefreshView.HeightRequest = 600;
     }
 
 

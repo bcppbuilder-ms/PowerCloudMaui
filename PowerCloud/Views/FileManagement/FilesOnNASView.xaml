@@ -144,267 +144,268 @@
 
 
     <ContentView.Content>
-        <Grid RowSpacing="0"
-          ColumnSpacing="0"
-          HorizontalOptions="Fill"
-          VerticalOptions="Fill">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+        <Grid HorizontalOptions="Fill"
+              VerticalOptions="Fill">
 
             <StackLayout IsVisible="False">
                 <CheckBox x:Name="cbIsMultiSelect" IsChecked="False"/>
             </StackLayout>
+            
+            <ActivityIndicator Color="SandyBrown" x:Name="ActIndicator" HeightRequest="5" WidthRequest="100"/>
 
-            <Grid Grid.Row="0">
-                <ActivityIndicator Color="SandyBrown" x:Name="ActIndicator" HeightRequest="100" WidthRequest="100"
-                    VerticalOptions="Center" HorizontalOptions="Center"/>
+            <!--FileList-->
+            <RefreshView x:Name="ThisRefreshView"
+                         IsRefreshing="{Binding IsRefreshing}"
+                         Command="{Binding RefreshCommand}"
+                         VerticalOptions="Fill"
+                         HorizontalOptions="Fill">
+                <CollectionView x:Name="NASFileList"                                
+                                ItemsSource="{Binding NASFiles}"
+                                SelectionMode="Single"
+                                SelectedItem="{Binding FileSelected}"
+                                Scrolled="FileList_ListView_Public_Scrolled"
+                                RemainingItemsThreshold="1" 
+                                RemainingItemsThresholdReached="NASFileList_RemainingItemsThresholdReached"
+                                HorizontalOptions="Fill" 
+                                VerticalOptions="Fill">
+                    <!--RemainingItemsThresholdReachedCommand="{Binding LoadMoreDataCommand}">-->
+                    <!--ex test date template-->
+                    <!--<CollectionView.ItemsSource>
+            <x:Array Type="{x:Type local:FileItem}">
+                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
+                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
+                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
+                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
+                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
+                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
+                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
+                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
+                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
+                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
+                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
+                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
+                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
+                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
+                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
+                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
+                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
+                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
+                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
+                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
+                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
+                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
+                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
+                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
+                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
+            </x:Array>
+        </CollectionView.ItemsSource>-->
+                    <!--FileList__Top-Option-row-->
+                    <CollectionView.Header>
+                        <StackLayout x:Name="InformationBoard">
+                            <Grid>
+                                <Grid.Padding>
+                                    <OnPlatform x:TypeArguments="Thickness">
+                                        <On Platform="iOS" Value="10,10,10,2" />
+                                        <On Platform="Android" Value="10,10,10,2" />
+                                    </OnPlatform>
+                                </Grid.Padding>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="55" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="25" />
+                                </Grid.ColumnDefinitions>
 
-                <!--FileList-->
-                <RefreshView Grid.Row="0"
-                             x:Name="ThisRefreshView" 
-                             IsRefreshing="{Binding IsRefreshing}" 
-                             Command="{Binding RefreshCommand}"
-                             VerticalOptions="Fill"
-                             HorizontalOptions="Fill">
-                    <CollectionView x:Name="NASFileList" 
-                                    ItemsSource="{Binding NASFiles}"
-                                    SelectionMode="Single" 
-                                    SelectedItem="{Binding FileSelected}" 
-                                    Scrolled="FileList_ListView_Public_Scrolled"
-                                    RemainingItemsThreshold="1" 
-                                    RemainingItemsThresholdReached="NASFileList_RemainingItemsThresholdReached"
-                                    HorizontalOptions="Fill"
-                                    VerticalOptions="Fill">
-                        <!--RemainingItemsThresholdReachedCommand="{Binding LoadMoreDataCommand}">-->
-                        <!--ex test date template-->
-                        <!--<CollectionView.ItemsSource>
-                            <x:Array Type="{x:Type local:FileItem}">
-                                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
-                                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
-                                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
-                                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
-                                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
-                                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
-                                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
-                                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
-                                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
-                                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
-                                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
-                                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
-                                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
-                                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
-                                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
-                                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
-                                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
-                                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
-                                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
-                                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
-                                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
-                                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
-                                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
-                                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
-                                <local:FileItem FileName="FileName" FileFormat="FileFormat" FileLastModifiedDate="FileLastModifiedDate" FileSize="FileSize" />
-                            </x:Array>
-                        </CollectionView.ItemsSource>-->
-                        <!--FileList__Top-Option-row-->
-                        <CollectionView.Header>
-                            <StackLayout x:Name="InformationBoard">
-                                <!--Padding="10,5,10,13">-->
-                                <Grid>
-                                    <!--Padding="10,2,10,2">-->
-                                    <Grid.Padding>
-                                        <OnPlatform x:TypeArguments="Thickness">
-                                            <On Platform="iOS" Value="10,10,10,2" />
-                                            <On Platform="Android" Value="10,10,10,2" />
-                                        </OnPlatform>
-                                    </Grid.Padding>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="55" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="25" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <!--popup_111_排序-->
-                                    <StackLayout Grid.Column="0" Orientation="Horizontal">
-                                        <StackLayout.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="Btn_Popup_FileManSort"/>
-                                        </StackLayout.GestureRecognizers>
-                                        <Label Text="名稱"/>
-                                        <Label Text="{x:Static Models:icomoonFontIcon.Icon12}"
+                                <!--popup_111_排序-->
+                                <StackLayout Grid.Column="0" Orientation="Horizontal">
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="Btn_Popup_FileManSort"/>
+                                    </StackLayout.GestureRecognizers>
+                                    <Label Text="名稱"/>
+                                    <Label Text="{x:Static Models:icomoonFontIcon.Icon12}"
                                            Style="{StaticResource LabelIconStyle}"
                                            FontSize="20" />
-                                    </StackLayout>
+                                </StackLayout>
 
-                                    <!--space-->
-                                    <StackLayout Grid.Column="1" Orientation="Horizontal">
+                                <!--space-->
+                                <StackLayout Grid.Column="1" Orientation="Horizontal" />
 
-                                    </StackLayout>
-
-                                    <!--View_117_縮圖檢視 -->
-                                    <StackLayout Grid.Column="2" >
-                                        <StackLayout.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="thumb_pic_Tapped"/>
-                                        </StackLayout.GestureRecognizers>
-                                        <Label 
-                                           HorizontalOptions="End"
-                                           x:Name="IconChar01" Text="&#xe919;"
+                                <!--View_117_縮圖檢視 -->
+                                <StackLayout Grid.Column="2" >
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="thumb_pic_Tapped"/>
+                                    </StackLayout.GestureRecognizers>
+                                    <Label HorizontalOptions="End"
+                                           x:Name="IconChar01" 
+                                           Text="&#xe919;"
                                            Style="{StaticResource LabelIconStyle}"
                                            FontSize="20" />
-                                    </StackLayout>
-                                </Grid>
-                            </StackLayout>
-                        </CollectionView.Header>
+                                </StackLayout>
+                            </Grid>
+                        </StackLayout>
+                    </CollectionView.Header>
 
 
-                        <!--FileList__File-Item__清單模式的樣式-->
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <!--<Grid.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="Btn__goFileManagement_SubFolder"/>
-                                </Grid.GestureRecognizers>-->
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="60"></ColumnDefinition>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                        <ColumnDefinition Width="40"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-                                    <!--檔案-圖示-->
-                                    <Grid Grid.Column="0" Grid.Row="0" Padding="15,10,5,5">
-                                        <StackLayout HorizontalOptions="Fill"
+                    <!--FileList__File-Item__清單模式的樣式-->
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <!--<Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Btn__goFileManagement_SubFolder"/>
+                </Grid.GestureRecognizers>-->
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="40"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <!--檔案-圖示-->
+                                <Grid Grid.Column="0" Grid.Row="0" Padding="15,10,5,5">
+                                    <StackLayout HorizontalOptions="Fill"
                                                  VerticalOptions="Fill"
                                                  AbsoluteLayout.LayoutBounds="1, 1, 1, 1"
                                                  AbsoluteLayout.LayoutFlags="All">
-                                            <Frame BorderColor="LightGray"
+                                        <Frame BorderColor="LightGray"
                                                BackgroundColor="White"
-                                               HasShadow="False" 
-                                               Padding="0" 
+                                               HasShadow="False"
+                                               Padding="0"
                                                Margin="0"
                                                CornerRadius="0">
-                                                <Image Source="{Binding ImageSrc}" HeightRequest="30" Aspect= "AspectFit">
-                                                    <Image.GestureRecognizers>
-                                                        <TapGestureRecognizer Command="{Binding Source={x:Reference NASFileList}, 
-                                                        Path=BindingContext.SetSelectedCommand}" CommandParameter="{Binding}" 
-                                                        Tapped="FileIcon_Tapped"/>
-                                                    </Image.GestureRecognizers>
-                                                </Image>
-                                            </Frame>
-                                        </StackLayout>
+                                            <Image Source="{Binding ImageSrc}" HeightRequest="30" Aspect= "AspectFit">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding Source={x:Reference NASFileList},
+                                                        Path=BindingContext.SetSelectedCommand}" CommandParameter="{Binding}"
+                                                                          Tapped="FileIcon_Tapped"/>
+                                                </Image.GestureRecognizers>
+                                            </Image>
+                                        </Frame>
+                                    </StackLayout>
 
-                                        <!--FileManagement_FileList__File-Item_CheckBox-->
-                                        <!--FileList__File-Item_CheckBox move more-row-->
-                                        <!--<StackLayout AbsoluteLayout.LayoutBounds="1, 1, 40, 40">
-                                            <CheckBox IsChecked="{Binding Selected}" VerticalOptions="Start"
-                                                   IsVisible="{Binding Source={x:Reference cbIsMultiSelect}, Path=IsChecked}"
-                                                  IsEnabled="{Binding CanMultiSelect}">
-                                                <VisualStateManager.VisualStateGroups>
-                                                    <VisualStateGroup x:Name="CommonStates">
-                                                        <VisualState x:Name="Normal">
-                                                            <VisualState.Setters>
-                                                                <Setter Property="Color" Value="{StaticResource Color_BlueGreen}" />
-                                                            </VisualState.Setters>
-                                                        </VisualState>
-                                                        <VisualState x:Name="Disabled">
-                                                            <VisualState.Setters>
-                                                                <Setter Property="Color" Value="Silver" />
-                                                            </VisualState.Setters>
-                                                        </VisualState>
-                                                    </VisualStateGroup>
-                                                </VisualStateManager.VisualStateGroups>
-                                            </CheckBox>
-                                        </StackLayout>-->
-                                    </Grid>
-                                    <!--檔案-名稱/檔案格式說明-->
-                                    <Grid Grid.Column="1"  Grid.Row="0" Padding="0,10,15,5">
-                                        <StackLayout>
-                                            <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" />
-                                            <Label FontSize="10" TextColor="{StaticResource Color_Gary}">
-                                                <Label.FormattedText>
-                                                    <FormattedString>
-                                                        <Span Text="{Binding MimeType}" />
-                                                        <Span Text=" - "/>
-                                                        <Span Text="{Binding LastWriteTime}" />
-                                                        <Span Text=" - "/>
-                                                        <Span Text="{Binding Size}" />
-                                                    </FormattedString>
-                                                </Label.FormattedText>
-                                            </Label>
-                                        </StackLayout>
-                                    </Grid>
-                                    <!--檔案-更多按鈕 more-row -->
-                                    <StackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center">
-                                        <!--更多按鈕-->
-                                        <Label Text="{x:Static Models:icomoonFontIcon.Icon33}"
+                                    <!--FileManagement_FileList__File-Item_CheckBox-->
+                                    <!--FileList__File-Item_CheckBox move more-row-->
+                                    <!--<StackLayout AbsoluteLayout.LayoutBounds="1, 1, 40, 40">
+                            <CheckBox IsChecked="{Binding Selected}" VerticalOptions="Start"
+                                   IsVisible="{Binding Source={x:Reference cbIsMultiSelect}, Path=IsChecked}"
+                                  IsEnabled="{Binding CanMultiSelect}">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal">
+                                            <VisualState.Setters>
+                                                <Setter Property="Color" Value="{StaticResource Color_BlueGreen}" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <VisualState.Setters>
+                                                <Setter Property="Color" Value="Silver" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </CheckBox>
+                        </StackLayout>-->
+                                </Grid>
+                                <!--檔案-名稱/檔案格式說明-->
+                                <Grid Grid.Column="1"  Grid.Row="0" Padding="0,10,15,5">
+                                    <StackLayout>
+                                        <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" />
+                                        <Label FontSize="10" TextColor="{StaticResource Color_Gary}">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding MimeType}" />
+                                                    <Span Text=" - "/>
+                                                    <Span Text="{Binding LastWriteTime}" />
+                                                    <Span Text=" - "/>
+                                                    <Span Text="{Binding Size}" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                    </StackLayout>
+                                </Grid>
+                                <!--檔案-更多按鈕 more-row -->
+                                <StackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center">
+                                    <!--更多按鈕-->
+                                    <Label Text="{x:Static Models:icomoonFontIcon.Icon33}"
                                            Style="{StaticResource LabelIconStyle}"
                                            FontSize="20">
                                         <Label.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding Source={x:Reference NASFileList}, 
-                                                        Path=BindingContext.SetSelectedCommand}" CommandParameter="{Binding}" 
-                                                        Tapped="Btn_Popup_MoreOptions"/>
+                                                Path=BindingContext.SetSelectedCommand}" 
+                                                                  CommandParameter="{Binding}"
+                                                                  Tapped="Btn_Popup_MoreOptions"/>
                                         </Label.GestureRecognizers>
                                     </Label>
-                                        <!--多選-->
-                                        <CheckBox IsChecked="{Binding Selected}" VerticalOptions="Start"
-                                                            IsVisible="{Binding Source={x:Reference cbIsMultiSelect}, Path=IsChecked}"
-                                                            IsEnabled="{Binding CanMultiSelect}">
-                                            <VisualStateManager.VisualStateGroups>
-                                                <VisualStateGroup x:Name="CommonStates">
-                                                    <VisualState x:Name="Normal">
-                                                        <VisualState.Setters>
-                                                            <Setter Property="Color" Value="{StaticResource Color_BlueGreen}" />
-                                                        </VisualState.Setters>
-                                                    </VisualState>
-                                                    <VisualState x:Name="Disabled">
-                                                        <VisualState.Setters>
-                                                            <Setter Property="Color" Value="Silver" />
-                                                        </VisualState.Setters>
-                                                    </VisualState>
-                                                </VisualStateGroup>
-                                            </VisualStateManager.VisualStateGroups>
-                                        </CheckBox>
+                                    <!--多選-->
+                                    <CheckBox IsChecked="{Binding Selected}" VerticalOptions="Start"
+                                              IsVisible="{Binding Source={x:Reference cbIsMultiSelect}, Path=IsChecked}" 
+                                              IsEnabled="{Binding CanMultiSelect}">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="Normal">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Color" Value="{StaticResource Color_BlueGreen}" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState x:Name="Disabled">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Color" Value="Silver" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </CheckBox>
 
-                                    </StackLayout>
+                                </StackLayout>
 
-                                    <!--分隔線-->
-                                    <BoxView Grid.Row="1"
-                                             Grid.ColumnSpan="3"
-                                             Style="{StaticResource DividerStyle}"/>
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
+                                <!--分隔線-->
+                                <BoxView Grid.Row="1"
+                                         Grid.ColumnSpan="3"
+                                         Style="{StaticResource DividerStyle}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
 
-                        <!--FileList__File-Item__縮圖模式 : 需至「FileManagement_PicView」查看，從68行~至102行，包括切換成縮圖模式的設定和樣式 -->
+                    <!--FileList__File-Item__縮圖模式 : 需至「FileManagement_PicView」查看，從68行~至102行，包括切換成縮圖模式的設定和樣式 -->
 
-                        <!--FileList__當沒有任何檔案時顯示-->
-                        <CollectionView.EmptyView>
-                            <ContentView>
-                                <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-                                    <Label Text="這個資料夾是空的"
+                    <!--FileList__在會後加上緩衝區-->
+                    <CollectionView.Footer>
+                        <StackLayout HeightRequest="130" />
+                    </CollectionView.Footer>
+
+
+
+                    <!--FileList__當沒有任何檔案時顯示-->
+                    <CollectionView.EmptyView>
+                        <ContentView>
+                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label Text="這個資料夾是空的"
                                        Margin="10,25,10,10"
                                        FontAttributes="Bold"
                                        FontSize="18"
                                        HorizontalOptions="Fill"
                                        HorizontalTextAlignment="Center" />
-                                </StackLayout>
-                            </ContentView>
-                        </CollectionView.EmptyView>
-                    </CollectionView>
-                </RefreshView>
+                            </StackLayout>
 
-            </Grid>
+
+                        </ContentView>
+                    </CollectionView.EmptyView>
+                </CollectionView>
+
+
+            </RefreshView>
+
+
+
 
             <!--FileList__Bottom-btn-->
-            <Grid Grid.Row="1" 
+            <Grid AbsoluteLayout.LayoutFlags="PositionProportional"
+                AbsoluteLayout.LayoutBounds="1,1"
                 HorizontalOptions="End" 
-                  VerticalOptions="End" 
-                  x:Name="FinalLayout" 
-                  Padding="0,0,25,10" 
-                  ColumnSpacing="15">
+                VerticalOptions="End" 
+                x:Name="FinalLayout"
+                Padding="0,0,25,10" 
+                ColumnSpacing="15">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="75" />
                     <ColumnDefinition Width="75" />
@@ -412,20 +413,20 @@
                 <!--<Bottom-btn__back-->
                 <StackLayout x:Name="GridBottom" Grid.Column="0">
                     <Frame HeightRequest="75"
-                               Padding="0"
-                               CornerRadius="38"
-                               HasShadow="False"
-                               BackgroundColor="{StaticResource Color_BlueGreen}">
+                           Padding="0"
+                           CornerRadius="38"
+                           HasShadow="False"
+                           BackgroundColor="{StaticResource Color_BlueGreen}">
                         <!--<Frame.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnClicked"/>
                         </Frame.GestureRecognizers>-->
                         <Label Text="{x:Static Models:icomoonFontIcon.Icon47}"
-                                   FontFamily="icomoon" 
-                                   FontSize="32" 
-                                   Margin="0,3,0,0"
-                                   TextColor="{StaticResource Color_White}"
-                                   HorizontalTextAlignment="Center"
-                                   VerticalTextAlignment="Center"/>
+                               FontFamily="icomoon"
+                               FontSize="32"
+                               Margin="0,3,0,0"
+                               TextColor="{StaticResource Color_White}"
+                               HorizontalTextAlignment="Center"
+                               VerticalTextAlignment="Center"/>
                     </Frame>
                 </StackLayout>
                 <!--<Bottom-btn__add-->
@@ -448,6 +449,9 @@
                 </StackLayout>
             </Grid>
 
+
         </Grid>
+        
+        
     </ContentView.Content>
 </ContentView>
