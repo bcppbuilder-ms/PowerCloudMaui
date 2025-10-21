@@ -4,6 +4,7 @@
              x:Class="PowerCloud.Views.FileManagement.View"
              xmlns:Models="clr-namespace:PowerCloud.Models"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:Mgt="clr-namespace:PowerCloud.Views.FileManagement"   
              Shell.BackgroundColor="Black"
              BackgroundColor="Black"
              Title="view page">
@@ -13,16 +14,56 @@
         </toolkit:StatusBarBehavior>
     </ContentPage.Behaviors>
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Mgt:BoolNotConverter x:Key="NotConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+
+    <!--img name-->
+    <!--<Shell.TitleView>
+        <Label x:Name="shellTitleView" 
+               Padding="0,0,60,0"
+               HorizontalTextAlignment="Center"
+               VerticalTextAlignment="Center"
+               FontSize="16" 
+               Margin="0,0,0,0"
+               Text="Hello"
+               TextColor="{StaticResource Color_Wh}"/>
+    </Shell.TitleView>-->
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
-        <StackLayout Grid.Row="0">
+        <!--<StackLayout Grid.Row="0">
             <Image Aspect="AspectFill" 
-                   VerticalOptions="CenterAndExpand" 
+                   VerticalOptions="Center" 
                    HorizontalOptions="Center" />
-        </StackLayout>
+        </StackLayout>-->
+        <CarouselView x:Name="ImageList"
+                      Grid.Row="0"
+                      ItemsSource="{Binding x1}"
+                      CurrentItemChanged="ImageList_CurrentItemChanged"
+                      HorizontalScrollBarVisibility="Always">
+            <CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="0">
+                        <Image Aspect="AspectFill" Source="{Binding ImageSrc}" 
+                               VerticalOptions="Center" HorizontalOptions="Fill" 
+                               IsAnimationPlaying="{Binding isGif}" />
+                    </Grid>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+
+        <ActivityIndicator Color="AliceBlue" x:Name="ActIndicator" IsRunning="True"
+                    VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="0"/>
+
+
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50" />
@@ -36,6 +77,11 @@
                        Style="{StaticResource LabelIconStyle}"
                        FontSize="26" 
                        TextColor="{StaticResource Color_White}"/>                
+            </StackLayout>
+            <StackLayout Grid.Column="1" x:Name="TextBoard">
+                <Label Text="{Binding Name}" 
+                               VerticalOptions="End" HorizontalOptions="Center"
+                               TextColor="{StaticResource White}"/>
             </StackLayout>
             <StackLayout Margin="0,0,5,0" 
                          Padding="3"

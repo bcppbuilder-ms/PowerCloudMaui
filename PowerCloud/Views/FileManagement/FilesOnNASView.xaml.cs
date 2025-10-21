@@ -358,7 +358,7 @@ public partial class FilesOnNASView : ContentView
         HasParent = true;
     }
 
-    private void FileIcon_Tapped(object sender, TappedEventArgs e)
+    private async void FileIcon_Tapped(object sender, TappedEventArgs e)
     {
         FinalLayout.IsVisible = false;
         ActIndicator.IsRunning = true;
@@ -380,7 +380,7 @@ public partial class FilesOnNASView : ContentView
             ////await Shell.Current.GoToAsync(nameof(FileManagement_View));
             if (mvm.FileSelected.MimeType.StartsWith("image"))
             {
-                //await Navigation.PushAsync(new FileManagement_View(mvm));
+                await Navigation.PushAsync(new View(mvm));
             }
             else
             {

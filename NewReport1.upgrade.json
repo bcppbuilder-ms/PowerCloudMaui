@@ -1,0 +1,141 @@
+{
+  "settings": {
+    "components": {
+      "code": true,
+      "binaries": false
+    },
+    "targetId": "",
+    "targetDisplayName": ".NET 9.0"
+  },
+  "analysisStartTime": "2025-09-22T15:30:23.6496073Z",
+  "analysisEndTime": "2025-09-22T15:30:25.4475964Z",
+  "privacyModeHelpUrl": "https://go.microsoft.com/fwlink/?linkid=2270980",
+  "stats": {
+    "summary": {
+      "projects": 1,
+      "issues": 2,
+      "incidents": 3,
+      "effort": 3
+    },
+    "charts": {
+      "severity": {
+        "Mandatory": 1,
+        "Optional": 0,
+        "Potential": 2,
+        "Information": 0
+      },
+      "category": {
+        "NuGet": 2,
+        "Project": 1
+      }
+    }
+  },
+  "projects": [
+    {
+      "path": "PowerCloud\\PowerCloud.csproj",
+      "startingProject": true,
+      "issues": 2,
+      "storyPoints": 3,
+      "ruleInstances": [
+        {
+          "incidentId": "55541f8f-b117-4b01-bdcf-3b5cb0a81b50",
+          "ruleId": "NuGet.0002",
+          "projectPath": "PowerCloud\\PowerCloud.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.Extensions.Logging.Debug, 8.0.1\n\n\u5EFA\u8B70\uFF1A\n\nMicrosoft.Extensions.Logging.Debug 9.0.9",
+              "protected": "Microsoft.Extensions.Logging.Debug, 8.0.1\n\n\u5EFA\u8B70\uFF1A\n\nMicrosoft.Extensions.Logging.Debug 9.0.9"
+            },
+            "kind": "File",
+            "path": "PowerCloud\\PowerCloud.csproj",
+            "snippet": "Microsoft.Extensions.Logging.Debug, 8.0.1\n\n\u5EFA\u8B70\uFF1A\n\nMicrosoft.Extensions.Logging.Debug 9.0.9",
+            "protectedSnippet": "Microsoft.Extensions.Logging.Debug, 8.0.1\n\n\u5EFA\u8B70\uFF1A\n\nMicrosoft.Extensions.Logging.Debug 9.0.9",
+            "label": "Microsoft.Extensions.Logging.Debug 8.0.1",
+            "properties": {
+              "PackageId": "Microsoft.Extensions.Logging.Debug",
+              "PackageVersion": "8.0.1",
+              "PackageNewVersion": "9.0.9",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "e03ffc4c-123d-41b0-84f2-3d7a833d1cd6",
+          "ruleId": "NuGet.0002",
+          "projectPath": "PowerCloud\\PowerCloud.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Newtonsoft.Json, 13.0.3\n\n\u5EFA\u8B70\uFF1A\n\nNewtonsoft.Json 13.0.4",
+              "protected": "Newtonsoft.Json, 13.0.3\n\n\u5EFA\u8B70\uFF1A\n\nNewtonsoft.Json 13.0.4"
+            },
+            "kind": "File",
+            "path": "PowerCloud\\PowerCloud.csproj",
+            "snippet": "Newtonsoft.Json, 13.0.3\n\n\u5EFA\u8B70\uFF1A\n\nNewtonsoft.Json 13.0.4",
+            "protectedSnippet": "Newtonsoft.Json, 13.0.3\n\n\u5EFA\u8B70\uFF1A\n\nNewtonsoft.Json 13.0.4",
+            "label": "Newtonsoft.Json 13.0.3",
+            "properties": {
+              "PackageId": "Newtonsoft.Json",
+              "PackageVersion": "13.0.3",
+              "PackageNewVersion": "13.0.4",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "214e1abc-9bab-43d2-888a-60a5b7819d9b",
+          "ruleId": "Project.0002",
+          "projectPath": "PowerCloud\\PowerCloud.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "\u76EE\u524D\u7684\u76EE\u6A19\u67B6\u69CB: net8.0-android;net8.0-ios\n\u5EFA\u8B70\u7684\u76EE\u6A19\u67B6\u69CB: net8.0-android;net8.0-ios;net9.0-ios;net9.0-android",
+              "protected": "\u76EE\u524D\u7684\u76EE\u6A19\u67B6\u69CB: net8.0-android;net8.0-ios\n\u5EFA\u8B70\u7684\u76EE\u6A19\u67B6\u69CB: net8.0-android;net8.0-ios;net9.0-ios;net9.0-android"
+            },
+            "kind": "File",
+            "path": "PowerCloud\\PowerCloud.csproj",
+            "snippet": "\u76EE\u524D\u7684\u76EE\u6A19\u67B6\u69CB: net8.0-android;net8.0-ios\n\u5EFA\u8B70\u7684\u76EE\u6A19\u67B6\u69CB: net8.0-android;net8.0-ios;net9.0-ios;net9.0-android",
+            "protectedSnippet": "\u76EE\u524D\u7684\u76EE\u6A19\u67B6\u69CB: net8.0-android;net8.0-ios\n\u5EFA\u8B70\u7684\u76EE\u6A19\u67B6\u69CB: net8.0-android;net8.0-ios;net9.0-ios;net9.0-android"
+          }
+        }
+      ]
+    }
+  ],
+  "rules": {
+    "NuGet.0002": {
+      "id": "NuGet.0002",
+      "isFeature": false,
+      "description": "\u5EFA\u8B70\u70BA\u9078\u53D6\u7684\u76EE\u6A19\u67B6\u69CB\u5347\u7D1A NuGet \u5957\u4EF6\u3002\n\n\u5EFA\u8B70\u4F7F\u7528\u6A19\u6E96 .NET \u5957\u4EF6\uFF0C\u8B93\u7248\u672C\u7B26\u5408\u5C08\u6848\u76EE\u6A19\u7684 .NET \u7248\u672C\u3002\n\n\u773E\u6240\u5468\u77E5\uFF0C\u6709\u4E9B\u5957\u4EF6\u66F4\u9069\u5408\u9078\u53D6\u7684\u76EE\u6A19\u67B6\u69CB\u3002",
+      "label": "\u5EFA\u8B70\u5347\u7D1A NuGet \u5957\u4EF6",
+      "severity": "Potential",
+      "effort": 1,
+      "links": [
+        {
+          "url": "https://go.microsoft.com/fwlink/?linkid=2262530",
+          "isCustom": false
+        }
+      ]
+    },
+    "Project.0002": {
+      "id": "Project.0002",
+      "isFeature": false,
+      "description": "\u5C08\u6848\u7684\u76EE\u6A19\u67B6\u69CB\u5FC5\u9808\u8B8A\u66F4\u70BA\u60A8\u70BA\u6B64\u5347\u7D1A\u9078\u53D6\u7684\u65B0\u76EE\u6A19\u67B6\u69CB\u3002\n\n\u5728\u5347\u7D1A\u671F\u9593\uFF0C\u76EE\u6A19\u67B6\u69CB\u6703\u5728\u9069\u7528\u6642\u8ABF\u6574\u70BA\u5C0D\u61C9\u7684\u5E73\u53F0\u3002\u5728\u67D0\u4E9B\u60C5\u6CC1\u4E0B\uFF0C\u5982\u679C\u5C08\u6848\u4F7F\u7528\u7684\u529F\u80FD\u73FE\u5728\u5728\u65B0\u5F0F .NET \u67B6\u69CB (windows\u3001iOS\u3001Android \u7B49) \u4E2D\u6709\u81EA\u5DF1\u7684\u5E73\u53F0\uFF0C\u5247\u5728\u5347\u7D1A\u4E4B\u5F8C\u6703\u5C0E\u81F4\u591A\u500B\u76EE\u6A19\u67B6\u69CB\u3002",
+      "label": "\u5FC5\u9808\u8B8A\u66F4\u5C08\u6848\u7684\u76EE\u6A19\u67B6\u69CB",
+      "severity": "Mandatory",
+      "effort": 1,
+      "links": [
+        {
+          "title": "\u5F9E .NET Framework \u5230 .NET \u7684\u79FB\u690D\u6982\u89C0",
+          "url": "https://go.microsoft.com/fwlink/?linkid=2265227",
+          "isCustom": false
+        },
+        {
+          "title": ".NET \u5C08\u6848 SDK",
+          "url": "https://go.microsoft.com/fwlink/?linkid=2265226",
+          "isCustom": false
+        }
+      ]
+    }
+  }
+}
