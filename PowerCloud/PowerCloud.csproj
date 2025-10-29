@@ -57,16 +57,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui" Version="9.0.0" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="12.2.0" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.120" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.120" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.10" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\FileManagement\Popup_SelectFile.xaml.cs">
-	    <DependentUpon>Popup_SelectFile.xaml</DependentUpon>
+	  <Compile Update="Views\FileManagement\Popup_More.xaml.cs">
+	    <DependentUpon>Popup_More.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\FileManagement\Popup_MoreMulti.xaml.cs">
+	    <DependentUpon>Popup_MoreMulti.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
@@ -104,6 +107,9 @@
 	  <MauiXaml Update="Views\BackupView\View.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\FileManagement\filesMyHome.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\FileManagement\FilesOnNASView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -134,22 +140,28 @@
 	  <MauiXaml Update="Views\FileManagement\Popup_Rename.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\FileManagement\Popup_SelectFile.xaml">
+	  <MauiXaml Update="Views\FileManagement\Popup_More.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\FileManagement\Popup_SelectFolder.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\FileManagement\Popup_SelectMore.xaml">
+	  <MauiXaml Update="Views\FileManagement\Popup_MoreMulti.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\FileManagement\Popup_Sort.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\FileManagement\Popup_TakePicture.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\FileManagement\Popup_ViewDelete.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\FileManagement\SpacePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\FileManagement\UsingCamera.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\FileManagement\View.xaml">

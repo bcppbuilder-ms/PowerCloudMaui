@@ -10,12 +10,12 @@ public partial class Popup_SelectFolder : CommunityToolkit.Maui.Views.Popup
 		InitializeComponent();
 
         //PowerCloud ÀÉ®×ºÞ²z 4«ö¶s
-        Size = new(1 * (DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density), 280);
+        DesiredSize = new(1 * (DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density), 280);
 
     }
 
     //Btn_Clicked_ClosePopup
-    void Btn_Clicked_ClosePopup(object? sender, EventArgs e) => Close();
+    async void Btn_Clicked_ClosePopup(object? sender, EventArgs e) => await CloseAsync();
 
 
 }

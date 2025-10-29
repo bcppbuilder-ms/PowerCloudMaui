@@ -1,7 +1,7 @@
-using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Maui.Extensions;
 using PowerCloud.ViewModels;
+
 using System.Collections.ObjectModel;
-using LayoutAlignment = Microsoft.Maui.Primitives.LayoutAlignment;
 
 namespace PowerCloud.Views.FileManagement;
 
@@ -88,8 +88,8 @@ public partial class ListView : ContentPage
         //var popup = new PopupTestContentView();
         var popup = new Popup_Sort();
         //popup-end
-        popup.VerticalOptions = LayoutAlignment.End;
-        popup.HorizontalOptions = LayoutAlignment.Fill;
+        popup.VerticalOptions = LayoutOptions.End;
+        popup.HorizontalOptions = LayoutOptions.Fill;
 
         //popup-center
         //popup.VerticalOptions = LayoutAlignment.Center;
@@ -102,25 +102,25 @@ public partial class ListView : ContentPage
     private void Btn_Popup_FileManAdd(object sender, EventArgs e)
     {
         //var popup = new PopupTestContentView();
-        var popup = new Popup_Add();
+        var popup = new Popup_Add(mvm);
         //popup-end
-        popup.VerticalOptions = LayoutAlignment.End;
-        popup.HorizontalOptions = LayoutAlignment.Fill;
+        popup.VerticalOptions = LayoutOptions.End;
+        popup.HorizontalOptions = LayoutOptions.Fill;
 
         //popup-center
         //popup.VerticalOptions = LayoutAlignment.Center;
         //popup.HorizontalOptions = LayoutAlignment.Fill;
 
-        this.ShowPopup(popup);
+        AppShell.Current.ShowPopup(popup);
     }
 
     private void Btn_Popup_FileManSelectFile(object sender, TappedEventArgs e)
     {
         //var popup = new PopupTestContentView();
-        var popup = new Popup_SelectFile(mvm);
+        var popup = new Popup_More(mvm);
         //popup-end
-        popup.VerticalOptions = LayoutAlignment.End;
-        popup.HorizontalOptions = LayoutAlignment.Fill;
+        popup.VerticalOptions = LayoutOptions.End;
+        popup.HorizontalOptions = LayoutOptions.Fill;
 
         //popup-center
         //popup.VerticalOptions = LayoutAlignment.Center;
@@ -341,7 +341,7 @@ public partial class ListView : ContentPage
         }
         else
         {
-            await AppShell.Current.ShowPopupAsync(new FileManagement.Popup_SelectFile(mvm));
+            await AppShell.Current.ShowPopupAsync(new FileManagement.Popup_More(mvm));
         }
     }
 

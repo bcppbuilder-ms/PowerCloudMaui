@@ -2,10 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:PowerCloud.Views.FileManagement"
-             x:Class="PowerCloud.Views.FileManagement.filesPublic"
-             Title="共用空間">
-    
-    <ContentPage.ToolbarItems x:Uid="myToolBar">
+             x:Class="PowerCloud.Views.FileManagement.filesMyHome"
+             Title="我的空間">
+
+    <ContentPage.ToolbarItems>
         <!--icon__搜尋-->
         <ToolbarItem>
             <ToolbarItem.IconImageSource>
@@ -34,7 +34,7 @@
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
         <!--icon__下載-->
-        <ToolbarItem >
+        <ToolbarItem>
             <ToolbarItem.IconImageSource>
                 <FontImageSource Glyph="&#xe913;"
                                  FontFamily="icomoon"
@@ -52,9 +52,9 @@
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
         <!--icon__更多-->
-        <ToolbarItem Clicked="MultiSelect_More_Clicked">
+        <ToolbarItem Clicked="Btn_Select_More_Clicked">
             <ToolbarItem.IconImageSource>
-                <FontImageSource Glyph="&#xe91b;"
+                <FontImageSource Glyph="&#xe91b;" 
                                  FontFamily="icomoon"
                                  Color="White"
                                  Size="20" />
@@ -63,7 +63,7 @@
         <!--icon__回上一層-->
         <ToolbarItem>
             <ToolbarItem.IconImageSource>
-                <FontImageSource Glyph="&#xe908;"
+                <FontImageSource Glyph="&#xe908;" 
                                  FontFamily="icomoon"
                                  Color="White"
                                  Size="20" />
@@ -72,6 +72,6 @@
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
-        <controls:FilesOnNASView x:Name="myControl"/>
+        <controls:FilesOnNASView x:Name="myControl"></controls:FilesOnNASView>
     </ContentPage.Content>
 </ContentPage>

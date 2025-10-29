@@ -26,24 +26,33 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
 	<key>CFBundleIdentifier</key>
 	<string></string>
-
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs access to the camera to take photos.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app needs access to microphone for taking videos.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>This app needs access to the photo gallery for picking photos and videos.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs access to photos gallery for picking photos and videos.</string>
+	
 	<key>NSAppTransportSecurity</key>
 	<dict>
-	<key>NSExceptionDomains</key>
-	<dict>
-        <key>powernas.com.tw</key>
-        <dict>
-            <key>NSIncludesSubdomains</key>
-            <true/>
-            <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
-            <true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+        		<key>powernas.com.tw</key>
+		        <dict>
+		            <key>NSIncludesSubdomains</key>
+		            <true/>
+	                    <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+        		    <true/>
+	                </dict>
+	        </dict>
         </dict>
-    </dict>
-</dict>
 
 </dict>
 </plist>

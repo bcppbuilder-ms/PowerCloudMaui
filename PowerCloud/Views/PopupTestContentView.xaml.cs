@@ -18,7 +18,7 @@ public partial class PopupTestContentView : CommunityToolkit.Maui.Views.Popup
         //Size = new(1 * (DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density), 280);
 
         //PowerCloud 檔案管理 3按鈕
-        Size = new(1 * (DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density), 220);
+        DesiredSize = new(1 * (DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density), 220);
 
         //左右剛好視窗 高度由後面控制
         //Size = new(1 * (DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density), 0.3 * (DeviceDisplay.MainDisplayInfo.Height / DeviceDisplay.MainDisplayInfo.Density));
@@ -31,5 +31,5 @@ public partial class PopupTestContentView : CommunityToolkit.Maui.Views.Popup
 
     //Btn_Clicked_ClosePopup
     //https://learn.microsoft.com/en-us/dotnet/communitytoolkit/maui/views/popup
-    void Btn_Clicked_ClosePopup(object? sender, EventArgs e) => Close();
+    async void Btn_Clicked_ClosePopup(object? sender, EventArgs e) => await CloseAsync();
 }

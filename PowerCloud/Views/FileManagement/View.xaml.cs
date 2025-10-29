@@ -1,9 +1,9 @@
-using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Maui.Extensions;
 using PowerCloud.ViewModels;
+
 using System.Collections.ObjectModel;
 using System.Web;
 using System.Windows.Input;
-using LayoutAlignment = Microsoft.Maui.Primitives.LayoutAlignment;
 
 namespace PowerCloud.Views.FileManagement;
 
@@ -216,10 +216,10 @@ public partial class View : ContentPage
         //popup.HorizontalOptions = LayoutAlignment.Fill;
 
         //popup-center
-        popup.VerticalOptions = LayoutAlignment.Center;
-        popup.HorizontalOptions = LayoutAlignment.Fill;
+        popup.VerticalOptions = LayoutOptions.Center;
+        popup.HorizontalOptions = LayoutOptions.Fill;
 
-        this.ShowPopup(popup);
+        AppShell.Current.ShowPopup(popup);
     }
 }
 

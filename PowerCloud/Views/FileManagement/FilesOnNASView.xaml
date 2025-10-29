@@ -31,23 +31,21 @@
                     <!--FileManagement_PicView_File-Item_img+CheckBox -->
                     <AbsoluteLayout Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="2">
                         <!--FileManagement_PicView_File-Item_img-->
-                        <Frame HorizontalOptions="Fill"
+                        <Border HorizontalOptions="Fill"
                              VerticalOptions="Fill"
                              AbsoluteLayout.LayoutBounds="1, 1, 1, 1"
                              AbsoluteLayout.LayoutFlags="All"
-                             BorderColor="{StaticResource Gray100}"
-                             HasShadow="False" 
                              Padding="0" 
-                             Margin="0"
-                             CornerRadius="0">
-                            <Image Source="{Binding ImageSrc}" HeightRequest="90" Aspect="AspectFill">
+                             Margin="0">
+                            <Image Source="{Binding ImageSrc2}" HeightRequest="90" Aspect="AspectFill">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={x:Reference NASFileList}, 
-                                                        Path=BindingContext.SetSelectedCommand}" CommandParameter="{Binding}" 
-                                                        Tapped="FileIcon_Tapped"/>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding Source={x:Reference NASFileList}, Path=BindingContext.SetSelectedCommand}" 
+                                        CommandParameter="{Binding}" 
+                                        Tapped="ShowContentItem_Tapped"/>
                                 </Image.GestureRecognizers>
                             </Image>
-                        </Frame>
+                        </Border>
 
                         <!--FileManagement_PicView_File-Item_CheckBox-->
                         <!--<CheckBox VerticalOptions="End" AbsoluteLayout.LayoutBounds="1, 1, 40, 30"
@@ -150,8 +148,8 @@
             <StackLayout IsVisible="False">
                 <CheckBox x:Name="cbIsMultiSelect" IsChecked="False"/>
             </StackLayout>
-            
-            <ActivityIndicator Color="SandyBrown" x:Name="ActIndicator" HeightRequest="5" WidthRequest="100"/>
+
+            <ActivityIndicator Color="SandyBrown" x:Name="ActIndicator" Scale="5"/>
 
             <!--FileList-->
             <RefreshView x:Name="ThisRefreshView"
@@ -159,6 +157,7 @@
                          Command="{Binding RefreshCommand}"
                          VerticalOptions="Fill"
                          HorizontalOptions="Fill">
+
                 <CollectionView x:Name="NASFileList"                                
                                 ItemsSource="{Binding NASFiles}"
                                 SelectionMode="Single"
@@ -229,10 +228,10 @@
                                 <!--space-->
                                 <StackLayout Grid.Column="1" Orientation="Horizontal" />
 
-                                <!--View_117_縮圖檢視 -->
+                                <!--View_117_並列圖示檢視 -->
                                 <StackLayout Grid.Column="2" >
                                     <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="thumb_pic_Tapped"/>
+                                        <TapGestureRecognizer Tapped="ShowTwoColumn_Tapped"/>
                                     </StackLayout.GestureRecognizers>
                                     <Label HorizontalOptions="End"
                                            x:Name="IconChar01" 
@@ -267,20 +266,18 @@
                                                  VerticalOptions="Fill"
                                                  AbsoluteLayout.LayoutBounds="1, 1, 1, 1"
                                                  AbsoluteLayout.LayoutFlags="All">
-                                        <Frame BorderColor="LightGray"
-                                               BackgroundColor="White"
-                                               HasShadow="False"
+                                        <Border BackgroundColor="White"
                                                Padding="0"
-                                               Margin="0"
-                                               CornerRadius="0">
+                                               Margin="0">
                                             <Image Source="{Binding ImageSrc}" HeightRequest="30" Aspect= "AspectFit">
                                                 <Image.GestureRecognizers>
-                                                    <TapGestureRecognizer Command="{Binding Source={x:Reference NASFileList},
-                                                        Path=BindingContext.SetSelectedCommand}" CommandParameter="{Binding}"
-                                                                          Tapped="FileIcon_Tapped"/>
+                                                    <TapGestureRecognizer 
+                                                        Command="{Binding Source={x:Reference NASFileList}, Path=BindingContext.SetSelectedCommand}" 
+                                                        CommandParameter="{Binding}"
+                                                        Tapped="thumb_pic_Tapped"/>
                                                 </Image.GestureRecognizers>
                                             </Image>
-                                        </Frame>
+                                        </Border>
                                     </StackLayout>
 
                                     <!--FileManagement_FileList__File-Item_CheckBox-->
@@ -309,6 +306,12 @@
                                 <!--檔案-名稱/檔案格式說明-->
                                 <Grid Grid.Column="1"  Grid.Row="0" Padding="0,10,15,5">
                                     <StackLayout>
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={x:Reference NASFileList}, 
+                                                Path=BindingContext.SetSelectedCommand}" 
+                                                                  CommandParameter="{Binding}"
+                                                                  Tapped="ShowContentItem_Tapped"/>
+                                        </StackLayout.GestureRecognizers>
                                         <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" />
                                         <Label FontSize="10" TextColor="{StaticResource Color_Gary}">
                                             <Label.FormattedText>
@@ -412,11 +415,10 @@
                 </Grid.ColumnDefinitions>
                 <!--<Bottom-btn__back-->
                 <StackLayout x:Name="GridBottom" Grid.Column="0">
-                    <Frame HeightRequest="75"
-                           Padding="0"
-                           CornerRadius="38"
-                           HasShadow="False"
-                           BackgroundColor="{StaticResource Color_BlueGreen}">
+                    <Border HeightRequest="75"
+                            Padding="0"
+                            BackgroundColor="{StaticResource Color_BlueGreen}"
+                            StrokeShape="Ellipse">
                         <!--<Frame.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnClicked"/>
                         </Frame.GestureRecognizers>-->
@@ -427,25 +429,24 @@
                                TextColor="{StaticResource Color_White}"
                                HorizontalTextAlignment="Center"
                                VerticalTextAlignment="Center"/>
-                    </Frame>
+                    </Border>
                 </StackLayout>
                 <!--<Bottom-btn__add-->
                 <StackLayout Grid.Column="1">
-                    <Frame HeightRequest="75"
-                               Padding="0"
-                               CornerRadius="38"
-                               HasShadow="False"
-                               BackgroundColor="{StaticResource Color_BlueGreen}">
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="Btn_Popup_FileManAdd"/>
-                        </Frame.GestureRecognizers>
+                    <Border HeightRequest="75"
+                            Padding="0"
+                            BackgroundColor="{StaticResource Color_BlueGreen}"
+                            StrokeShape="Ellipse" >
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Btn_Popup_Add"/>
+                        </Border.GestureRecognizers>
                         <Label Text="{x:Static Models:icomoonFontIcon.Icon38}"
                                    FontFamily="icomoon" 
                                    FontSize="48" 
                                    TextColor="{StaticResource Color_White}"
                                    HorizontalTextAlignment="Center"
                                    VerticalTextAlignment="Center"/>
-                    </Frame>
+                    </Border>
                 </StackLayout>
             </Grid>
 

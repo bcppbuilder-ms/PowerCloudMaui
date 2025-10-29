@@ -102,7 +102,7 @@ namespace PowerCloud.ViewModels
             await devInfo.DownloadToDevice(mvm);
         }
 
-        public async Task<Stream> GetDownloadStream(NASFileViewModel nasFile)
+        public async Task<Stream?> GetDownloadStream(NASFileViewModel nasFile)
         {
             if (devInfo == null)
                 throw new ArgumentNullException("Download failure");

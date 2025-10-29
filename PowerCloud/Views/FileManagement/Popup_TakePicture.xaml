@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="PowerCloud.Views.FileManagement.Popup_TakePicture"
+               xmlns:Models="clr-namespace:PowerCloud.Models"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+    
+    <ScrollView VerticalOptions="Start" 
+                HorizontalOptions="Fill">
+        <StackLayout Spacing="0" Padding="0,0,0,10" BackgroundColor="{StaticResource Color_White}">
+            <Grid Padding="13" Margin="0,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="35" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="35" />
+                </Grid.ColumnDefinitions>
+                <Label Text="使用相機" 
+                       Grid.Column="1"
+                       FontSize="20" 
+                       HorizontalOptions="Center" 
+                       Padding="5" />
+    
+                <Grid Margin="0" Grid.Column="2" BackgroundColor="{StaticResource Color_LightGary}">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="ClosePopup_Tapped"/>
+                    </Grid.GestureRecognizers>
+                    <Label Style="{StaticResource PopupCloseIconStyle}"
+                           Text="{x:Static Models:icomoonFontIcon.Icon16}" />
+                </Grid>
+            </Grid>
+
+            <Grid Padding="10,10,10,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <!--button__拍照-->
+                <Border Grid.Column="0" Padding="0" Margin="0" BackgroundColor="White">
+                    <StackLayout Padding="10,20,10,20">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="takePhoto_Clicked" />
+                        </StackLayout.GestureRecognizers>
+                        <Label Text="{Static Models:icomoonFontIcon.Icon7}" 
+                               FontSize="26" 
+                               Padding="0"
+                               Margin="0"
+                               Style="{StaticResource PopupCloseIconStyle}"/>
+                        <Label Text="拍照" 
+                           FontSize="15" 
+                           Style="{StaticResource PopupCloseIconStyle}"/>
+                    </StackLayout>
+                </Border>
+
+                <!--button__攝影-->
+                <Border  Grid.Column="1" Padding="0" Margin="0" BackgroundColor="White">
+                    <StackLayout Padding="10,20,10,20">
+                        <!--StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="takeVideo_Clicked" />
+                        </StackLayout.GestureRecognizers>-->
+                        <Label Text="{Static Models:icomoonFontIcon.Icon51}" 
+                           Style="{StaticResource PopupCloseIconStyle}"
+                           FontSize="26" 
+                           Padding="0"
+                           Margin="0"
+                           HorizontalTextAlignment="Center"/>
+                        <Label Text="攝影" 
+                           HorizontalTextAlignment="Center"
+                           FontSize="15" 
+                           Style="{StaticResource PopupCloseIconStyle}"/>
+                    </StackLayout>
+                </Border>
+
+
+                <!--button__選檔-->
+                <Border Grid.Column="2" Padding="0" Margin="0" BackgroundColor="White">
+                    <StackLayout Padding="10,20,10,20">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="pickVideo_Clicked" />
+                        </StackLayout.GestureRecognizers>
+                        <Label Text="{Static Models:icomoonFontIcon.Icon11}" 
+                           Style="{StaticResource PopupCloseIconStyle}" 
+                           FontSize="26" 
+                           Padding="0"
+                           Margin="0"/>
+                        <Label Text="選檔" 
+                           FontSize="15" 
+                           Style="{StaticResource PopupCloseIconStyle}"/>
+                    </StackLayout>
+                </Border>
+
+
+
+                <!--<Button x:Name="takePhoto" Text="拍照" Clicked="takePhoto_Clicked" Grid.Column="0"/>-->
+                <!--<Button x:Name="takeVideo" Text="攝影" Clicked="takeVideo_Clicked" Grid.Column="1"/>-->
+                <!--<Button x:Name="pickVideo" Text="選檔" Clicked="pickVideo_Clicked" Grid.Column="2"/>-->
+
+
+            </Grid>
+
+            <Image x:Name="image"/>
+        </StackLayout>
+    </ScrollView>
+
+</toolkit:Popup>

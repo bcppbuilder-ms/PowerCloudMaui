@@ -8,12 +8,12 @@ public partial class Popup_Move : CommunityToolkit.Maui.Views.Popup
 		InitializeComponent();
 
         //左右剛好視窗 高度0.9
-        Size = new(1 * (DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density), 0.9 * (DeviceDisplay.MainDisplayInfo.Height / DeviceDisplay.MainDisplayInfo.Density));
+        DesiredSize = new(1 * (DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density), 0.9 * (DeviceDisplay.MainDisplayInfo.Height / DeviceDisplay.MainDisplayInfo.Density));
 
     }
 
 
     //Btn_Clicked_ClosePopup
-    void Btn_Clicked_ClosePopup(object? sender, EventArgs e) => Close();
+    async void Btn_Clicked_ClosePopup(object? sender, EventArgs e) => await CloseAsync();
 
 }

@@ -1,6 +1,4 @@
-using CommunityToolkit.Maui.Views;
-using LayoutAlignment = Microsoft.Maui.Primitives.LayoutAlignment;
-
+using CommunityToolkit.Maui.Extensions;
 
 namespace PowerCloud.Views.Transfer;
 
@@ -20,10 +18,10 @@ public partial class Download : ContentPage
         //popup.HorizontalOptions = LayoutAlignment.Fill;
 
         //popup-center
-        popup.VerticalOptions = LayoutAlignment.Center;
-        popup.HorizontalOptions = LayoutAlignment.Fill;
+        popup.VerticalOptions = LayoutOptions.Center;
+        popup.HorizontalOptions = LayoutOptions.Fill;
 
-        this.ShowPopup(popup);
+        AppShell.Current.ShowPopup(popup);
     }
     private void Btn_Popup_Transfer_CancelMore(object sender, EventArgs e)
     {
@@ -34,8 +32,8 @@ public partial class Download : ContentPage
         //popup.HorizontalOptions = LayoutAlignment.Fill;
 
         //popup-center
-        popup.VerticalOptions = LayoutAlignment.Center;
-        popup.HorizontalOptions = LayoutAlignment.Fill;
+        popup.VerticalOptions = LayoutOptions.Center;
+        popup.HorizontalOptions = LayoutOptions.Fill;
 
         this.ShowPopup(popup);
     }

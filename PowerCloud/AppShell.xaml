@@ -79,12 +79,16 @@
                 Route="filesPublic" />
             <ShellContent
                 Title="我的空間"
-                ContentTemplate="{DataTemplate local:Views.FileManagement.ListView}"
-                Route="ListView" />
-            <ShellContent
+                ContentTemplate="{DataTemplate local:Views.FileManagement.filesMyHome}"
+                Route="filesMyHome" />
+            <!--<ShellContent
                 Title="群組空間"
                 ContentTemplate="{DataTemplate local:Views.FileManagement.SpacePage}"
-                Route="FileManagement_Groups" />
+                Route="FileManagement_Groups" />-->
+            <ShellContent
+                Title="群組空間"
+                ContentTemplate="{DataTemplate local:Views.FileManagement.UsingCamera}"
+                Route="fileGroup" />
         </Tab>
     </FlyoutItem>
     <FlyoutItem Title="上傳/下載狀態">

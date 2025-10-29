@@ -1,7 +1,9 @@
 using PowerCloud.ViewModels;
+using PowerCloud.NasHttp;
+
 using System.Collections.ObjectModel;
-using CommunityToolkit.Maui.Views;
-using LayoutAlignment = Microsoft.Maui.Primitives.LayoutAlignment;
+
+using CommunityToolkit.Maui.Extensions;
 
 namespace PowerCloud.Views.FileManagement;
 
@@ -97,13 +99,16 @@ public partial class FilesOnNASView : ContentView
         set
         {
             SetValue(IsMultiSelectProperty, value);
+
             if (value)
             {
                 cbIsMultiSelect.IsChecked = true;
+                mvm.MultiSelectedCheck = true;
             }
             else
             {
                 cbIsMultiSelect.IsChecked = false;
+                mvm.MultiSelectedCheck = false;
             }
             HasParent = false;
         }
@@ -161,13 +166,87 @@ public partial class FilesOnNASView : ContentView
 
 
 
+
+
+
+
+
+
+
+
+    ////public static readonly BindableProperty? ToolBarProperty = BindableProperty.Create(
+    ////    nameof(List<ToolbarItem>), typeof(List<ToolbarItem>), typeof(List<ToolbarItem>),
+    ////    defaultValue: default(List<ToolbarItem>), defaultBindingMode: BindingMode.OneWay, propertyChanged: ToolBarItemsChanged);
+
+    ////private static void ToolBarItemsChanged(BindableObject bindable, object oldValue, object newValue)
+    ////{
+    ////    if (oldValue != newValue)
+    ////    {
+    ////        //ToolbarItem[] items = ((List<ToolbarItem>)newValue).ToArray();
+    ////    }
+    ////}
+
+    ////public List<ToolbarItem>? ToolBar
+    ////{
+    ////    get
+    ////    {
+    ////        object obj = GetValue(ToolBarProperty);
+    ////        if (obj == null)
+    ////            return null;
+
+    ////        return (List<ToolbarItem>)obj;
+    ////    }
+
+    ////    set
+    ////    {
+    ////        SetValue(ToolBarProperty, value);
+    ////    }
+    ////}
+
+
+
+
+    ////public static readonly BindableProperty? ParentPageProperty = BindableProperty.Create(
+    ////    nameof(ContentPage), typeof(ContentPage), typeof(ContentPage),
+    ////    defaultValue: default(ContentPage), defaultBindingMode: BindingMode.OneWay, propertyChanged: ParentPropertyChanged);
+
+    ////private static void ParentPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+    ////{
+    ////    if (oldValue != newValue) 
+    ////    {
+    ////    }
+    ////}
+
+    ////public ContentPage? ParentPage
+    ////{
+    ////    get
+    ////    {
+    ////        object obj = GetValue(ParentPageProperty);
+    ////        if (obj == null)
+    ////            return null;
+
+    ////        return (ContentPage)obj;
+    ////    }
+
+    ////    set
+    ////    {
+    ////        SetValue(ParentPageProperty, value);
+    ////        if (ParentPage != null)
+    ////        {
+    ////            SetValue(ToolBarProperty, ParentPage.ToolbarItems.ToList());
+    ////        }
+    ////    }
+    ////}
+
+
+
+
     //string xicon01 = "\ue979";
     //public string IconChar01 { get { return xicon01; } set { xicon01 = value; OnPropertyChanged("IconChar01"); } }
 
 
 
     MainNasFileViewModel mvm;
-
     public event EventHandler? OnHasParentChanged;
 
 
@@ -187,13 +266,10 @@ public partial class FilesOnNASView : ContentView
     {
         //var popup = new PopupTestContentView();
         var popup = new Popup_Sort();
-        //popup-end
-        popup.VerticalOptions = LayoutAlignment.End;
-        popup.HorizontalOptions = LayoutAlignment.Fill;
 
-        //popup-center
-        //popup.VerticalOptions = LayoutAlignment.Center;
-        //popup.HorizontalOptions = LayoutAlignment.Fill;
+        //popup-end
+        popup.VerticalOptions = Microsoft.Maui.Controls.LayoutOptions.End; //LayoutAlignment.End;
+        popup.HorizontalOptions = Microsoft.Maui.Controls.LayoutOptions.Fill; //LayoutAlignment.Fill;
 
         Shell.Current.ShowPopup(popup);
     }
@@ -202,10 +278,12 @@ public partial class FilesOnNASView : ContentView
     private void Btn_Popup_FileManAdd(object sender, EventArgs e)
     {
         //var popup = new PopupTestContentView();
-        var popup = new Popup_Add();
+        var popup = new Popup_Add(mvm);
         //popup-end
-        popup.VerticalOptions = LayoutAlignment.End;
-        popup.HorizontalOptions = LayoutAlignment.Fill;
+        //popup.VerticalOptions = LayoutAlignment.End;
+        //popup.HorizontalOptions = LayoutAlignment.Fill;
+        popup.VerticalOptions = LayoutOptions.End;  // LayoutAlignment.End
+        popup.HorizontalOptions = LayoutOptions.Fill;
 
         //popup-center
         //popup.VerticalOptions = LayoutAlignment.Center;
@@ -251,9 +329,10 @@ public partial class FilesOnNASView : ContentView
         }
         else
         {
-            await AppShell.Current.ShowPopupAsync(new Popup_SelectFile(mvm));
+            await AppShell.Current.ShowPopupAsync(new Popup_More(mvm));
         }
     }
+
     //private async void NASFileList_SelectionChanged(object sender, SelectionChangedEventArgs e)
     //{
     //    if (((NASFileViewModel)NASFileList.SelectedItem).MimeType == "folder")
@@ -273,22 +352,29 @@ public partial class FilesOnNASView : ContentView
     //    }
     //}
 
-    private async void thumb_pic_Tapped(object sender, EventArgs e)
+    private async void thumb_pic_Tapped(object sender, TappedEventArgs e)
     {
         //App.PC2ViewModel.PicViewPath = mvm.PrevPath;
         //Routing.RegisterRoute(nameof(Views.FileManagement_PicView), typeof(Views.FileManagement_PicView));
         //await Shell.Current.GoToAsync(nameof(Views.FileManagement_PicView));
 
         mvm.UseThumbNail = !mvm.UseThumbNail;
-        displayListOrView();
 
-        await mvm.readAllFileList(mvm.PrevPath, mvm.NASFiles.Count);
-        //mvm.ResetImageSrc(mvm.UseThumbNail).GetAwaiter().GetResult();
+        await mvm.ResetImageSrc(mvm.UseThumbNail, mvm.ShowTwoColumn);
+    }
+
+    private async void ShowTwoColumn_Tapped(object sender, TappedEventArgs e)
+    {
+        mvm.ShowTwoColumn = !mvm.ShowTwoColumn;
+
+        await mvm.ResetImageSrc(mvm.UseThumbNail, mvm.ShowTwoColumn);
+       
+        displayListOrView();
     }
 
     private void displayListOrView()
     {
-        if (mvm.UseThumbNail)
+        if (mvm.ShowTwoColumn)
         {
             IconChar01.Text = "\ue91a";
             //InformationBoard.IsVisible = true;
@@ -311,6 +397,7 @@ public partial class FilesOnNASView : ContentView
             NASFileList.ItemsLayout = listLayout;
         }
 
+        
         mvm.ScrollToAnchor(ScrollToPosition.Start);
     }
 
@@ -349,7 +436,7 @@ public partial class FilesOnNASView : ContentView
         return id;
     }
 
-    private async void GotoParrent_Tapped(object sender, EventArgs e)
+    private async void GotoParent_Tapped(object sender, EventArgs e)
     {
         if (mvm.PrevPath.Contains(Path.DirectorySeparatorChar.ToString()))
         {
@@ -358,7 +445,8 @@ public partial class FilesOnNASView : ContentView
         HasParent = true;
     }
 
-    private async void FileIcon_Tapped(object sender, TappedEventArgs e)
+    //private async void FileIcon_Tapped(object sender, TappedEventArgs e)
+    private async void ShowContentItem_Tapped(object sender, TappedEventArgs e)
     {
         FinalLayout.IsVisible = false;
         ActIndicator.IsRunning = true;
@@ -396,15 +484,58 @@ public partial class FilesOnNASView : ContentView
     private void Btn_Popup_MoreOptions(object sender, TappedEventArgs e)
     {
         //var popup = new PopupTestContentView();
-        var popup = new Popup_SelectFile(mvm);
+        var popup = new Popup_More(mvm);
         //popup-end
-        popup.VerticalOptions = LayoutAlignment.End;
-        popup.HorizontalOptions = LayoutAlignment.Fill;
+        popup.VerticalOptions = LayoutOptions.End;
+        popup.HorizontalOptions = LayoutOptions.Fill;
 
         //popup-center
         //popup.VerticalOptions = LayoutAlignment.Center;
         //popup.HorizontalOptions = LayoutAlignment.Fill;
 
+        Shell.Current.ShowPopup(popup);
+    }
+
+    // For ToolBarItem
+    public async void FilesUpLoad(object sender, EventArgs e)
+    {
+        if (mvm == null)
+            return;
+
+        FileResult? file = await FilePicker.PickAsync();
+
+
+        if (file == null)
+            return;
+
+        NE201FileManager mr = NE201FileManager.FileManagerFactory(App.PC2ViewModel.UserSelected);
+        await mr.NE201FileUpload(file, mvm.PrevPath);
+        //await mvm.ListView_RefreshFolder();
+        await mvm.readAllFileList(mvm.PrevPath, mvm.NASFiles.Count + 1);
+    }
+
+    public async Task<object?> FilesSelectMore(object sender, EventArgs e)
+    {
+        if (IsMultiSelect)
+            return await AppShell.Current.ShowPopupAsync(new Popup_MoreMulti(mvm));
+        else
+        {
+            //string s = AppShell.Current.CurrentPage.Title;
+            string s = AppShell.Current.CurrentPage.GetType().Name;
+            await AppShell.Current.CurrentPage.DisplayAlert("提醒", "請至少選取一個檔案", "關閉");
+            return null;
+        }
+    }
+
+    private void Btn_Popup_Add(object sender, TappedEventArgs e)
+    {
+        var popup = new Popup_Add(mvm);
+        //popup-end
+        popup.VerticalOptions = LayoutOptions.End;
+        popup.HorizontalOptions = LayoutOptions.Fill;
+        //popup-center
+        //popup.VerticalOptions = LayoutAlignment.Center;
+        //popup.HorizontalOptions = LayoutAlignment.Fill;
         Shell.Current.ShowPopup(popup);
     }
 }

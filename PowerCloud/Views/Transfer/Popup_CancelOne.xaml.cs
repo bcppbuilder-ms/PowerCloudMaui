@@ -10,5 +10,5 @@ public partial class Popup_CancelOne : CommunityToolkit.Maui.Views.Popup
     }
 
     //Btn_Clicked_ClosePopup
-    void Btn_Clicked_ClosePopup(object? sender, EventArgs e) => Close();
+    async void Btn_Clicked_ClosePopup(object? sender, EventArgs e) => await CloseAsync();
 }

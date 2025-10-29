@@ -123,11 +123,13 @@ namespace PowerCloud.Platforms
 
 
 
-        public async Task<Stream> GetDownloadStream(NASFileViewModel file)
+        public async Task<Stream?> GetDownloadStream(NASFileViewModel file)
         {
             if (string.IsNullOrEmpty(externalPath))
             {
-                await GetExternalPath(App.PC2ViewModel.UserSelected);
+                string s = await GetExternalPath(App.PC2ViewModel.UserSelected);
+                if (string.IsNullOrEmpty(s))
+                    return null;
             }
 
 

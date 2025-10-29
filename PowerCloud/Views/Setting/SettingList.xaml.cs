@@ -1,5 +1,5 @@
+using CommunityToolkit.Maui.Extensions;
 using CommunityToolkit.Maui.Views;
-using LayoutAlignment = Microsoft.Maui.Primitives.LayoutAlignment;
 
 namespace PowerCloud.Views.Setting;
 
@@ -16,8 +16,8 @@ public partial class SettingList : ContentPage
         //var popup = new PopupTestContentView();
         var popup = new Popup_TransNumber();
         //popup-end
-        popup.VerticalOptions = LayoutAlignment.End;
-        popup.HorizontalOptions = LayoutAlignment.Fill;
+        popup.VerticalOptions = LayoutOptions.End;
+        popup.HorizontalOptions = LayoutOptions.Fill;
 
         //popup-center
         //popup.VerticalOptions = LayoutAlignment.Center;
@@ -31,14 +31,14 @@ public partial class SettingList : ContentPage
         //var popup = new PopupTestContentView();
         var popup = new Popup_TransNetwork();
         //popup-end
-        popup.VerticalOptions = LayoutAlignment.End;
-        popup.HorizontalOptions = LayoutAlignment.Fill;
+        popup.VerticalOptions = LayoutOptions.End;
+        popup.HorizontalOptions = LayoutOptions.Fill;
 
         //popup-center
         //popup.VerticalOptions = LayoutAlignment.Center;
         //popup.HorizontalOptions = LayoutAlignment.Fill;
 
-        this.ShowPopup(popup);
+         AppShell.Current.ShowPopup(popup);
     }
 
         private void Btn_Popup_Setting_BackupNetwork(object sender, EventArgs e)
@@ -46,8 +46,8 @@ public partial class SettingList : ContentPage
         //var popup = new PopupTestContentView();
         var popup = new Popup_BackupNetwork();
         //popup-end
-        popup.VerticalOptions = LayoutAlignment.End;
-        popup.HorizontalOptions = LayoutAlignment.Fill;
+        popup.VerticalOptions = LayoutOptions.End;
+        popup.HorizontalOptions = LayoutOptions.Fill;
 
         //popup-center
         //popup.VerticalOptions = LayoutAlignment.Center;

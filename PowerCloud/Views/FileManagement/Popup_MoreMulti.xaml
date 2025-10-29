@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-               x:Class="PowerCloud.Views.FileManagement.Popup_SelectMore"
+               x:Class="PowerCloud.Views.FileManagement.Popup_MoreMulti"
                xmlns:Models="clr-namespace:PowerCloud.Models"
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
 
@@ -20,7 +20,7 @@
                Grid.Column="0"
                VerticalTextAlignment="Center"
                x:Name="NameLabel"
-               Text="File Name"/>
+               Text="{Binding FileSelected.Name}"/>
         <StackLayout Grid.Row="0"
                Grid.Column="1"
                Padding="0">

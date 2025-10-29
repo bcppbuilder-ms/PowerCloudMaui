@@ -1,7 +1,5 @@
-using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Maui.Extensions;
 using PowerCloud.ViewModels;
-
-using LayoutAlignment = Microsoft.Maui.Primitives.LayoutAlignment;
 
 namespace PowerCloud.Views;
 
@@ -61,10 +59,10 @@ public partial class TestPage : ContentPage
     private void OnCounterClicked(object sender, EventArgs e)
     {
         var popup = new PopupTestContentView();
-        popup.VerticalOptions = LayoutAlignment.End;
-        popup.HorizontalOptions = LayoutAlignment.Fill;
+        popup.VerticalOptions = LayoutOptions.End;
+        popup.HorizontalOptions = LayoutOptions.Fill;
 
-        this.ShowPopup(popup);
+        AppShell.Current.ShowPopup(popup);
     }
 
 

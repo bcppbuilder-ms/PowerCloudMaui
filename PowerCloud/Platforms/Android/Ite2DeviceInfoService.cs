@@ -3,14 +3,14 @@ using Android.Content.PM;
 using Android.Graphics;
 using Android.OS;
 using Android.Provider;
-
+using Kotlin.Contracts;
 using PowerCloud.ViewModels;
 
 namespace PowerCloud.Platforms
 {
     public class Ite2DeviceInfoService2 : IIte2DeviceInfo2
     {
-        public Task<string> GetExternalPath(AccountViewModel user)
+        public Task<string?> GetExternalPath(AccountViewModel user)
         {
 
             //StorageManager mgr = StorageManager.FromContext(Application.Context);
@@ -25,8 +25,9 @@ namespace PowerCloud.Platforms
             //    }
             //}
 
-            string s = Android.OS.Environment.DirectoryPictures;
-            return Task.Run<string>(() => s);
+            string? s = Android.OS.Environment.DirectoryPictures;
+
+            return Task.Run<string?>(() => s);
         }
 
         public async Task DownloadToDevice(MainNasFileViewModel mvm)
@@ -158,10 +159,10 @@ namespace PowerCloud.Platforms
         }
         #endregion
 
-        public Task<System.IO.Stream> GetDownloadStream(NASFileViewModel file)
+        public Task<Stream?> GetDownloadStream(NASFileViewModel file)
         {
             ContentValues values = new ContentValues();
-            ContentResolver contentResolver = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity.ApplicationContext.ContentResolver; //CrossCurrentActivity.Current.AppContext.ContentResolver;
+            ContentResolver? contentResolver = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.ApplicationContext?.ContentResolver; //CrossCurrentActivity.Current.AppContext.ContentResolver;
 
             //var appName = Xamarin.Essentials.AppInfo.Name;
             var appName = AppInfo.PackageName;
