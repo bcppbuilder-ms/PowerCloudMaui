@@ -102,7 +102,7 @@ public partial class PicView : ContentPage
     private void Btn_Popup_FileManAdd(object sender, EventArgs e)
     {
         //var popup = new PopupTestContentView();
-        var popup = new Popup_Add();
+        var popup = new Popup_Add(mvm);
         //popup-end
         popup.VerticalOptions = LayoutAlignment.End;
         popup.HorizontalOptions = LayoutAlignment.Fill;
@@ -117,7 +117,7 @@ public partial class PicView : ContentPage
     private void Btn_Popup_FileManSelectFile(object sender, EventArgs e)
     {
         //var popup = new PopupTestContentView();
-        var popup = new Popup_SelectFile(mvm);
+        var popup = new Popup_More(mvm);
         //popup-end
         popup.VerticalOptions = LayoutAlignment.End;
         popup.HorizontalOptions = LayoutAlignment.Fill;
@@ -294,18 +294,18 @@ public partial class PicView : ContentPage
 
 
 
-    private void thumb_pic_Tapped(object sender, TappedEventArgs e)
-    {
-        //App.PC2ViewModel.PicViewPath = mvm.PrevPath;
-        //Routing.RegisterRoute(nameof(Views.FileManagement_PicView), typeof(Views.FileManagement_PicView));
-        //await Shell.Current.GoToAsync(nameof(Views.FileManagement_PicView));
+    //private void thumb_pic_Tapped(object sender, TappedEventArgs e)
+    //{
+    //    //App.PC2ViewModel.PicViewPath = mvm.PrevPath;
+    //    //Routing.RegisterRoute(nameof(Views.FileManagement_PicView), typeof(Views.FileManagement_PicView));
+    //    //await Shell.Current.GoToAsync(nameof(Views.FileManagement_PicView));
 
-        mvm.UseThumbNail = !mvm.UseThumbNail;
-        displayListOrView();
+    //    mvm.UseThumbNail = !mvm.UseThumbNail;
+    //    displayListOrView();
 
-        //await mvm.readAllFileList(mvm.PrevPath, mvm.NASFiles.Count);
-        mvm.ResetImageSrc(mvm.UseThumbNail).GetAwaiter().GetResult();
-    }
+    //    //await mvm.readAllFileList(mvm.PrevPath, mvm.NASFiles.Count);
+    //    mvm.ResetImageSrc(mvm.UseThumbNail, mvm.ShowTwoColumn).GetAwaiter().GetResult();
+    //}
 
     private void displayListOrView()
     {

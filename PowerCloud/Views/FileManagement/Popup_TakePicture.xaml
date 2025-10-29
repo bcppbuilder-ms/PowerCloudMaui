@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Popup_TakePicture"
+             ios:Page.UseSafeArea="true"
+             x:Class="PowerCloud.Views.FileManagement.Popup_TakePicture">
+
+        <ScrollView VerticalOptions="End" 
+                HorizontalOptions="Fill">
+            <StackLayout Spacing="0" Padding="0,0,0,10" BackgroundColor="{StaticResource Color_Wh}">
+                <Grid Padding="13" Margin="0,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="35" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="35" />
+                    </Grid.ColumnDefinitions>
+                    <Label Text="使用相機" 
+                       Grid.Column="1"
+                       FontSize="20" 
+                       HorizontalOptions="Center" 
+                       Padding="5" 
+                       TextColor="#c7c7c7"/>
+                    <!--TextColor="#c7c7c7"/>-->
+                    <!--Btn_Clicked_RemovePopup-->
+                    <Frame Padding="3,0,3,0" 
+                           Margin="0"
+                           Grid.Column="2"
+                           BackgroundColor="{StaticResource Color_LightGary}"
+                           CornerRadius="17"
+                           HasShadow="False">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Remove_page_Tapped"/>
+                        </Frame.GestureRecognizers>
+                        <Label Text="&#xe903;" 
+                               FontFamily="{StaticResource IcomoonFont}" 
+                               FontSize="16" 
+                               Padding="0"
+                               TextColor="{StaticResource Color_DarkGary}"
+                               HorizontalTextAlignment="Center"
+                               VerticalTextAlignment="Center"/>
+                    </Frame>
+                </Grid>
+
+                <Grid Padding="10,10,10,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <!--button__拍照-->
+                    <Frame Grid.Column="0" HasShadow="False" BorderColor="LightGray" Padding="0" Margin="0" BackgroundColor="White">
+                        <StackLayout Padding="10,20,10,20">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="takePhoto_Clicked" />
+                            </StackLayout.GestureRecognizers>
+                            <Label Text="&#xe928;" 
+                           FontFamily="{StaticResource IcomoonFont}" 
+                           FontSize="26" 
+                           Padding="0"
+                           Margin="0"
+                           TextColor="{StaticResource Color_Dark}"
+                           HorizontalTextAlignment="Center"/>
+                            <Label Text="拍照" 
+                           HorizontalTextAlignment="Center"
+                           FontSize="15" 
+                           TextColor="{StaticResource Color_Dark}"/>
+                        </StackLayout>
+                    </Frame>
+
+                    <!--button__攝影-->
+                    <Frame  Grid.Column="1" HasShadow="False" BorderColor="LightGray" Padding="0" Margin="0" BackgroundColor="White">
+                        <StackLayout Padding="10,20,10,20">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="takeVideo_Clicked" />
+                            </StackLayout.GestureRecognizers>
+                            <Label Text="&#xea06;" 
+                           FontFamily="{StaticResource IcomoonFont}" 
+                           FontSize="26" 
+                           Padding="0"
+                           Margin="0"
+                           TextColor="{StaticResource Color_Dark}"
+                           HorizontalTextAlignment="Center"/>
+                            <Label Text="攝影" 
+                           HorizontalTextAlignment="Center"
+                           FontSize="15" 
+                           TextColor="{StaticResource Color_Dark}"/>
+                        </StackLayout>
+                    </Frame>
+
+                    <!--button__選檔-->
+                    <Frame Grid.Column="2" HasShadow="False" BorderColor="LightGray" Padding="0" Margin="0" BackgroundColor="White">
+                        <StackLayout Padding="10,20,10,20">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="pickVideo_Clicked" />
+                            </StackLayout.GestureRecognizers>
+                            <Label Text="&#xe965;" 
+                           FontFamily="{StaticResource IcomoonFont}" 
+                           FontSize="26" 
+                           Padding="0"
+                           Margin="0"
+                           TextColor="{StaticResource Color_Dark}"
+                           HorizontalTextAlignment="Center"/>
+                            <Label Text="選檔" 
+                           HorizontalTextAlignment="Center"
+                           FontSize="15" 
+                           TextColor="{StaticResource Color_Dark}"/>
+                        </StackLayout>
+                    </Frame>
+
+
+
+
+                    <!--<Button x:Name="takePhoto" Text="拍照" Clicked="takePhoto_Clicked" Grid.Column="0"/>-->
+                    <!--<Button x:Name="takeVideo" Text="攝影" Clicked="takeVideo_Clicked" Grid.Column="1"/>-->
+                    <!--<Button x:Name="pickVideo" Text="選檔" Clicked="pickVideo_Clicked" Grid.Column="2"/>-->
+
+
+                </Grid>
+
+                <Image x:Name="image"/>
+            </StackLayout>
+        </ScrollView>
+
+    <!--<xct:Popup
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:local="clr-namespace:PowerCloud.Models"
+    x:TypeArguments="local:PopupResult"
+    x:Class="PowerCloud.Views.MyPopup">
+    
+    
+    <StackLayout HeightRequest="150">
+        <Frame BackgroundColor="#2196F3" Padding="24" CornerRadius="0">
+            <Label Text="MediaPicker!" HorizontalTextAlignment="Center" TextColor="White" FontSize="36" />
+        </Frame>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="myLabel" />
+            <Button Grid.Column="1" Text="Select" Clicked="Btn_Select_Clicked"/>
+            <Button Grid.Column="2" Text="Capture" Clicked="Btn_Capture_Clicked"/>
+        </Grid>
+        -->
+    <!--<Image x:Name="PicArea"  HeightRequest="350"/>-->
+    <!--
+        <Entry x:Name="UsingName"/>
+        <Button Text="Close Popup" Clicked="Btn_Close_Clicked" />
+    </StackLayout>
+
+</xct:Popup>-->
+</ContentPage>

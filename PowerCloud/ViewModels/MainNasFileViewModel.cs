@@ -86,6 +86,9 @@ namespace PowerCloud.ViewModels
         NASFileViewModel fileselected;
         public NASFileViewModel FileSelected { get { return fileselected; } set { SetPropertyValue(ref fileselected, value); } }
 
+        bool multiselectedCheck = false;
+        public bool MultiSelectedCheck { get { return multiselectedCheck; } set { SetPropertyValue(ref multiselectedCheck, value); } }
+
         string tmpimagepath;
         public string TempImagePath { get { return tmpimagepath; } set { SetPropertyValue(ref tmpimagepath, value); } }
 
@@ -96,7 +99,7 @@ namespace PowerCloud.ViewModels
         private string errMsg;
         public string ErrorMessage { get { return errMsg; } set { SetPropertyValue(ref errMsg, value); } }
 
-        public CollectionView PageCollectionView { get; set; }
+        public CollectionView? PageCollectionView { get; set; }
 
 
 
@@ -144,6 +147,16 @@ namespace PowerCloud.ViewModels
             {
                 bool oldvalue = useThumbNail;
                 SetPropertyValue(ref useThumbNail, value);
+            }
+        }
+
+        private bool show2Column = false;
+        public bool ShowTwoColumn
+        {
+            get { return show2Column; }
+            set
+            {
+                SetPropertyValue(ref show2Column, value);
             }
         }
 
@@ -287,8 +300,8 @@ namespace PowerCloud.ViewModels
             CurrentMaxPage = pageCount;
         }
 
-        HttpClientHandler NASHttpHandler;
-        HttpClient VMHttpClient;
+        HttpClientHandler? NASHttpHandler;
+        HttpClient? VMHttpClient;
 
         //HttpClientHandler NAS2HttpHandler;
         //HttpClient VM2HttpClient;
@@ -299,7 +312,7 @@ namespace PowerCloud.ViewModels
         }
 
 
-        NE201FileManager myFmr;
+        NE201FileManager? myFmr;
         public NE201FileManager fmr 
         {
             get 
@@ -319,13 +332,15 @@ namespace PowerCloud.ViewModels
         public async Task<bool> DownloadFile(NASFileViewModel file)
         {
             long allSize = file.Size;
+            bool returnValue = false;
             using (Stream sourceStream = await fmr.NE201DownloadStream(file))
             {
-                using (Stream deviceStream = await App.PC2ViewModel.accountManager.GetDownloadStream(file))
+                using (Stream? deviceStream = await App.PC2ViewModel.accountManager.GetDownloadStream(file))
                 {
                     //Stream deviceStream = App.PC2ViewModel.accountManager.GetDownloadStream(file.FileOnNas);
                     if (sourceStream != null && deviceStream != null)
                     {
+                        returnValue = true;
                         //await sourceStream.CopyToAsync(deviceStream);
 
                         var buffer = new byte[buffLen];
@@ -341,10 +356,12 @@ namespace PowerCloud.ViewModels
                         }
                         file.Selected = false;
                     }
+                    else
+                        return returnValue;
                 }
             }
 
-            return true;
+            return returnValue;
         }
 
         public async Task<Stream> GetDownloadStream(NASFileViewModel file)
@@ -421,15 +438,15 @@ namespace PowerCloud.ViewModels
 
         internal async Task<bool> GotoParentFolder(/*CollectionView NASFileList*/)
         {
-            string upper = Path.GetDirectoryName(PrevPath);
+            string? upper = Path.GetDirectoryName(PrevPath);
             PrevPath = upper;
             NASFiles.Clear();
             CurrentMaxPage = 0;
             if (string.IsNullOrEmpty(upper))
             {
-                NASFiles.Add(new NASFileViewModel() { PathName = "", MimeType = "folder", Name = "home", ImageSrc = null});
-                NASFiles.Add(new NASFileViewModel() { PathName = "", MimeType = "folder", Name = "public", ImageSrc = null });
-                NASFiles.Add(new NASFileViewModel() { PathName = "", MimeType = "folder", Name = "group", ImageSrc = null });
+                NASFiles.Add(new NASFileViewModel() { PathName = "", MimeType = "folder", Name = "home", ImageSrc = null, ImageSrc2 = null});
+                NASFiles.Add(new NASFileViewModel() { PathName = "", MimeType = "folder", Name = "public", ImageSrc = null, ImageSrc2 = null });
+                NASFiles.Add(new NASFileViewModel() { PathName = "", MimeType = "folder", Name = "group", ImageSrc = null, ImageSrc2 = null });
             }
             else
             {
@@ -494,16 +511,25 @@ namespace PowerCloud.ViewModels
                 PageCollectionView.ScrollTo(lastVisibleItem, -1, ScrollToPosition.End);
         }
 
-        public async Task ResetImageSrc(bool newUsingThumb)
-        { 
+        public async Task ResetImageSrc(bool newUsingThumb, bool newShow2Col)
+        {
             foreach (NASFileViewModel item in NASFiles)
             {
-                if (newUsingThumb && item.MimeType.StartsWith("image") && item.thumbNail.Length == 0)
+                if (item.MimeType.StartsWith("image"))
                 {
-                    item.thumbNail = await fmr.NE201ImageThumbnail(Path.Combine(item.PathName, item.Name), thumbSize);
-                    //item.thumbNail = fmr.NE201ImageThumbnail(Path.Combine(item.PathName, item.Name), thumbSize);
+                    if (newUsingThumb && item.thumbNail.Length == 0)
+                        item.thumbNail = await fmr.NE201ImageThumbnail(Path.Combine(item.PathName, item.Name), thumbSize);
+                    else if (!newUsingThumb)
+                        item.thumbNail = new byte[0];
+
+                    if (show2Column && item.buff2Col.Length == 0)
+                        item.buff2Col = await fmr.NE201ImageThumbnail(Path.Combine(item.PathName, item.Name), thumbSize);
+                    else if (!show2Column)
+                        item.buff2Col = new byte[0];
                 }
+
                 item.UsingThumb = newUsingThumb;
+                item.ShowTwoColumns = newShow2Col;
             }
         }
 
@@ -650,10 +676,10 @@ namespace PowerCloud.ViewModels
             string result = string.Empty;
             if (response != null && response.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                 ErrorMessage = "wait deserializing ....";
+                ErrorMessage = "wait deserializing ....";
                 result = await response.Content.ReadAsStringAsync();
                 //result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                NASFileResponse nasF = JsonConvert.DeserializeObject<NASFileResponse>(result);
+                NASFileResponse? nasF = JsonConvert.DeserializeObject<NASFileResponse>(result);
                 if (pageNo == 1 && oldPageLen == 0)
                 {
                     ErrorMessage = "Initializing date";
@@ -669,9 +695,9 @@ namespace PowerCloud.ViewModels
                     {
                         index++;
                         fi.PathName = sourcepath;
-                        if (UseThumbNail)
+                        if (fi.MimeType.StartsWith("image"))
                         {
-                            if (fi.MimeType.StartsWith("image"))
+                            if (useThumbNail)
                             {
                                 byte[] buffer = new byte[0];
                                 buffer = await fmr.NE201ImageThumbnail(Path.Combine(fi.PathName, fi.Name), thumbSize);
@@ -681,10 +707,29 @@ namespace PowerCloud.ViewModels
                                 {
                                     fi.thumbNail = new byte[n];
                                     Array.Copy(buffer, fi.thumbNail, n);
+                                    fi.buff2Col = new byte[n];
+                                    Array.Copy(buffer, fi.buff2Col, n);
+                                }
+                            }
+
+                            if (show2Column)
+                            {
+                                if (fi.buff2Col.Length == 0)
+                                {
+                                    byte[] buffer = new byte[0];
+                                    buffer = await fmr.NE201ImageThumbnail(Path.Combine(fi.PathName, fi.Name), thumbSize);
+                                    //buffer = fmr.NE201ImageThumbnail(Path.Combine(fi.PathName, fi.Name), thumbSize);
+                                    int n = buffer.Length;
+                                    if (n > 0)
+                                    {
+                                        fi.buff2Col = new byte[n];
+                                        Array.Copy(buffer, fi.buff2Col, n);
+                                    }
                                 }
                             }
                         }
                         fi.UsingThumb = UseThumbNail;
+                        fi.ShowTwoColumns = ShowTwoColumn;
                         if (oldPageLen == 0)
                         {
                             NASFiles.Add(fi);

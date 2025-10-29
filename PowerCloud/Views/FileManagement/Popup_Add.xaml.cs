@@ -1,3 +1,7 @@
+using CommunityToolkit.Maui.Views;
+using PowerCloud.NasHttp;
+using PowerCloud.ViewModels;
+using StoreKit;
 using LayoutAlignment = Microsoft.Maui.Primitives.LayoutAlignment;
 
 namespace PowerCloud.Views.FileManagement;
@@ -5,15 +9,16 @@ namespace PowerCloud.Views.FileManagement;
 
 public partial class Popup_Add : CommunityToolkit.Maui.Views.Popup
 {
-    public Popup_Add()
+    public Popup_Add(MainNasFileViewModel mvmPrm)
 	{
 		InitializeComponent();
 
         //PowerCloud 檔案管理 3按鈕
-        Size = new(1 * (DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density), 220);
+        Size = new(0.95 * (DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density));
 
-
+        mvm = mvmPrm;
     }
+    MainNasFileViewModel? mvm;
 
     //private void Btn_Popup_AddFolder(object sender, EventArgs e)
     //{
@@ -35,4 +40,179 @@ public partial class Popup_Add : CommunityToolkit.Maui.Views.Popup
     //https://learn.microsoft.com/en-us/dotnet/communitytoolkit/maui/views/popup
     void Btn_Clicked_ClosePopup(object? sender, EventArgs e) => Close();
 
+    async private void Tap_Upload_Tapped(object sender, EventArgs e)
+    {
+        if (mvm == null)
+            return;
+
+        ActIndicator.IsRunning = true;
+        NE201FileManager fmgr = NE201FileManager.FileManagerFactory(App.PC2ViewModel.UserSelected);
+
+        //var customFileType =
+        //new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
+        //{
+        //    { DevicePlatform.iOS, new[] { "public.my.comic.extension" } }, // or general UTType values
+        //    { DevicePlatform.Android, new[] { "application/comics" } },
+        //    { DevicePlatform.UWP, new[] { ".cbr", ".cbz" } },
+        //    { DevicePlatform.Tizen, new[] { "*/*" } },
+        //    { DevicePlatform.macOS, new[] { "cbr", "cbz" } }, // or general UTType values
+        //});
+        var options = new PickOptions
+        {
+            PickerTitle = "Please select files",
+            //FileTypes = customFileType,
+        };
+        if (DeviceInfo.Platform == DevicePlatform.iOS)
+        {
+            //var result = await MediaPicker.PickPhotoAsync();
+            var result = await FilePicker.PickMultipleAsync(options);
+            if (result != null)
+            {
+
+                int n = 0;
+                foreach (FileResult fresult in result)
+                {
+                    string fullName = Path.Combine(mvm.PrevPath, fresult.FileName);
+                    fullName = await mvm.GetNewFileName(fullName);
+                    if (await fmgr.NE201FileUpload(fresult, mvm.PrevPath, Path.GetFileName(fullName)))
+                    {
+                        n++;
+                        FileInfo finfo = new FileInfo(fresult.FullPath);
+                        NASFileViewModel newFile = new NASFileViewModel()
+                        {
+                            MimeType = fresult.ContentType,
+                            Name = Path.GetFileName(fullName),
+                            PathName = mvm.PrevPath,
+                            Size = finfo.Length,
+                            LastWriteTime = finfo.LastWriteTime.ToString("R")
+                        };
+                        if (mvm.UseThumbNail)
+                        {
+                            newFile.thumbNail = await fmgr.NE201ImageThumbnail(Path.Combine(fresult.FileName, mvm.PrevPath), mvm.thumbSize);
+                        }
+                        newFile.UsingThumb = mvm.UseThumbNail;
+                        mvm.NASFiles.Insert(0, newFile);
+                        n++;
+                    }
+                }
+
+                ////await mvm.readAllFileList(mvm.PrevPath, mvm.NASFiles.Count + n);
+                ////mvm.ScrollToAnchor();
+                
+                
+                ActIndicator.IsRunning = false;
+                if (n > 0)
+                    await AppShell.Current.CurrentPage.DisplayAlert($"訊息", "上傳完成", "結束");
+                else
+                    await AppShell.Current.CurrentPage.DisplayAlert($"訊息", "未完成上傳", "中斷");
+
+                //if (AppShell.Current.Navigation.NavigationStack.Count > 0)
+                //    await AppShell.Current.Navigation.RemovePage(this); //.RemovePopupPageAsync(this);
+                Close();
+            }
+            else
+            {
+                fmgr.ResultMessage = "Can not find local file.";
+            }
+        }
+        else
+        {
+            var result = await FilePicker.PickMultipleAsync(options); // await MediaPicker.PickPhotoAsync();
+                                                                      //var result = await MediaPicker.PickPhotoAsync();
+            if (result != null)
+            {
+                int n = 0;
+                ActIndicator.IsRunning = true;
+                foreach (FileResult fresult in result)
+                {
+                    string fullName = Path.Combine(mvm.PrevPath, fresult.FileName);
+                    fullName = await mvm.GetNewFileName(fullName);
+                    if (await fmgr.NE201FileUpload(fresult, mvm.PrevPath, Path.GetFileName(fullName)))
+                    {
+                        n++;
+                        FileInfo finfo = new FileInfo(fresult.FullPath);
+                        NASFileViewModel newFile = new NASFileViewModel()
+                        {
+                            MimeType = fresult.ContentType,
+                            Name = Path.GetFileName(fullName),
+                            PathName = mvm.PrevPath,
+                            Size = finfo.Length,
+                            LastWriteTime = finfo.LastWriteTime.ToString("R")
+                        };
+                        if (mvm.UseThumbNail)
+                        {
+                            newFile.thumbNail = await fmgr.NE201ImageThumbnail(Path.Combine(fresult.FileName, mvm.PrevPath), mvm.thumbSize);
+                        }
+                        newFile.UsingThumb = mvm.UseThumbNail;
+                        mvm.NASFiles.Insert(0, newFile);
+                    }
+                }
+
+                ActIndicator.IsRunning = false;
+                if (n > 0)
+                    await AppShell.Current.CurrentPage.DisplayAlert($"訊息", "上傳完成", "結束");
+                else
+                    await AppShell.Current.CurrentPage.DisplayAlert($"訊息", "未完成上傳", "中斷");
+
+                //if (AppShell.Current.Navigation.NavigationStack.Count > 0)
+                //    await AppShell.Current.Navigation.RemovePage(this); //.RemovePopupPageAsync(this);
+                Close();
+            }
+            else
+            {
+                fmgr.ResultMessage = "Can not find local file.";
+            }
+        }
+    }
+
+    private void Popup_AddFolder_Tapped(object sender, TappedEventArgs e)
+    {
+        //await AppShell.Current.CurrentPage.Navigation.PushModalAsync(new opup_AddFolder(mvm));
+        if (mvm == null)
+            return;
+
+        var popup = new Popup_AddFolder(mvm);
+        //popup-end
+        popup.VerticalOptions = LayoutAlignment.End;
+        popup.HorizontalOptions = LayoutAlignment.Fill;
+        //popup-center
+        //popup.VerticalOptions = LayoutAlignment.Center;
+        //popup.HorizontalOptions = LayoutAlignment.Fill;
+        Shell.Current.ShowPopup(popup);
+    }
+
+    private async void Tap_Camera_Tapped(object sender, TappedEventArgs e)
+    {
+
+        await AppShell.Current.CurrentPage.Navigation.PushAsync(new FileManagement_Popup_TakePic(mvm));
+        await AppShell.Current.CurrentPage.Navigation.PopAsync(this);
+        #region backup for community toolkit popup page
+        //FileResult picResult = await MediaPicker.CapturePhotoAsync();
+        //if (picResult != null)
+        //{
+        //    await Task.Delay(TimeSpan.FromSeconds(0.3));
+
+        //    PopupResult popupResult;
+        //    popupResult = new PopupResult
+        //    {
+        //        ReturnData = "Test0001.image"
+        //    };
+        //    var result = await Navigation.ShowPopupAsync(new MyPopup(popupResult));
+
+        //    //picResult.FileName = result.ReturnData;
+        //    saveToServer(picResult, popupResult.ReturnData);
+        //    await mvm.ListView_RefreshFolder();
+        //}
+        //string s = picResult.FileName;
+        //picResult = null;
+
+        //////PopupResult popupResult;
+        //////popupResult = new PopupResult
+        //////{
+        //////    ReturnData = "Test0001.image"
+        //////};
+        //////var result = await Navigation.ShowPopupAsync(new MyPopup(popupResult));
+        //////await DisplayAlert("Result", $"Result: {result.ReturnData}", "OK");
+        #endregion
+    }
 }

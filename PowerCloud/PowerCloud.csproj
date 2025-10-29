@@ -65,8 +65,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\FileManagement\Popup_SelectFile.xaml.cs">
-	    <DependentUpon>Popup_SelectFile.xaml</DependentUpon>
+	  <Compile Update="Views\FileManagement\Popup_More.xaml.cs">
+	    <DependentUpon>Popup_More.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\FileManagement\Popup_MoreMulti.xaml.cs">
+	    <DependentUpon>Popup_MoreMulti.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
@@ -104,6 +107,9 @@
 	  <MauiXaml Update="Views\BackupView\View.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\FileManagement\filesMyHome.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\FileManagement\FilesOnNASView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -134,16 +140,19 @@
 	  <MauiXaml Update="Views\FileManagement\Popup_Rename.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\FileManagement\Popup_SelectFile.xaml">
+	  <MauiXaml Update="Views\FileManagement\Popup_More.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\FileManagement\Popup_SelectFolder.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\FileManagement\Popup_SelectMore.xaml">
+	  <MauiXaml Update="Views\FileManagement\Popup_MoreMulti.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\FileManagement\Popup_Sort.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\FileManagement\Popup_TakePicture.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\FileManagement\Popup_ViewDelete.xaml">

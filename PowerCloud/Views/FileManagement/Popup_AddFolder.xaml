@@ -12,12 +12,13 @@
               
         <!--inner-->
         <Entry Style="{StaticResource PopupEntryStyle}"
-                Placeholder="Enter text" />
+               x:Name="EntryFolderName"
+               Placeholder="Enter text" />
         
         <!--btn-row-->
         <HorizontalStackLayout HorizontalOptions="End" Padding="0,30,0,15">
-            <Button Text="取消" Style="{StaticResource Btn_Bg_White_DarkGary}"/>
-            <Button Text="建立" Clicked="Btn_Clicked_ClosePopup" Style="{StaticResource Btn_Bg_BlueGreen}" Margin="15,0,0,0"/>
+            <Button Text="取消" Clicked="Btn_Clicked_ClosePopup" Style="{StaticResource Btn_Bg_White_DarkGary}"/>
+            <Button Text="建立" Clicked="Btn_Clicked_AddFolder" Style="{StaticResource Btn_Bg_BlueGreen}" Margin="15,0,0,0"/>
         </HorizontalStackLayout>
 
     </VerticalStackLayout>

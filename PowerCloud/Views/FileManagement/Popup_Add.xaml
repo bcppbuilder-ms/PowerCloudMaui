@@ -5,7 +5,11 @@
                xmlns:Models="clr-namespace:PowerCloud.Models"
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
 
+
     <VerticalStackLayout Style="{StaticResource PopupBackgroudStyle}">
+        
+        <!--<ActivityIndicator Color="SandyBrown" x:Name="ActIndicator" Scale="2"/>-->
+        
         <!--title-->
         <Grid>
             <Grid.ColumnDefinitions>
@@ -16,17 +20,18 @@
             <Label Style="{StaticResource PopupTitleTextStyle}"
                    Grid.Column="1"
                    Text="新增" />
-            <StackLayout Grid.Column="2"
-                         Padding="5,0,0,0">
-                <Frame Style="{StaticResource PopupCloseButtonStyle}">
-                    <Frame.GestureRecognizers>
+            <StackLayout Grid.Column="2" Padding="5,0,0,0">
+                <Border Style="{StaticResource PopupCloseButtonStyle}">
+                    <Border.GestureRecognizers>
                         <TapGestureRecognizer Tapped="Btn_Clicked_ClosePopup" />
-                    </Frame.GestureRecognizers>
+                    </Border.GestureRecognizers>
                     <Label Style="{StaticResource PopupCloseIconStyle}"
                            Text="{x:Static Models:icomoonFontIcon.Icon16}" />
-                </Frame>
+                </Border>
             </StackLayout>
         </Grid>
+
+        
         <!--inner btn-->
         <VerticalStackLayout Grid.Row="2"
                              Grid.Column="0"
@@ -35,29 +40,44 @@
                      Grid.ColumnSpan="3"
                      Style="{StaticResource DividerStyle}"/>
             <!--popup-btn1-->
-            <HorizontalStackLayout Style="{StaticResource PopupButtonStyle}">
-                <!--<HorizontalStackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="Btn_Popup_SelectFolder"/>
-                </HorizontalStackLayout.GestureRecognizers>-->
-                <Label Style="{StaticResource PopupButtonIconStyle}"
-                       Text="{x:Static Models:icomoonFontIcon.Icon29}" />
-                <Label Style="{StaticResource PopupButtonTextStyle}"
-                       Text="建立資料夾"/>
-            </HorizontalStackLayout>
-            <!--popup-btn2-->
-            <HorizontalStackLayout Style="{StaticResource PopupButtonStyle}">
-                <Label Style="{StaticResource PopupButtonIconStyle}"
-                       Text="{x:Static Models:icomoonFontIcon.Icon48}" />
-                <Label Style="{StaticResource PopupButtonTextStyle}"
-                       Text="上傳"/>
-            </HorizontalStackLayout>
-            <!--popup-btn3-->
-            <HorizontalStackLayout Style="{StaticResource PopupButtonStyle}">
-                <Label Style="{StaticResource PopupButtonIconStyle}"
-                       Text="{x:Static Models:icomoonFontIcon.Icon7}" />
-                <Label Style="{StaticResource PopupButtonTextStyle}"
-                       Text="使用相機"/>
-            </HorizontalStackLayout>
+
+
+            <Grid>
+                <ActivityIndicator Color="SandyBrown" x:Name="ActIndicator" Scale="3" />
+
+                <StackLayout Orientation="Vertical">
+                    <HorizontalStackLayout Style="{StaticResource PopupButtonStyle}">
+                        <HorizontalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Popup_AddFolder_Tapped"/>
+                        </HorizontalStackLayout.GestureRecognizers>
+                        <Label Style="{StaticResource PopupButtonIconStyle}"
+                               Text="{x:Static Models:icomoonFontIcon.Icon29}" />
+                        <Label Style="{StaticResource PopupButtonTextStyle}"
+                               Text="建立資料夾"/>
+                    </HorizontalStackLayout>
+                    <!--popup-btn2-->
+                    <HorizontalStackLayout Style="{StaticResource PopupButtonStyle}">
+                        <HorizontalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Tap_Upload_Tapped"/>
+                        </HorizontalStackLayout.GestureRecognizers>
+                        <Label Style="{StaticResource PopupButtonIconStyle}"
+                               Text="{x:Static Models:icomoonFontIcon.Icon48}" />
+                        <Label Style="{StaticResource PopupButtonTextStyle}"
+                               Text="上傳"/>
+                    </HorizontalStackLayout>
+                    <!--popup-btn3-->
+                    <HorizontalStackLayout Style="{StaticResource PopupButtonStyle}">
+                        <HorizontalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Tap_Camera_Tapped"/>
+                        </HorizontalStackLayout.GestureRecognizers>
+                            <Label Style="{StaticResource PopupButtonIconStyle}"
+                               Text="{x:Static Models:icomoonFontIcon.Icon7}" />
+                        <Label Style="{StaticResource PopupButtonTextStyle}"
+                               Text="使用相機"/>
+                    </HorizontalStackLayout>
+                </StackLayout>
+            </Grid>
+
 
         </VerticalStackLayout>
     </VerticalStackLayout>

@@ -52,7 +52,7 @@
             <CarouselView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="0">
-                        <Image Aspect="AspectFill" Source="{Binding ImageSrc}" 
+                        <Image Aspect="AspectFit" Source="{Binding ImageSrc}" 
                                VerticalOptions="Center" HorizontalOptions="Fill" 
                                IsAnimationPlaying="{Binding isGif}" />
                     </Grid>
@@ -64,7 +64,7 @@
                     VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="0"/>
 
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" x:Name="TextBoard">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50" />
                 <ColumnDefinition Width="*" />
@@ -78,7 +78,7 @@
                        FontSize="26" 
                        TextColor="{StaticResource Color_White}"/>                
             </StackLayout>
-            <StackLayout Grid.Column="1" x:Name="TextBoard">
+            <StackLayout Grid.Column="1">
                 <Label Text="{Binding Name}" 
                                VerticalOptions="End" HorizontalOptions="Center"
                                TextColor="{StaticResource White}"/>

@@ -3,14 +3,15 @@ using PowerCloud.ViewModels;
 
 namespace PowerCloud.Views.FileManagement;
 
-public partial class filesPublic : ContentPage
+public partial class filesMyHome : ContentPage
 {
-	public filesPublic()
-	{
-		InitializeComponent();
+    public filesMyHome()
+    {
+        InitializeComponent();
 
         myControl.OnHasParentChanged += MyControl_OnHasParentChanged;
         actIndicator = (ActivityIndicator)myControl.FindByName("ActIndicator");
+        //setupToolItems();
     }
 
     private void MyControl_OnHasParentChanged(object? sender, EventArgs e)
@@ -25,35 +26,6 @@ public partial class filesPublic : ContentPage
     private void setupToolItems()
     {
         return; //暫時不使用 ToolbarItems
-        if (singleToolItems.Count == 0)
-        {
-            singleToolItems.Add(ToolbarItems[0]);
-            singleToolItems.Add(ToolbarItems[1]);
-
-            multiToolItems.Add(ToolbarItems[2]);
-            multiToolItems.Add(ToolbarItems[3]);
-            multiToolItems.Add(ToolbarItems[4]);
-            multiToolItems.Add(ToolbarItems[5]);
-        }
-
-        while (ToolbarItems.Count > 0)
-            ToolbarItems.RemoveAt(0);
-        if (myControl.IsMultiSelect)
-        {
-            ToolbarItems.Add(multiToolItems[0]);
-            ToolbarItems.Add(multiToolItems[1]);
-            ToolbarItems.Add(multiToolItems[2]);
-            ToolbarItems.Add(multiToolItems[3]);
-            ToolbarItems.Add(singleToolItems[0]);
-            ToolbarItems[4].IconImageSource = ImageSource.FromFile("wh_x.png");
-        }
-        else
-        {
-            ToolbarItems.Add(singleToolItems[0]);
-            if (myControl.HasParent)
-                ToolbarItems.Add(singleToolItems[1]);
-            ToolbarItems[0].IconImageSource = ImageSource.FromFile("wh_square_check.png");
-        }
     }
 
     protected override bool OnBackButtonPressed()
@@ -77,16 +49,6 @@ public partial class filesPublic : ContentPage
     private void updateToolbarItems()
     {
         return; //暫時不使用 ToolbarItems
-        if (myControl.HasParent)
-        {
-            if (ToolbarItems.Count < 2)
-                ToolbarItems.Add(singleToolItems[1]);
-        }
-        else
-        {
-            if (ToolbarItems.Count == 2)
-                ToolbarItems.RemoveAt(1);
-        }
     }
 
     AccountViewModel currentUser = null;
@@ -117,7 +79,7 @@ public partial class filesPublic : ContentPage
 
         if (currentUser != App.PC2ViewModel.UserSelected)
         {
-            myControl.InitPath = "public";
+            myControl.InitPath = "home";
             currentUser = App.PC2ViewModel.UserSelected;
         }
         if (myControl.BindingContext != null)
@@ -158,7 +120,7 @@ public partial class filesPublic : ContentPage
     private /*async*/ void Btn_MultiSelect_ListView(object sender, EventArgs e)
     {
         myControl.IsMultiSelect = !myControl.IsMultiSelect;
-        
+
         setupToolItems();
 
 
@@ -219,16 +181,17 @@ public partial class filesPublic : ContentPage
         //await Navigation.PushPopupAsync(new FileManagement_Popup_Rename(mvm)); //(NASFileViewModel)NASFileList.SelectedItem));
     }
 
+    private void ToolbarItem_Upload_Clicked(object sender, EventArgs e)
+    {
+    }
+
     private async void ShareFiles_Clicked(object sender, EventArgs e)
     {
         await myControl.Share_Tapped_Handle();
     }
 
-    private async void MultiSelect_More_Clicked(object sender, EventArgs e)
+    private async void Btn_Select_More_Clicked(object sender, EventArgs e)
     {
-        if (myControl == null)
-            return;
-
         await myControl.FilesSelectMore(sender, e);
     }
 }

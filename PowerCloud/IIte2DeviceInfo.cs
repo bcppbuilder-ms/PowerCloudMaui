@@ -6,7 +6,7 @@ namespace PowerCloud
     {
         Task<string> GetExternalPath(AccountViewModel user);
         Task DownloadToDevice(MainNasFileViewModel mvm);
-        Task<Stream> GetDownloadStream(NASFileViewModel file);
+        Task<Stream?> GetDownloadStream(NASFileViewModel file);
 
         void GetPhotoLibrary(MainNasFileViewModel prmMvm);
         List<AlbumItem> GetNativeFileIDs();

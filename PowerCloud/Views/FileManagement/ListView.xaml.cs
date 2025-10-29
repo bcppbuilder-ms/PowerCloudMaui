@@ -102,7 +102,7 @@ public partial class ListView : ContentPage
     private void Btn_Popup_FileManAdd(object sender, EventArgs e)
     {
         //var popup = new PopupTestContentView();
-        var popup = new Popup_Add();
+        var popup = new Popup_Add(mvm);
         //popup-end
         popup.VerticalOptions = LayoutAlignment.End;
         popup.HorizontalOptions = LayoutAlignment.Fill;
@@ -117,7 +117,7 @@ public partial class ListView : ContentPage
     private void Btn_Popup_FileManSelectFile(object sender, TappedEventArgs e)
     {
         //var popup = new PopupTestContentView();
-        var popup = new Popup_SelectFile(mvm);
+        var popup = new Popup_More(mvm);
         //popup-end
         popup.VerticalOptions = LayoutAlignment.End;
         popup.HorizontalOptions = LayoutAlignment.Fill;
@@ -341,7 +341,7 @@ public partial class ListView : ContentPage
         }
         else
         {
-            await AppShell.Current.ShowPopupAsync(new FileManagement.Popup_SelectFile(mvm));
+            await AppShell.Current.ShowPopupAsync(new FileManagement.Popup_More(mvm));
         }
     }
 
