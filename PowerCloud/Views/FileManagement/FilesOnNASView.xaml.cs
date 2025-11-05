@@ -537,5 +537,7 @@ public partial class FilesOnNASView : ContentView
         //popup.VerticalOptions = LayoutAlignment.Center;
         //popup.HorizontalOptions = LayoutAlignment.Fill;
         Shell.Current.ShowPopup(popup);
+
+        ////await Navigation.PushAsync(new Popup_Add(mvm));
     }
 }
