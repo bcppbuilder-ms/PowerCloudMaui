@@ -9,7 +9,7 @@ public partial class Popup_TakePicture : CommunityToolkit.Maui.Views.Popup
 {
 	public Popup_TakePicture(MainNasFileViewModel prmMvm)
 	{
-		InitializeComponent();
+        InitializeComponent();
 
         mvm = prmMvm;
     }
@@ -26,13 +26,21 @@ public partial class Popup_TakePicture : CommunityToolkit.Maui.Views.Popup
 
         try
         {
-            var photo = await MediaPicker.CapturePhotoAsync();
+            MediaPickerOptions options = new()
+            {
+                Title = "Take a photo",
+            };
+
+            var photo = await MediaPicker.CapturePhotoAsync(options);
 
             if (photo != null)
             {
                 var stream = await photo.OpenReadAsync();
                 image.Source = ImageSource.FromStream(() => stream);
-            }
+
+                FileResult x = new FileResult(photo.FullPath);
+        }
+
         }
         catch (FeatureNotSupportedException)
         {
@@ -143,7 +151,7 @@ public partial class Popup_TakePicture : CommunityToolkit.Maui.Views.Popup
         ////    Directory.CreateDirectory(longs);
         ////}
         ////else
-        ////{
+            ////{
         ////    //string vpath = Path.GetDirectoryName(localFileName);
         ////    //string[] allv = Directory.GetFiles(vpath);
         ////    //string[] allf = Directory.GetFiles(longs);
@@ -153,7 +161,8 @@ public partial class Popup_TakePicture : CommunityToolkit.Maui.Views.Popup
         ////    ////    //    File.Delete(ff);
         ////    ////    string s = ff;
         ////    ////}
-        ////}
+            ////}
+        }
 
 
 
