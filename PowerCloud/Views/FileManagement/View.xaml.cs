@@ -1,4 +1,5 @@
 using CommunityToolkit.Maui.Extensions;
+using CommunityToolkit.Maui.Views;
 using PowerCloud.ViewModels;
 
 using System.Collections.ObjectModel;
@@ -43,22 +44,38 @@ public partial class View : ContentPage
         n = nasIndex;
         while (n < mvm.NASFiles.Count)
         {
-            if (mvm.NASFiles[n].MimeType.StartsWith("image"))
+            FileReviewViewModel? xItem = null;
+            bool isVideoType = mvm.NASFiles[n].MimeType.StartsWith("video", true, null);
+
+            if (isVideoType || mvm.NASFiles[n].MimeType.StartsWith("image"))
             {
-                FileReviewViewModel xItem = new FileReviewViewModel(mvm.NASFiles[n], n);
+                xItem = new FileReviewViewModel(mvm.NASFiles[n], n);
                 xItem.ImageListIndex = x1.Count;
                 x1.Add(xItem);
+                if (isVideoType)
+                    x1[xItem.ImageListIndex].IsVideo = true;
+                else
+                    x1[xItem.ImageListIndex].IsImage = true;
+
             }
             n++;
         }
         n = 0;
         while (n < nasIndex)
         {
-            if (mvm.NASFiles[n].MimeType.StartsWith("image"))
+            FileReviewViewModel? xItem = null;
+            bool isVideoType = mvm.NASFiles[n].MimeType.StartsWith("video", true, null);
+
+            if (isVideoType || mvm.NASFiles[n].MimeType.StartsWith("image"))
             {
-                FileReviewViewModel xItem = new FileReviewViewModel(mvm.NASFiles[n], n);
+                xItem = new FileReviewViewModel(mvm.NASFiles[n], n);
                 xItem.ImageListIndex = x1.Count;
                 x1.Add(xItem);
+                if (isVideoType)
+                    x1[xItem.ImageListIndex].IsVideo = true;
+                else
+                    x1[xItem.ImageListIndex].IsImage = true;
+
             }
             n++;
         }
@@ -200,11 +217,16 @@ public partial class View : ContentPage
 
             //return true;
         }
-        file.ImageSrc = ImageSource.FromFile(localFile);
+        if (file.IsImage)
+            file.ImageSrc = ImageSource.FromFile(localFile);
+        else
+        {
+            file.VideoSrc = MediaSource.FromFile(localFile);
+        }
 
-        //Image img = new Image { Source = ImageSource.FromFile(localFile) };
-        //img.
-        return done;
+            //Image img = new Image { Source = ImageSource.FromFile(localFile) };
+            //img.
+            return done;
     }
 
     private void Btn_Popup_FileManViewDelete(object sender, EventArgs e)
@@ -243,7 +265,12 @@ public class FileReviewViewModel : BindViewModel
         }
         else
         {
-            IsGif = false;
+            if (x.MimeType.StartsWith("video", true, null))
+                isVideo = true;
+            else if (x.MimeType.StartsWith("image", true, null))
+                isImage = true;
+            else if (x.MimeType.StartsWith("audio", true, null))
+                isAudio = true;
         }
     }
 
@@ -253,20 +280,48 @@ public class FileReviewViewModel : BindViewModel
 
     public NASFileViewModel FileOnNas { get { return x2; } set { SetPropertyValue(ref x2, value); } }
 
-    public string prvImageSrcPath;
+    public string prvImageSrcPath = string.Empty;
 
-    ImageSource src;
-    public ImageSource ImageSrc
+    ImageSource? src = null;
+    public ImageSource? ImageSrc
     {
         get { return src; }
         set { SetPropertyValue(ref src, value); }
     }
 
-    bool isgif;
+    MediaSource? videoSrc = null;
+    public MediaSource? VideoSrc
+    {
+        get { return videoSrc; }
+        set { SetPropertyValue(ref videoSrc, value); }
+    }
+
+    bool isgif = false;
     public bool IsGif
     {
         get { return isgif; }
-        private set { SetPropertyValue(ref isgif, value); }
+        internal set { SetPropertyValue(ref isgif, value); }
+    }
+
+    bool isImage = false;
+    public bool IsImage
+    {
+        get { return isImage; }
+        internal set { SetPropertyValue(ref isImage, value); }
+    }
+
+    bool isVideo = false;
+    public bool IsVideo
+    {
+        get { return isVideo; }
+        internal set { SetPropertyValue(ref isVideo, value); }
+    }
+
+    bool isAudio = false;
+    public bool IsAudio
+    {
+        get { return isAudio; }
+        internal set { SetPropertyValue(ref isAudio, value); }
     }
     #endregion
 }

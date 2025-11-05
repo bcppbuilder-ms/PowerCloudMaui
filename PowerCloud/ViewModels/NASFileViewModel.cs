@@ -1,4 +1,5 @@
 ﻿using Microsoft.Maui.Controls.PlatformConfiguration.TizenSpecific;
+using static Android.Provider.MediaStore;
 
 namespace PowerCloud.ViewModels
 {
@@ -46,16 +47,16 @@ namespace PowerCloud.ViewModels
             }
         }
 
-        private string lastWriteTime;
+        private string lastWriteTime = string.Empty;
         public string LastWriteTime { get { return lastWriteTime; } set { SetPropertyValue(ref lastWriteTime, value); } }
 
-        private string createTime;
+        private string createTime = string.Empty;
         public string CreationTime { get { return createTime; } set { SetPropertyValue(ref createTime, value); } }
 
         private bool canMultiSelect;
         public bool CanMultiSelect { get { return MimeType != "folder"; } set { SetPropertyValue(ref canMultiSelect, MimeType != "folder"); } }
 
-        private string mineType;
+        private string mineType = string.Empty;
         public string MimeType 
         { 
             get { return mineType; } 
@@ -67,8 +68,8 @@ namespace PowerCloud.ViewModels
         private bool shared;
         public bool Shared { get { return shared; } set { SetPropertyValue(ref shared, value); } }
 
-        private List<string> fileAttrContent;
-        public List<string> FileAttrContent { get { return fileAttrContent; } set { SetPropertyValue(ref fileAttrContent, value); } }
+        private List<string>? fileAttrContent;
+        public List<string>? FileAttrContent { get { return fileAttrContent; } set { SetPropertyValue(ref fileAttrContent, value); } }
 
         private bool usingThumb = false;
         public bool UsingThumb { get { return usingThumb; } set { SetPropertyValue(ref usingThumb, value); ImageSrc = null; } }
@@ -77,8 +78,8 @@ namespace PowerCloud.ViewModels
         //public byte[] ThumbNailArea { get { return thumbNail; } set { SetPropertyValue(ref thumbNail, value); } } 
 
 
-        private ImageSource prvImageSrc;
-        public ImageSource ImageSrc
+        private ImageSource? prvImageSrc;
+        public ImageSource? ImageSrc
         {
             get
             {
@@ -87,7 +88,7 @@ namespace PowerCloud.ViewModels
 
             set
             {
-                ImageSource imageSrc = null;
+                ImageSource? imageSrc = null;
                 if (mineType.StartsWith("image"))
                 {
                     if (usingThumb && thumbNail.Length > 0)
@@ -110,7 +111,10 @@ namespace PowerCloud.ViewModels
                         }
                         else if (mineType.StartsWith("video"))
                         {
-                            imageSrc = ImageSource.FromFile("file_video.png");
+                            //if (usingThumb && thumbNail.Length > 0)
+                            //    imageSrc = ImageSource.FromStream(() => new MemoryStream(thumbNail));
+                            //else
+                                imageSrc = ImageSource.FromFile("file_video.png");
                         }
                         else
                         {
@@ -129,8 +133,8 @@ namespace PowerCloud.ViewModels
         public byte[] buff2Col = new byte[0];
 
 
-        private ImageSource prvImageSrc2;
-        public ImageSource ImageSrc2
+        private ImageSource? prvImageSrc2;
+        public ImageSource? ImageSrc2
         {
             get
             {
@@ -139,7 +143,7 @@ namespace PowerCloud.ViewModels
 
             set
             {
-                ImageSource imageSrc2 = null;
+                ImageSource? imageSrc2 = null;
                 if (mineType.StartsWith("image"))
                 {
                     if (show2Columns && buff2Col.Length > 0)
@@ -162,7 +166,10 @@ namespace PowerCloud.ViewModels
                         }
                         else if (mineType.StartsWith("video"))
                         {
-                            imageSrc2 = ImageSource.FromFile("file_video.png");
+                            //if (usingThumb && thumbNail.Length > 0)
+                            //    imageSrc2 = ImageSource.FromStream(() => new MemoryStream(thumbNail));
+                            //else
+                                imageSrc2 = ImageSource.FromFile("file_video.png");
                         }
                         else
                         {

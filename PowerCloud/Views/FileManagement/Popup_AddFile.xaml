@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="PowerCloud.Views.FileManagement.Popup_AddFile"
+               xmlns:Models="clr-namespace:PowerCloud.Models"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+
+    <StackLayout>
+                <Label Text="上傳檔案" TextColor="Black"/>
+                <StackLayout>
+                    <ActivityIndicator Color="Aqua" x:Name="ActIndicator"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center" />
+                </StackLayout>
+        <StackLayout>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Text="原檔名" TextColor="Black" Grid.Row="0"/>
+                <Label x:Name="NativeFileName" TextColor="Black" Grid.Row="1" Background="Silver"/>
+                <Label Text="檔名" TextColor="Black" Grid.Row="2"/>
+                <StackLayout Grid.Row="3">
+                    <Entry x:Name="NewName" TextColor="Blue" Background="Silver"/>
+                </StackLayout>
+            </Grid>
+        </StackLayout>
+        <!--Btn-->
+        <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+            <Button Text="取消" Clicked="Cancel_Clicked"/>
+            <Button Text="確定上傳" Clicked="Upload_Clicked"/>
+        </StackLayout>
+
+
+    </StackLayout>
+</toolkit:Popup>

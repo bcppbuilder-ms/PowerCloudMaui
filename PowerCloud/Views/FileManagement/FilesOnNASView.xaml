@@ -147,6 +147,7 @@
 
             <StackLayout IsVisible="False">
                 <CheckBox x:Name="cbIsMultiSelect" IsChecked="False"/>
+                <CheckBox x:Name="cbShowSelectMore" IsChecked="True"/>
             </StackLayout>
 
             <ActivityIndicator Color="SandyBrown" x:Name="ActIndicator" Scale="5"/>
@@ -331,10 +332,10 @@
                                     <!--更多按鈕-->
                                     <Label Text="{x:Static Models:icomoonFontIcon.Icon33}"
                                            Style="{StaticResource LabelIconStyle}"
+                                           IsVisible="{Binding Source={x:Reference cbShowSelectMore}, Path=IsChecked}" 
                                            FontSize="20">
                                         <Label.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding Source={x:Reference NASFileList}, 
-                                                Path=BindingContext.SetSelectedCommand}" 
+                                            <TapGestureRecognizer Command="{Binding Source={x:Reference NASFileList}, Path=BindingContext.SetSelectedCommand}" 
                                                                   CommandParameter="{Binding}"
                                                                   Tapped="Btn_Popup_MoreOptions"/>
                                         </Label.GestureRecognizers>

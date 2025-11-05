@@ -56,9 +56,9 @@
                     <!--button__攝影-->
                 <Border  Grid.Column="1" Padding="0" Margin="0" BackgroundColor="White">
                         <StackLayout Padding="10,20,10,20">
-                        <!--StackLayout.GestureRecognizers>
+                        <StackLayout.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="takeVideo_Clicked" />
-                        </StackLayout.GestureRecognizers>-->
+                        </StackLayout.GestureRecognizers>
                         <Label Text="{Static Models:icomoonFontIcon.Icon51}" 
                            Style="{StaticResource PopupCloseIconStyle}"
                            FontSize="26" 

@@ -1,7 +1,5 @@
-using CommunityToolkit.Maui.Views;
-using PowerCloud.NasHttp;
+using CommunityToolkit.Maui.Extensions;
 using PowerCloud.ViewModels;
-using LayoutAlignment = Microsoft.Maui.Primitives.LayoutAlignment;
 
 namespace PowerCloud.Views.FileManagement;
 
@@ -23,6 +21,7 @@ public partial class Popup_TakePicture : CommunityToolkit.Maui.Views.Popup
 
     private async void takePhoto_Clicked(object sender, System.EventArgs e)
     {
+        FileResult? photo = null;
 
         try
         {
@@ -31,28 +30,31 @@ public partial class Popup_TakePicture : CommunityToolkit.Maui.Views.Popup
                 Title = "Take a photo",
             };
 
-            var photo = await MediaPicker.CapturePhotoAsync(options);
+            photo = await MediaPicker.CapturePhotoAsync(options);
 
             if (photo != null)
             {
                 var stream = await photo.OpenReadAsync();
                 image.Source = ImageSource.FromStream(() => stream);
 
-                FileResult x = new FileResult(photo.FullPath);
+                //FileResult x = new FileResult(photo.FullPath);
         }
 
         }
         catch (FeatureNotSupportedException)
         {
             await AppShell.Current.CurrentPage.DisplayAlert("Error", "Camera not supported on this device.", "OK");
+            return;
         }
         catch (PermissionException)
         {
             await AppShell.Current.CurrentPage.DisplayAlert("Error", "Camera permission denied.", "OK");
+            return;
         }
         catch (Exception ex)
         {
             await AppShell.Current.CurrentPage.DisplayAlert("Error", $"Unexpected error: {ex.Message}", "OK");
+            return;
         }
         ////if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
         ////{
@@ -71,22 +73,20 @@ public partial class Popup_TakePicture : CommunityToolkit.Maui.Views.Popup
         ////    DefaultCamera = CameraDevice.Front
         ////});
 
-        ////if (file == null)
-        ////    return;
+        if (photo == null)
+            return;
 
-        ////localFileName = file.Path;
+        localFileName = photo.FullPath;
 
-        ////image.Source = ImageSource.FromStream(() =>
-        ////{
-        ////    var stream = file.GetStream();
-        ////    file.Dispose();
-        ////    return stream;
-        ////});
+        if (mvm == null)
+            return;
 
-        ////FileResult x = new FileResult(localFileName);
+        var popup = new Popup_AddFile(mvm, photo);
+        //popup.VerticalOptions = LayoutOptions.Center;
+        //popup.HorizontalOptions = LayoutOptions.Fill;
+        popup.Margin = new Thickness(0, 0, 0, 0);
 
-        ////await Navigation.PushPopupAsync(new FileManagement_Popup_AddFile(mvm, x));
-        ////await Navigation.RemovePopupPageAsync(this);
+        Shell.Current.ShowPopup(popup);
     }
 
     string localFileName;
@@ -124,59 +124,56 @@ public partial class Popup_TakePicture : CommunityToolkit.Maui.Views.Popup
 
     private async void takeVideo_Clicked(object sender, System.EventArgs e)
     {
-        ////if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakeVideoSupported)
-        ////{
-        ////    await DisplayAlert("No Camera", ":( No camera avaialble.", "OK");
-        ////    return;
-        ////}
+        FileResult? video = null;
 
-        ////string newName = nextFileName("video.mp4");
+        try
+        {
+            MediaPickerOptions options = new()
+            {
+                Title = "Take a Video",
+            };
 
-        ////MediaFile file = await CrossMedia.Current.TakeVideoAsync(new StoreVideoOptions
-        ////{
-        ////    Name = newName,
-        ////    Directory = "DefaultVideos",
-        ////});
+            video = await MediaPicker.CaptureVideoAsync(options);
 
-        ////if (file == null)
-        ////    return;
+            if (video != null)
+            {
+                var stream = await video.OpenReadAsync();
+                image.Source = ImageSource.FromStream(() => stream);
 
-        ////localFileName = file.Path;
+                //FileResult x = new FileResult(photo.FullPath);
+            }
 
-        ////file.Dispose();
-
-        ////string longs = Path.Combine(FileSystem.AppDataDirectory, "Movies", "DefaultVideos");
-        ////if (!Directory.Exists(longs))
-        ////{
-        ////    Directory.CreateDirectory(longs);
-        ////}
-        ////else
-            ////{
-        ////    //string vpath = Path.GetDirectoryName(localFileName);
-        ////    //string[] allv = Directory.GetFiles(vpath);
-        ////    //string[] allf = Directory.GetFiles(longs);
-        ////    ////foreach (string ff in allf)
-        ////    ////{
-        ////    ////    //if (Path.GetExtension(ff) == ".mp4")
-        ////    ////    //    File.Delete(ff);
-        ////    ////    string s = ff;
-        ////    ////}
-            ////}
+        }
+        catch (FeatureNotSupportedException)
+        {
+            await AppShell.Current.CurrentPage.DisplayAlert("Error", "Camera not supported on this device.", "OK");
+            return;
+        }
+        catch (PermissionException)
+        {
+            await AppShell.Current.CurrentPage.DisplayAlert("Error", "Camera permission denied.", "OK");
+            return;
+        }
+        catch (Exception ex)
+        {
+            await AppShell.Current.CurrentPage.DisplayAlert("Error", $"Unexpected error: {ex.Message}", "OK");
+            return;
         }
 
+        if (video == null)
+            return;
 
+        localFileName = video.FullPath;
 
-        ////FileResult x = new FileResult(localFileName);
+        if (mvm == null)
+            return;
 
-        ////string extFileStr = Path.Combine(longs, x.FileName);
-        ////if (File.Exists(extFileStr))
-        ////    File.Delete(extFileStr);
+        var popup = new Popup_AddFile(mvm, video);
+        //popup.VerticalOptions = LayoutOptions.Center;
+        //popup.HorizontalOptions = LayoutOptions.Fill;
+        popup.Margin = new Thickness(0, 0, 0, 0);
 
-        ////File.Move(x.FullPath, extFileStr);
-        ////x = new FileResult(Path.Combine(longs, x.FileName));
-
-        ////await Navigation.PushPopupAsync(new FileManagement_Popup_AddFile(mvm, x));
-        ////await Navigation.RemovePopupPageAsync(this);
+        Shell.Current.ShowPopup(popup);
     }
 
     private async void pickVideo_Clicked(object sender, EventArgs e)

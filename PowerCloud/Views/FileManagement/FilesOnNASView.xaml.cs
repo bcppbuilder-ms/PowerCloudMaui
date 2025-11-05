@@ -36,8 +36,7 @@ public partial class FilesOnNASView : ContentView
 
 
 
-    public static readonly BindableProperty InitPathProperty = BindableProperty.Create(
-        nameof(InitPath), typeof(string), typeof(FilesOnNASView),
+    public static readonly BindableProperty InitPathProperty = BindableProperty.Create(nameof(InitPath), typeof(string), typeof(FilesOnNASView),
         defaultValue: string.Empty, defaultBindingMode: BindingMode.OneWay, propertyChanged: InitPathPropertyChanged);
 
     private static void InitPathPropertyChanged(BindableObject bindable, object oldValue, object newValue)
@@ -74,8 +73,7 @@ public partial class FilesOnNASView : ContentView
 
 
 
-    public static readonly BindableProperty IsMultiSelectProperty = BindableProperty.Create(
-        nameof(IsMultiSelect), typeof(bool), typeof(FilesOnNASView),
+    public static readonly BindableProperty IsMultiSelectProperty = BindableProperty.Create(nameof(IsMultiSelect), typeof(bool), typeof(FilesOnNASView),
         defaultValue: false, defaultBindingMode: BindingMode.OneWay, propertyChanged: IsMultiSelectPropertyChanged);
 
     private static void IsMultiSelectPropertyChanged(BindableObject bindable, object oldValue, object newValue)
@@ -85,7 +83,6 @@ public partial class FilesOnNASView : ContentView
             //((FilesOnNASView)bindable).displayListOrView();
         }
     }
-
     public bool IsMultiSelect
     {
         get
@@ -102,11 +99,15 @@ public partial class FilesOnNASView : ContentView
 
             if (value)
             {
+                cbShowSelectMore.IsChecked = false;
+
                 cbIsMultiSelect.IsChecked = true;
                 mvm.MultiSelectedCheck = true;
             }
             else
             {
+                cbShowSelectMore.IsChecked = true;
+
                 cbIsMultiSelect.IsChecked = false;
                 mvm.MultiSelectedCheck = false;
             }
@@ -117,8 +118,7 @@ public partial class FilesOnNASView : ContentView
 
 
 
-    public static readonly BindableProperty HasParentProperty = BindableProperty.Create(
-        nameof(HasParent), typeof(bool), typeof(FilesOnNASView),
+    public static readonly BindableProperty HasParentProperty = BindableProperty.Create(nameof(HasParent), typeof(bool), typeof(FilesOnNASView),
         defaultValue: false, defaultBindingMode: BindingMode.OneWay, propertyChanged: HasParentPropertyChanged);
 
     private static void HasParentPropertyChanged(BindableObject bindable, object oldValue, object newValue)
@@ -156,7 +156,7 @@ public partial class FilesOnNASView : ContentView
 
             MainNasFileViewModel mvm = (MainNasFileViewModel)BindingContext;
 
-            if (mvm.PrevPath.Contains(Path.DirectorySeparatorChar.ToString()))
+            if (mvm.PrevPath?.Contains(Path.DirectorySeparatorChar.ToString()) ?? false)
                 SetValue(HasParentProperty, true);
             else
                 SetValue(HasParentProperty, false);
@@ -438,7 +438,7 @@ public partial class FilesOnNASView : ContentView
 
     private async void GotoParent_Tapped(object sender, EventArgs e)
     {
-        if (mvm.PrevPath.Contains(Path.DirectorySeparatorChar.ToString()))
+        if (mvm.PrevPath?.Contains(Path.DirectorySeparatorChar.ToString()) ?? false)
         {
             await mvm.ListView_GotoParentFolder(/*NASFileList*/);
         }
@@ -464,9 +464,7 @@ public partial class FilesOnNASView : ContentView
         }
         else
         {
-            ////Routing.RegisterRoute(nameof(FileManagement_View), typeof(FileManagement_View));
-            ////await Shell.Current.GoToAsync(nameof(FileManagement_View));
-            if (mvm.FileSelected.MimeType.StartsWith("image"))
+            if (mvm.FileSelected.MimeType.StartsWith("image") || mvm.FileSelected.MimeType.StartsWith("video"))
             {
                 await Navigation.PushAsync(new View(mvm));
             }
@@ -537,5 +535,7 @@ public partial class FilesOnNASView : ContentView
         //popup.VerticalOptions = LayoutAlignment.Center;
         //popup.HorizontalOptions = LayoutAlignment.Fill;
         Shell.Current.ShowPopup(popup);
+
+        ////await Navigation.PushAsync(new Popup_Add(mvm));
     }
 }

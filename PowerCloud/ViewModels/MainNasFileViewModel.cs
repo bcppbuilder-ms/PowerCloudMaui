@@ -33,7 +33,8 @@ namespace PowerCloud.ViewModels
             NASFiles = new ObservableCollection<NASFileViewModel>();
             //await ListView_RefreshFolder();
             await GetNextPageOfData();
-            PageCollectionView.ItemsSource = NASFiles;
+            if (PageCollectionView != null)
+                PageCollectionView.ItemsSource = NASFiles;
         }
 
         public async Task<string> GetNewFileName(string fullName)
@@ -41,14 +42,14 @@ namespace PowerCloud.ViewModels
             string fileName = Path.GetFileName(fullName);
             string fExt = Path.GetExtension(fileName);
             string fBaseName = fileName.Substring(0, fileName.Length - fExt.Length);
-            string pathName = Path.GetDirectoryName(fullName);
+            string? pathName = Path.GetDirectoryName(fullName);
             if (pathName == fullName)
                 pathName = "";
             int seq = 0;
             while (await fmr.NE201IsFileExist(fullName))
             {
                 seq++;
-                fullName = Path.Combine(pathName, fBaseName) + $"_{seq}{fExt}";
+                fullName = Path.Combine(pathName ?? string.Empty, fBaseName) + $"_{seq}{fExt}";
             }
             return fullName;
         }
@@ -72,7 +73,7 @@ namespace PowerCloud.ViewModels
         int prvCurrentMaxPage;
         public int CurrentMaxPage { get { return prvCurrentMaxPage; } set { SetPropertyValue(ref prvCurrentMaxPage, value); } }
 
-        string prvPrevPath;
+        string prvPrevPath = string.Empty;
         public string PrevPath
         {
             get { return prvPrevPath; }
@@ -96,14 +97,14 @@ namespace PowerCloud.ViewModels
         bool multiselectedCheck = false;
         public bool MultiSelectedCheck { get { return multiselectedCheck; } set { SetPropertyValue(ref multiselectedCheck, value); } }
 
-        string tmpimagepath;
+        string tmpimagepath = string.Empty;
         public string TempImagePath { get { return tmpimagepath; } set { SetPropertyValue(ref tmpimagepath, value); } }
 
 
         int filesCount;
         public int FilesCount { get { return filesCount; } set { SetPropertyValue(ref filesCount, NASFiles.Count); } }
 
-        private string errMsg;
+        private string errMsg = string.Empty;
         public string ErrorMessage { get { return errMsg; } set { SetPropertyValue(ref errMsg, value); } }
 
         public CollectionView? PageCollectionView { get; set; }
@@ -146,6 +147,7 @@ namespace PowerCloud.ViewModels
         public int thumbSize = 354;
 
 
+
         private bool useThumbNail = false;
         public bool UseThumbNail
         {
@@ -156,6 +158,8 @@ namespace PowerCloud.ViewModels
                 SetPropertyValue(ref useThumbNail, value);
             }
         }
+
+
 
         private bool show2Column = false;
         public bool ShowTwoColumn
@@ -511,18 +515,18 @@ namespace PowerCloud.ViewModels
         public void ScrollToAnchor(ScrollToPosition x = ScrollToPosition.Start)
         {
             if (x is ScrollToPosition.Start)
-                PageCollectionView.ScrollTo(firstVisibleItem, -1, ScrollToPosition.Start);
+                PageCollectionView?.ScrollTo(firstVisibleItem, -1, ScrollToPosition.Start);
             else if (x is ScrollToPosition.Center)
-                PageCollectionView.ScrollTo(centerItem, -1, ScrollToPosition.Center);
+                PageCollectionView?.ScrollTo(centerItem, -1, ScrollToPosition.Center);
             else
-                PageCollectionView.ScrollTo(lastVisibleItem, -1, ScrollToPosition.End);
+                PageCollectionView?.ScrollTo(lastVisibleItem, -1, ScrollToPosition.End);
         }
 
         public async Task ResetImageSrc(bool newUsingThumb, bool newShow2Col)
         {
             foreach (NASFileViewModel item in NASFiles)
             {
-                if (item.MimeType.StartsWith("image"))
+                if (item.MimeType.StartsWith("image"))  // || item.MimeType.StartsWith("video"))
                 {
                     if (newUsingThumb && item.thumbNail.Length == 0)
                         item.thumbNail = await fmr.NE201ImageThumbnail(Path.Combine(item.PathName, item.Name), thumbSize);
@@ -702,7 +706,7 @@ namespace PowerCloud.ViewModels
                     {
                         index++;
                         fi.PathName = sourcepath;
-                        if (fi.MimeType.StartsWith("image"))
+                        if (fi.MimeType.StartsWith("image"))    // || fi.MimeType.StartsWith("video"))
                         {
                             if (useThumbNail)
                             {

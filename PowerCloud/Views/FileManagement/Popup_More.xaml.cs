@@ -15,7 +15,7 @@ public partial class Popup_More : CommunityToolkit.Maui.Views.Popup
 
         //Size = new(1 * (DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density));
         DesiredSize = new(0.95 * (DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density));
-        BindingContext = mvm;
+        //BindingContext = mvm;
     }
 
     //Btn_Clicked_ClosePopup

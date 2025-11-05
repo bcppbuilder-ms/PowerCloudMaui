@@ -47,14 +47,23 @@
         <CarouselView x:Name="ImageList"
                       Grid.Row="0"
                       ItemsSource="{Binding x1}"
-                      CurrentItemChanged="ImageList_CurrentItemChanged"
-                      HorizontalScrollBarVisibility="Always">
+                      CurrentItemChanged="ImageList_CurrentItemChanged">
             <CarouselView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="0">
                         <Image Aspect="AspectFit" Source="{Binding ImageSrc}" 
                                VerticalOptions="Center" HorizontalOptions="Fill" 
-                               IsAnimationPlaying="{Binding isGif}" />
+                               IsVisible="{Binding IsImage}"
+                               IsAnimationPlaying="{Binding isGif}">
+
+                        </Image>
+                        <toolkit:MediaElement x:Name="mediaElement"
+                                              IsVisible="{Binding IsVideo}"
+                                              Source="{Binding VideoSrc}"
+                                              VerticalOptions="Center"
+                                              HorizontalOptions="Fill">
+
+                        </toolkit:MediaElement>
                     </Grid>
                 </DataTemplate>
             </CarouselView.ItemTemplate>
@@ -76,7 +85,7 @@
                 <Label Text="{x:Static Models:icomoonFontIcon.Icon44}" 
                        Style="{StaticResource LabelIconStyle}"
                        FontSize="26" 
-                       TextColor="{StaticResource Color_White}"/>                
+                       TextColor="{StaticResource Color_White}"/>
             </StackLayout>
             <StackLayout Grid.Column="1">
                 <Label Text="{Binding Name}" 
