@@ -805,7 +805,7 @@ namespace PowerCloud.ViewModels
                         //loginSuccess = NE201Login.RefreshLogin(App.PC2ViewModel.UserSelected).GetAwaiter().GetResult();
                         if (loginSuccess)
                         {
-                            ErrorMessage = $"Redo readpage. Retried: {redoCount}.";
+                            ErrorMessage = $"Redo read page. Retried: {redoCount}.";
                         }
                     }
                     else

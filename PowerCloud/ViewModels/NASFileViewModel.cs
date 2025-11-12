@@ -1,7 +1,4 @@
-﻿using Microsoft.Maui.Controls.PlatformConfiguration.TizenSpecific;
-using static Android.Provider.MediaStore;
-
-namespace PowerCloud.ViewModels
+﻿namespace PowerCloud.ViewModels
 {
     public class NASFileViewModel : BindViewModel
     {

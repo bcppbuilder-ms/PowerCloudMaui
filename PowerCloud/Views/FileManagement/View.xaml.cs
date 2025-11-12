@@ -174,7 +174,13 @@ public partial class View : ContentPage
         ImageList.IsVisible = false;
         ActIndicator.IsRunning = true;
         if (e.PreviousItem != null)
-            ((FileReviewViewModel)e.PreviousItem).ImageSrc = null;
+        {
+            if (((FileReviewViewModel)e.PreviousItem).IsVideo)
+            {
+                ((FileReviewViewModel)e.PreviousItem).VideoSrc = null;
+            }
+            //((FileReviewViewModel)e.PreviousItem).ImageSrc = null;
+        }
 
         FileReviewViewModel item = (FileReviewViewModel)e.CurrentItem;
         //shellTitleView.Text = item.FileOnNas.Name;
@@ -224,9 +230,9 @@ public partial class View : ContentPage
             file.VideoSrc = MediaSource.FromFile(localFile);
         }
 
-            //Image img = new Image { Source = ImageSource.FromFile(localFile) };
-            //img.
-            return done;
+        //Image img = new Image { Source = ImageSource.FromFile(localFile) };
+        //img.
+        return done;
     }
 
     private void Btn_Popup_FileManViewDelete(object sender, EventArgs e)
