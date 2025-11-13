@@ -48,13 +48,20 @@ public partial class FilesOnNASView : ContentView
         }
     }
 
-    public string? InitPath
+    public string InitPath
     {
-        get { return base.GetValue(InitPathProperty)?.ToString(); }
+        get 
+        { 
+            var rt = GetValue(InitPathProperty).ToString(); 
+            if (rt == null) 
+                return string.Empty;
+            return rt;
+        }
         set
         {
-            string? s = GetValue(InitPathProperty)?.ToString();
-            //if (string.IsNullOrEmpty(s) || s != value)
+            string? s = GetValue(InitPathProperty).ToString();
+
+            if (string.IsNullOrEmpty(s) || s != value)
             {
                 base.SetValue(InitPathProperty, value);
                 mvm = new MainNasFileViewModel()
@@ -99,14 +106,14 @@ public partial class FilesOnNASView : ContentView
 
             if (value)
             {
-                cbShowSelectMore.IsChecked = false;
+                //cbShowSelectMore.IsChecked = false;
 
                 cbIsMultiSelect.IsChecked = true;
                 mvm.MultiSelectedCheck = true;
             }
             else
             {
-                cbShowSelectMore.IsChecked = true;
+                //cbShowSelectMore.IsChecked = true;
 
                 cbIsMultiSelect.IsChecked = false;
                 mvm.MultiSelectedCheck = false;

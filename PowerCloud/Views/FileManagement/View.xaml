@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PowerCloud.Views.FileManagement.View"
+             xmlns:local="clr-namespace:PowerCloud.Views.FileManagement"
              xmlns:Models="clr-namespace:PowerCloud.Models"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:Mgt="clr-namespace:PowerCloud.Views.FileManagement"   
@@ -39,11 +40,6 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
-        <!--<StackLayout Grid.Row="0">
-            <Image Aspect="AspectFill" 
-                   VerticalOptions="Center" 
-                   HorizontalOptions="Center" />
-        </StackLayout>-->
         <CarouselView x:Name="ImageList"
                       Grid.Row="0"
                       ItemsSource="{Binding x1}"
@@ -57,13 +53,24 @@
                                IsAnimationPlaying="{Binding isGif}">
 
                         </Image>
+                        <!--<toolkit:MediaElement x:Name="mediaElement"
+                                              IsVisible="{Binding IsVideo}"
+                                              Source="{Binding VideoSrc}"
+                                              
+                                              Mgt:Ite2VideoAutoPlay.AutoPlayWhen="True"
+                                              
+                                              VerticalOptions="Center"
+                                              HorizontalOptions="Fill"/>-->
+
                         <toolkit:MediaElement x:Name="mediaElement"
                                               IsVisible="{Binding IsVideo}"
                                               Source="{Binding VideoSrc}"
-                                              VerticalOptions="Center"
-                                              HorizontalOptions="Fill">
+                                              
+                                              ShouldAutoPlay="True"
 
-                        </toolkit:MediaElement>
+                                              VerticalOptions="Center"
+                                              HorizontalOptions="Fill"/>
+
                     </Grid>
                 </DataTemplate>
             </CarouselView.ItemTemplate>

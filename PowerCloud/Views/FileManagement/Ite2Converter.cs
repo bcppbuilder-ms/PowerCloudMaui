@@ -6,11 +6,17 @@ public class BoolNotConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return !(bool)value;
+        if (value is bool b)
+            return !b;
+        else
+            return value;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return !(bool)value;
+        if (value is bool b)
+            return !b;
+        else
+            return value;
     }
 }
