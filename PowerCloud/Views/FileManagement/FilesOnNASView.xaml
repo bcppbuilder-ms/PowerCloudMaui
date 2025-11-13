@@ -147,7 +147,7 @@
 
             <StackLayout IsVisible="False">
                 <CheckBox x:Name="cbIsMultiSelect" IsChecked="False"/>
-                <CheckBox x:Name="cbShowSelectMore" IsChecked="True"/>
+                <!--<CheckBox x:Name="cbShowSelectMore" IsChecked="True"/>-->
             </StackLayout>
 
             <ActivityIndicator Color="SandyBrown" x:Name="ActIndicator" Scale="5"/>
@@ -309,7 +309,7 @@
                                     <StackLayout>
                                         <StackLayout.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding Source={x:Reference NASFileList}, 
-                                                Path=BindingContext.SetSelectedCommand}" 
+                                                                  Path=BindingContext.SetSelectedCommand}" 
                                                                   CommandParameter="{Binding}"
                                                                   Tapped="ShowContentItem_Tapped"/>
                                         </StackLayout.GestureRecognizers>
@@ -330,9 +330,10 @@
                                 <!--檔案-更多按鈕 more-row -->
                                 <StackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center">
                                     <!--更多按鈕-->
+                                    <!--IsVisible="{Binding Source={x:Reference cbShowSelectMore}, Path=IsChecked}"-->
                                     <Label Text="{x:Static Models:icomoonFontIcon.Icon33}"
                                            Style="{StaticResource LabelIconStyle}"
-                                           IsVisible="{Binding Source={x:Reference cbShowSelectMore}, Path=IsChecked}" 
+                                           IsVisible="{Binding Source={x:Reference cbIsMultiSelect}, Path=IsChecked, Converter={StaticResource NotConverter}}"
                                            FontSize="20">
                                         <Label.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding Source={x:Reference NASFileList}, Path=BindingContext.SetSelectedCommand}" 
