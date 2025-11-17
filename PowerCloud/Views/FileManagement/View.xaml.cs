@@ -227,6 +227,7 @@ public partial class View : ContentPage
             file.ImageSrc = ImageSource.FromFile(localFile);
         else
         {
+
             file.VideoSrc = MediaSource.FromFile(localFile);
         }
 
@@ -300,6 +301,33 @@ public class FileReviewViewModel : BindViewModel
     {
         get { return videoSrc; }
         set { SetPropertyValue(ref videoSrc, value); }
+    }
+
+
+    int displayWidth = 600;
+    public int DisplayWidth
+    {
+        get
+        {
+            displayWidth = (int)((App.Current?.Windows?[0]?.Width) ?? 620 ) - 20;
+
+            return displayWidth;
+        }
+
+        set { SetPropertyValue(ref displayWidth, value); }
+    }
+
+    int displayHeight = 800;
+    public int DisplayHeight
+    {
+        get
+        {
+            displayHeight = (int)((App.Current?.Windows?[0]?.Height) ?? 820) - 20;
+
+            return displayHeight;
+        }
+
+        set { SetPropertyValue(ref displayHeight, value); }
     }
 
     bool isgif = false;

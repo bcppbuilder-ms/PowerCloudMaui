@@ -62,8 +62,14 @@
                                               VerticalOptions="Center"
                                               HorizontalOptions="Fill"/>-->
 
+                        <!--Source="{Binding VideoSrc}"-->
+                        <!--HeightRequest="800"
+                                              WidthRequest="600"-->
                         <toolkit:MediaElement x:Name="mediaElement"
                                               IsVisible="{Binding IsVideo}"
+                                              
+                                              MinimumHeightRequest="{Binding DisplayHeight}"
+                                              MinimumWidthRequest="{Binding DisplayWidth}"
                                               Source="{Binding VideoSrc}"
                                               
                                               ShouldAutoPlay="True"
